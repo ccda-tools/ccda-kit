@@ -27,16 +27,26 @@ struct CCDASampleCorpusTests {
     func ccdaSampleParsesWithMeaningfulClinicalData(fileName: String) throws {
         let document = try CCDAEngine().parse(url: CCDASampleFixtures.ccdaSampleURL(fileName: fileName))
 
-        #expect(!document.header.documentId.display.isEmpty)
+        #expect(!document.header.documentId.stringValue.isEmpty)
         #expect(document.header.code?.code != nil)
         #expect(document.patient != nil)
-        #expect(document.patient?.name?.display != nil)
+        #expect(document.patient?.name != nil)
         #expect(document.patient?.birthTime != nil)
 
         for section in document.sections {
             #expect(section.title != nil || section.code != nil)
             #expect(!section.narrativeText.isEmpty || !section.entries.isEmpty || !section.media.isEmpty)
         }
+    }
+
+    @Test
+    func localMediaAttachmentSampleIncludesSupportedMediaTypes() throws {
+        let document = try CCDAEngine().parse(
+            url: CCDASampleFixtures.ccdaSampleURL(fileName: "local-media-attachments.xml")
+        )
+        let mediaTypes = document.sections.flatMap(\.media).map(\.mediaType)
+
+        #expect(mediaTypes == [.imagePNG, .applicationPDF, .textPlain, .textHTML])
     }
 
     @Test

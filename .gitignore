@@ -31,6 +31,3 @@ build/
 *.tmp
 *.swp
 *.swo
-
-# Internal planning notes
-OPEN_SOURCE_PLAN.md

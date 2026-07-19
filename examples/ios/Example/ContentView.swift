@@ -10,7 +10,8 @@ import CCDAEngine
 import CCDAUI
 
 private let ccdaExamples: [CCDAExample] = [
-    CCDAExample(title: "Local Comprehensive Sample", filename: "ccda", source: "Local"),
+    CCDAExample(title: "Local Comprehensive Sample", filename: "local-comprehensive-sample", source: "Shared Test Data"),
+    CCDAExample(title: "Media Attachments", filename: "local-media-attachments", source: "Shared Test Data"),
     CCDAExample(title: "HL7 CCD", filename: "hl7-ccd", source: "HL7 Samples"),
     CCDAExample(title: "HL7 Discharge Summary", filename: "hl7-discharge-summary", source: "HL7 Samples"),
     CCDAExample(title: "HL7 Progress Note", filename: "hl7-progress-note", source: "HL7 Samples"),
@@ -71,8 +72,12 @@ private struct CCDAExampleDetailView: View {
             return
         }
 
-        guard let url = Bundle.main.url(forResource: example.filename, withExtension: "xml") else {
-            loadState = .failed("\(example.filename).xml was not found in the app bundle.")
+        guard let url = Bundle.main.url(
+            forResource: example.filename,
+            withExtension: "xml",
+            subdirectory: "CCDAExamples"
+        ) else {
+            loadState = .failed(missingResourceMessage(for: example.filename))
             return
         }
 
@@ -82,6 +87,24 @@ private struct CCDAExampleDetailView: View {
         } catch {
             loadState = .failed(error.localizedDescription)
         }
+    }
+
+    private func missingResourceMessage(for filename: String) -> String {
+        let availableFiles = (try? FileManager.default.contentsOfDirectory(
+            at: Bundle.main.bundleURL.appendingPathComponent("CCDAExamples"),
+            includingPropertiesForKeys: nil
+        ))?
+            .filter { $0.pathExtension == "xml" }
+            .map(\.lastPathComponent)
+            .sorted()
+            .joined(separator: ", ")
+
+        return """
+        \(filename).xml was not found in the app bundle.
+
+        Bundle path: \(Bundle.main.bundleURL.appendingPathComponent("CCDAExamples").path)
+        XML files in bundle: \(availableFiles?.isEmpty == false ? availableFiles! : "none")
+        """
     }
 }
 

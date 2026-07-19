@@ -1,12 +1,20 @@
 import Foundation
 
-public final class CCDAEngine {
-    public init() {}
+/// Main parser entry point for converting C-CDA XML into normalized models.
+public final class CCDAEngine: Sendable {
+    private let configuration: CCDAEngineConfiguration
 
+    /// Creates a parser with the provided configuration.
+    public init(configuration: CCDAEngineConfiguration = .default) {
+        self.configuration = configuration
+    }
+
+    /// Parses C-CDA XML from in-memory data.
     public func parse(data: Data) throws -> CCDADocument {
         try parse(data: data, sourceDescription: nil)
     }
 
+    /// Parses C-CDA XML from a file URL.
     public func parse(url: URL) throws -> CCDADocument {
         try parse(data: Data(contentsOf: url), sourceDescription: url.path)
     }
@@ -27,158 +35,197 @@ public final class CCDAEngine {
             )
         }
 
-        return mapDocument(root)
+        return try mapDocument(root)
     }
 
-    private func mapDocument(_ root: XMLNode) -> CCDADocument {
+    private func mapDocument(_ root: CCDAXMLNode) throws -> CCDADocument {
         let header = CCDAHeader(
-            realmCode: root.first("realmCode")?.attributes["code"],
-            typeId: root.first("typeId").map(identifier),
-            templateIds: root.direct("templateId").map(templateId),
-            documentId: root.first("id").map(identifier) ?? CCDAIdentifier(root: nil, extensionValue: nil),
-            code: root.first("code").map(codedValue),
-            title: root.first("title")?.cleanText,
-            effectiveTime: root.first("effectiveTime")?.attributes["value"],
-            confidentialityCode: root.first("confidentialityCode").map(codedValue),
-            languageCode: root.first("languageCode")?.attributes["code"]
+            realmCode: root.first(.realmCode)?.attribute(.code),
+            typeId: root.first(.typeId).map(identifier),
+            templateIds: root.direct(.templateId).map(templateId),
+            documentId: root.first(.id).map(identifier) ?? CCDAIdentifier(root: nil, extensionValue: nil),
+            code: root.first(.code).map(codedValue),
+            title: root.first(.title)?.cleanText,
+            effectiveTime: timestamp(root.first(.effectiveTime)?.attribute(.value)),
+            confidentialityCode: root.first(.confidentialityCode).map(codedValue),
+            languageCode: root.first(.languageCode)?.attribute(.code)
         )
 
         return CCDADocument(
             header: header,
             patient: mapPatient(root),
-            sections: mapSections(root)
+            sections: try mapSections(root)
         )
     }
 
-    private func mapPatient(_ root: XMLNode) -> CCDAPatient? {
-        guard let patientRole = root.first("recordTarget")?.first("patientRole") else {
+    /// Maps patient demographics from recordTarget.
+    private func mapPatient(_ root: CCDAXMLNode) -> CCDAPatient? {
+        guard let patientRole = root.first(.recordTarget)?.first(.patientRole) else {
             return nil
         }
 
-        let patient = patientRole.first("patient")
+        let patient = patientRole.first(.patient)
 
         return CCDAPatient(
-            ids: patientRole.direct("id").map(identifier),
-            name: patient?.first("name").map(humanName),
-            gender: patient?.first("administrativeGenderCode").map(codedValue),
-            birthTime: patient?.first("birthTime")?.attributes["value"],
-            maritalStatus: patient?.first("maritalStatusCode").map(codedValue),
-            race: patient?.first("raceCode").map(codedValue),
-            ethnicity: patient?.first("ethnicGroupCode").map(codedValue),
-            addresses: patientRole.direct("addr").map(address),
-            telecoms: patientRole.direct("telecom").compactMap { $0.attributes["value"] }
+            ids: patientRole.direct(.id).map(identifier),
+            name: patient?.first(.name).map(humanName),
+            gender: patient?.first(.administrativeGenderCode).map(codedValue),
+            birthTime: timestamp(patient?.first(.birthTime)?.attribute(.value)),
+            maritalStatus: patient?.first(.maritalStatusCode).map(codedValue),
+            race: patient?.first(.raceCode).map(codedValue),
+            ethnicity: patient?.first(.ethnicGroupCode).map(codedValue),
+            addresses: patientRole.direct(.addr).map(address),
+            telecoms: patientRole.direct(.telecom).compactMap { $0.attribute(.value) }
         )
     }
 
-    private func mapSections(_ root: XMLNode) -> [CCDASection] {
-        guard let structuredBody = root.first("component")?.first("structuredBody") else {
+    /// Maps structuredBody components into renderable sections.
+    private func mapSections(_ root: CCDAXMLNode) throws -> [CCDASection] {
+        guard let structuredBody = root.first(.component)?.first(.structuredBody) else {
             return []
         }
 
-        return structuredBody.direct("component").compactMap { component in
-            guard let section = component.first("section") else { return nil }
+        return try structuredBody.direct(.component).compactMap { component in
+            guard let section = component.first(.section) else { return nil }
+            let code = section.first(.code).map(codedValue)
             return CCDASection(
-                templateIds: section.direct("templateId").map(templateId),
-                code: section.first("code").map(codedValue),
-                title: section.first("title")?.cleanText,
-                narrativeText: section.first("text")?.cleanText ?? "",
-                entries: section.direct("entry").flatMap { entry in
+                templateIds: section.direct(.templateId).map(templateId),
+                code: code,
+                kind: CCDASectionKind(code: code?.code),
+                title: section.first(.title)?.cleanText,
+                narrativeText: section.first(.text)?.cleanText ?? "",
+                entries: section.direct(.entry).flatMap { entry in
                     entry.children
-                        .filter { $0.name != "observationMedia" }
+                        .filter { !$0.isNamed(.observationMedia) }
                         .map(mapEntry)
                 },
-                media: section.direct("entry").flatMap { entry in
-                    entry.children
-                        .filter { $0.name == "observationMedia" }
-                        .compactMap(mapMedia)
+                media: try section.direct(.entry).flatMap { entry in
+                    try entry.children
+                        .filter { $0.isNamed(.observationMedia) }
+                        .compactMap { try mapMedia($0) }
                 }
             )
         }
     }
 
-    private func mapEntry(_ node: XMLNode) -> CCDAEntry {
-        let directValue = node.first("value")
-
+    /// Maps a clinical entry and its nested child entries.
+    private func mapEntry(_ node: CCDAXMLNode) -> CCDAEntry {
+        let directValue = node.first(.value)
+        
         return CCDAEntry(
             type: node.name,
-            templateIds: node.direct("templateId").map(templateId),
-            identifiers: node.direct("id").map(identifier),
-            code: node.first("code").map(codedValue),
-            status: node.first("statusCode")?.attributes["code"],
-            effectiveTime: effectiveTimeValue(from: node.first("effectiveTime")),
+            templateIds: node.direct(.templateId).map(templateId),
+            identifiers: node.direct(.id).map(identifier),
+            code: node.first(.code).map(codedValue),
+            status: node.first(.statusCode)?.attribute(.code),
+            effectiveTime: effectiveTimeValue(from: node.first(.effectiveTime)),
             value: directValue.map(ccdaValue),
-            textReference: node.first("text")?.first("reference")?.attributes["value"],
-            children: node.direct("entryRelationship").flatMap { relationship in
+            textReference: node.first(.text)?.first(.reference)?.attribute(.value),
+            children: node.direct(.entryRelationship).flatMap { relationship in
                 relationship.children.map(mapEntry)
-            } + node.direct("component").flatMap { component in
+            } + node.direct(.component).flatMap { component in
                 component.children.map(mapEntry)
             }
         )
     }
 
-    private func mapMedia(_ node: XMLNode) -> CCDAMedia? {
-        guard let value = node.first("value") else { return nil }
+    /// Maps observationMedia into the current embedded media model.
+    private func mapMedia(_ node: CCDAXMLNode) throws -> CCDAMedia? {
+        guard let value = node.first(.value) else { return nil }
+        let id = node.attribute(.id) ?? node.first(.id)?.attribute(.root) ?? UUID().uuidString
+        let mediaType = CCDAMediaType(mimeType: value.attribute(.mediaType))
+        let representation = CCDAMediaRepresentation(rawValue: value.attribute(.representation))
+        let base64Value = value.cleanText
+
+        if case .cacheToDisk = configuration.mediaStoragePolicy,
+           let cachedPayload = try cacheMediaIfPossible(id: id, mediaType: mediaType, base64Value: base64Value) {
+            return CCDAMedia(
+                id: id,
+                mediaType: mediaType,
+                representation: representation,
+                payload: cachedPayload
+            )
+        }
+
         return CCDAMedia(
-            id: node.attributes["ID"] ?? node.first("id")?.attributes["root"] ?? UUID().uuidString,
-            mediaType: value.attributes["mediaType"],
-            representation: value.attributes["representation"],
-            base64Value: value.cleanText
+            id: id,
+            mediaType: mediaType,
+            representation: representation,
+            payload: base64Value.isEmpty ? .unavailable : .inlineBase64(base64Value)
         )
     }
 
-    private func templateId(_ node: XMLNode) -> CCDATemplateId {
-        CCDATemplateId(root: node.attributes["root"] ?? "", extensionValue: node.attributes["extension"])
+    /// Maps a templateId element.
+    private func templateId(_ node: CCDAXMLNode) -> CCDATemplateId {
+        CCDATemplateId(root: node.attribute(.root) ?? "", extensionValue: node.attribute(.extension))
     }
 
-    private func identifier(_ node: XMLNode) -> CCDAIdentifier {
-        CCDAIdentifier(root: node.attributes["root"], extensionValue: node.attributes["extension"])
+    /// Maps an id-like element.
+    private func identifier(_ node: CCDAXMLNode) -> CCDAIdentifier {
+        CCDAIdentifier(root: node.attribute(.root), extensionValue: node.attribute(.extension))
     }
 
-    private func codedValue(_ node: XMLNode) -> CCDACodedValue {
+    /// Maps standard code attributes into a coded value.
+    private func codedValue(_ node: CCDAXMLNode) -> CCDACodedValue {
         CCDACodedValue(
-            code: node.attributes["code"],
-            codeSystem: node.attributes["codeSystem"],
-            codeSystemName: node.attributes["codeSystemName"],
-            displayName: node.attributes["displayName"]
+            code: node.attribute(.code),
+            codeSystem: node.attribute(.codeSystem),
+            codeSystemName: node.attribute(.codeSystemName),
+            displayName: node.attribute(.displayName)
         )
     }
 
-    private func ccdaValue(_ node: XMLNode) -> CCDAValue {
+    /// Maps value attributes from an entry value element.
+    private func ccdaValue(_ node: CCDAXMLNode) -> CCDAValue {
         CCDAValue(
-            type: node.attributes["type"] ?? node.attributes["xsi:type"],
-            code: node.attributes["code"],
-            displayName: node.attributes["displayName"],
-            value: node.attributes["value"],
-            unit: node.attributes["unit"]
+            type: node.attribute(.type) ?? node.attribute(.xsiType),
+            code: node.attribute(.code),
+            displayName: node.attribute(.displayName),
+            value: node.attribute(.value),
+            unit: node.attribute(.unit)
         )
     }
 
-    private func humanName(_ node: XMLNode) -> CCDAHumanName {
+    /// Maps a C-CDA name element.
+    private func humanName(_ node: CCDAXMLNode) -> CCDAHumanName {
         CCDAHumanName(
-            prefix: node.first("prefix")?.cleanText,
-            given: node.direct("given").map(\.cleanText),
-            family: node.first("family")?.cleanText
+            prefix: node.first(.prefix)?.cleanText,
+            given: node.direct(.given).map(\.cleanText),
+            family: node.first(.family)?.cleanText
         )
     }
 
-    private func address(_ node: XMLNode) -> CCDAAddress {
+    /// Maps a C-CDA addr element.
+    private func address(_ node: CCDAXMLNode) -> CCDAAddress {
         CCDAAddress(
-            use: node.attributes["use"],
-            streetLines: node.direct("streetAddressLine").map(\.cleanText),
-            city: node.first("city")?.cleanText,
-            state: node.first("state")?.cleanText,
-            postalCode: node.first("postalCode")?.cleanText,
-            country: node.first("country")?.cleanText
+            use: node.attribute(.use),
+            streetLines: node.direct(.streetAddressLine).map(\.cleanText),
+            city: node.first(.city)?.cleanText,
+            state: node.first(.state)?.cleanText,
+            postalCode: node.first(.postalCode)?.cleanText,
+            country: node.first(.country)?.cleanText
         )
     }
 
-    private func effectiveTimeValue(from node: XMLNode?) -> String? {
+    /// Extracts effectiveTime using value, low, then high.
+    private func effectiveTimeValue(from node: CCDAXMLNode?) -> CCDATimestamp? {
         guard let node else { return nil }
-        return node.attributes["value"]
-            ?? node.first("low")?.attributes["value"]
-            ?? node.first("high")?.attributes["value"]
+        return timestamp(
+            node.attribute(.value)
+            ?? node.first(.low)?.attribute(.value)
+            ?? node.first(.high)?.attribute(.value)
+        )
     }
 
+    private func timestamp(_ rawValue: String?) -> CCDATimestamp? {
+        guard let rawValue, !rawValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return nil
+        }
+
+        return CCDATimestamp(rawValue: rawValue)
+    }
+
+    /// Builds a consistent engine error from Foundation XMLParser state.
     private func xmlParsingFailure(
         from parser: XMLParser,
         sourceDescription: String?,
@@ -197,7 +244,30 @@ public final class CCDAEngine {
         )
     }
 
+    /// Converts non-positive parser positions into nil.
     private func positive(_ value: Int) -> Int? {
         value > 0 ? value : nil
+    }
+
+    private func cacheMediaIfPossible(
+        id: String,
+        mediaType: CCDAMediaType,
+        base64Value: String
+    ) throws -> CCDAMediaPayload? {
+        guard let mediaCacheDirectory = configuration.mediaCacheDirectory,
+              let data = Data(base64Encoded: base64Value.filter { !$0.isWhitespace }) else {
+            return nil
+        }
+
+        do {
+            let url = try CCDAMediaCache(directoryURL: mediaCacheDirectory)
+                .store(data: data, id: id, mediaType: mediaType)
+            return .cachedFile(url, byteCount: data.count)
+        } catch {
+            throw CCDAEngineError.mediaCacheWriteFailed(
+                mediaCacheDirectory,
+                error.localizedDescription
+            )
+        }
     }
 }

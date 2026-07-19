@@ -16,10 +16,6 @@ let package = Package(
         .library(
             name: "CCDAUI",
             targets: ["CCDAUI"]
-        ),
-        .executable(
-            name: "CCDAConformanceGenerator",
-            targets: ["CCDAConformanceGenerator"]
         )
     ],
     targets: [
@@ -37,10 +33,10 @@ let package = Package(
             dependencies: ["CCDAEngine"],
             path: "apple/Tests/CCDAEngineTests"
         ),
-        .executableTarget(
-            name: "CCDAConformanceGenerator",
-            dependencies: ["CCDAEngine"],
-            path: "apple/Tools/CCDAConformanceGenerator"
+        .testTarget(
+            name: "CCDAUITests",
+            dependencies: ["CCDAEngine", "CCDAUI"],
+            path: "apple/Tests/CCDAUITests"
         )
     ]
 )

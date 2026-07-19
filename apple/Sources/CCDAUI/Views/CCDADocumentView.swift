@@ -1,13 +1,17 @@
 import SwiftUI
 import CCDAEngine
 
+/// Default SwiftUI renderer for a parsed C-CDA document.
 public struct CCDADocumentView: View {
+    /// Parsed document to render.
     public let document: CCDADocument
 
+    /// Creates the default document renderer.
     public init(document: CCDADocument) {
         self.document = document
     }
 
+    /// SwiftUI view body.
     public var body: some View {
         CCDAComposableDocumentView(
             document: document,
@@ -17,24 +21,24 @@ public struct CCDADocumentView: View {
                         LabeledContent("Title", value: title)
                     }
                     if let date = header.effectiveTime {
-                        LabeledContent("Effective Time", value: date)
+                        LabeledContent("Effective Time", value: date.formattedDateTime)
                     }
-                    LabeledContent("Document ID", value: header.documentId.display)
+                    LabeledContent("Document ID", value: header.documentId.stringValue)
                 }
             },
             patient: { patient in
                 Section("Patient") {
-                    if let name = patient.name?.display {
+                    if let name = patient.name?.formattedName, !name.isEmpty {
                         LabeledContent("Name", value: name)
                     }
                     if let birthTime = patient.birthTime {
-                        LabeledContent("DOB", value: birthTime)
+                        LabeledContent("DOB", value: birthTime.formattedDateTime)
                     }
                     if let gender = patient.gender?.displayName ?? patient.gender?.code {
                         LabeledContent("Gender", value: gender)
                     }
                     ForEach(patient.addresses, id: \.self) { address in
-                        LabeledContent("Address", value: address.display)
+                        LabeledContent("Address", value: address.formattedPostalAddress)
                     }
                 }
             },
@@ -56,7 +60,7 @@ public struct CCDADocumentView: View {
                 CCDAEntryRow(entry: entry)
             },
             media: { media in
-                CCDAMediaImageView(media: media)
+                CCDAMediaView(media: media)
             }
         )
     }

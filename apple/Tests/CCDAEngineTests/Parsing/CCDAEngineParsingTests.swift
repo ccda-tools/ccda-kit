@@ -37,7 +37,8 @@ final class CCDAEngineParsingTests: XCTestCase {
         let document = try CCDAEngine().parse(data: Data(xml.utf8))
 
         XCTAssertEqual(document.header.title, "Sample CCD")
-        XCTAssertEqual(document.patient?.name?.display, "John Doe")
+        XCTAssertEqual(document.patient?.name?.given, ["John"])
+        XCTAssertEqual(document.patient?.name?.family, "Doe")
         XCTAssertEqual(document.sections.count, 1)
         XCTAssertEqual(document.sections.first?.title, "Medications")
         XCTAssertEqual(document.sections.first?.narrativeText, "Lisinopril")
@@ -54,7 +55,7 @@ final class CCDAEngineParsingTests: XCTestCase {
             let document = try engine.parse(url: url)
 
             XCTAssertFalse(
-                document.header.documentId.display.isEmpty,
+                document.header.documentId.stringValue.isEmpty,
                 "Expected document ID in \(url.lastPathComponent)."
             )
             XCTAssertTrue(

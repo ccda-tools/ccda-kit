@@ -68,10 +68,18 @@ private extension ConformanceDocument {
         self.documentId = document.header.documentId.display
         self.title = document.header.title
         self.documentCode = document.header.code.map(CodedSummary.init)
-        self.patientName = document.patient?.name?.display
+        self.patientName = document.patient?.name.map(Self.patientName)
         self.patientBirthTime = document.patient?.birthTime
         self.sectionCount = document.sections.count
         self.sections = document.sections.map(SectionSummary.init)
+    }
+}
+
+private extension ConformanceDocument {
+    static func patientName(_ name: CCDAHumanName) -> String {
+        ([name.prefix] + name.given + [name.family])
+            .compactMap { $0 }
+            .joined(separator: " ")
     }
 }
 

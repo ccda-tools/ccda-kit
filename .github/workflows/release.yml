@@ -1,0 +1,47 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "Package.swift"
+      - "apple/**"
+      - "examples/ios/**"
+      - "test-data/**"
+      - "docs/**"
+      - "CHANGELOG.md"
+      - ".github/workflows/release.yml"
+      - "scripts/release/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-main
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: Test And Release
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Swift tests
+        run: swift test
+
+      - name: Create release tag
+        id: release_tag
+        run: scripts/release/create-release-tag.sh
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release_tag.outputs.next_tag }}
+          RELEASE_NOTES_PATH: ${{ steps.release_tag.outputs.release_notes_path }}
+        run: scripts/release/create-github-release.sh

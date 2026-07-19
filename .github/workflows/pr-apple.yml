@@ -1,0 +1,29 @@
+name: pr-apple
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+    paths:
+      - "Package.swift"
+      - "apple/**"
+      - "examples/ios/**"
+      - "test-data/**"
+      - "docs/**"
+      - "CHANGELOG.md"
+      - ".github/workflows/pr-apple.yml"
+
+jobs:
+  swift-test:
+    name: Swift Test
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Swift tests
+        run: swift test

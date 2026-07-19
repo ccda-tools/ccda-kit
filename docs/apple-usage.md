@@ -8,7 +8,7 @@ Add the package to your app with Swift Package Manager:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/shahzaibiqbal/ccda-kit.git", branch: "main")
+    .package(url: "https://github.com/shahzaibiqbal/ccda-kit.git", from: "<latest-version>")
 ]
 ```
 
@@ -46,7 +46,8 @@ let engine = CCDAEngine()
 let document = try engine.parse(url: ccdaURL)
 
 let title = document.header.title
-let patientName = document.patient?.name?.display
+let patientName = document.patient?.name
+let birthDate = document.patient?.birthTime
 let sections = document.sections
 ```
 
@@ -90,6 +91,10 @@ struct CCDAScreen: View {
 }
 ```
 
+`CCDAUI` formats date and time fields from parsed HL7 timestamp components. Date-only values display as dates, while values that include time components display date and time.
+
+The engine keeps date/time fields as `CCDATimestamp?` values. Use `rawValue` when you need the original HL7 timestamp string, or the component properties when you need year, month, day, hour, minute, second, fractional second, or time zone offset.
+
 ## Render With Custom SwiftUI Components
 
 Use `CCDAComposableDocumentView` when your app wants full control over headers, patients, sections, entries, and media.
@@ -100,12 +105,12 @@ CCDAComposableDocumentView(
     header: { header in
         Section {
             Text(header.title ?? "Untitled")
-            Text(header.documentId.display)
+            Text(header.documentId.stringValue)
         }
     },
     patient: { patient in
         Section {
-            Text(patient.name?.display ?? "Unknown patient")
+            Text(patient.name?.formattedName ?? "Unknown patient")
         }
     },
     section: { section, entryView, mediaView in
@@ -127,9 +132,80 @@ CCDAComposableDocumentView(
         CCDAEntryRow(entry: entry)
     },
     media: { media in
-        CCDAMediaImageView(media: media)
+        CCDAMediaView(media: media)
     }
 )
+```
+
+## Handle Media
+
+C-CDA attachments are parsed from `observationMedia` entries into `CCDAMedia` values. The engine maps MIME strings into typed media cases:
+
+- `.imagePNG`
+- `.imageJPEG`
+- `.imageGIF`
+- `.applicationPDF`
+- `.textPlain`
+- `.textHTML`
+- `.unsupported(String)`
+- `.unknown`
+
+By default, valid base64 media is decoded and written to a temporary cache directory so large attachments do not stay inside the parsed document model.
+
+```swift
+let engine = CCDAEngine(
+    configuration: CCDAEngineConfiguration(
+        mediaStoragePolicy: .cacheToDisk,
+        mediaCacheDirectory: cacheDirectory
+    )
+)
+
+let document = try engine.parse(url: ccdaURL)
+```
+
+Use `.inline` only when your app intentionally wants base64 payloads kept in memory:
+
+```swift
+let engine = CCDAEngine(
+    configuration: CCDAEngineConfiguration(mediaStoragePolicy: .inline)
+)
+```
+
+Media payloads tell you how the attachment is stored:
+
+```swift
+switch media.payload {
+case .cachedFile(let url, let byteCount):
+    print(url, byteCount)
+case .inlineBase64:
+    let data = try media.loadData()
+    print(data.count)
+case .unavailable:
+    break
+}
+```
+
+`media.loadData()` throws when cached data cannot be read or inline base64 cannot be decoded.
+
+`CCDAUI` includes default media rendering:
+
+- Images render inline with `CCDAMediaImageView`.
+- PDF, plain text, and HTML open in `CCDAMediaWebView`.
+- Unsupported or unknown attachments render as attachment rows.
+
+For custom UI, switch on `media.mediaType` and render each case however your app wants:
+
+```swift
+switch media.mediaType {
+case .imagePNG, .imageJPEG, .imageGIF:
+    CCDAMediaImageView(media: media)
+case .applicationPDF, .textPlain, .textHTML:
+    CCDAMediaWebView(media: media)
+case .unsupported(let mimeType):
+    Text("Unsupported attachment: \(mimeType)")
+case .unknown:
+    Text("Attachment")
+}
 ```
 
 ## Run The Example App
@@ -137,7 +213,7 @@ CCDAComposableDocumentView(
 Open the example project:
 
 ```bash
-open apple/Example/Example.xcodeproj
+open examples/ios/Example.xcodeproj
 ```
 
 The example app loads bundled XML files and lets you select a sample C-CDA document from a list.
@@ -148,10 +224,4 @@ Run the Apple package tests from the repository root:
 
 ```bash
 swift test
-```
-
-Regenerate expected parser summaries after intentional parser behavior changes:
-
-```bash
-swift run CCDAConformanceGenerator
 ```

@@ -42,13 +42,21 @@ private struct ConformanceDocument: Codable, Equatable {
 
     init(document: CCDADocument, fileName: String) {
         self.fileName = fileName
-        self.documentId = document.header.documentId.display
+        self.documentId = document.header.documentId.stringValue
         self.title = document.header.title
         self.documentCode = document.header.code.map(CodedSummary.init)
-        self.patientName = document.patient?.name?.display
-        self.patientBirthTime = document.patient?.birthTime
+        self.patientName = document.patient?.name.map(Self.patientName)
+        self.patientBirthTime = document.patient?.birthTime?.rawValue
         self.sectionCount = document.sections.count
         self.sections = document.sections.map(SectionSummary.init)
+    }
+}
+
+private extension ConformanceDocument {
+    static func patientName(_ name: CCDAHumanName) -> String {
+        ([name.prefix] + name.given + [name.family])
+            .compactMap { $0 }
+            .joined(separator: " ")
     }
 }
 
