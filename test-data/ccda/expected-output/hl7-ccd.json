@@ -1,0 +1,194 @@
+{
+  "documentCode" : {
+    "code" : "34133-9",
+    "codeSystem" : "2.16.840.1.113883.6.1",
+    "displayName" : "Summarization of Episode Note"
+  },
+  "documentId" : "2.16.840.1.113883.19 / 999021",
+  "fileName" : "hl7-ccd.xml",
+  "patientBirthTime" : "19541125",
+  "patientName" : "Mr. Adam Frankie Everyman",
+  "sectionCount" : 14,
+  "sections" : [
+    {
+      "code" : {
+        "code" : "48765-2",
+        "codeSystem" : "2.16.840.1.113883.6.1"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.6.1"
+      ],
+      "title" : "Allergies, Adverse Reactions, Alerts"
+    },
+    {
+      "code" : {
+        "code" : "10160-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "HISTORY OF MEDICATION USE"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.1.1"
+      ],
+      "title" : "Medications"
+    },
+    {
+      "code" : {
+        "code" : "11450-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROBLEM LIST"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.5"
+      ],
+      "title" : "Problems"
+    },
+    {
+      "code" : {
+        "code" : "47519-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURES"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.7"
+      ],
+      "title" : "Procedures"
+    },
+    {
+      "code" : {
+        "code" : "30954-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "RESULTS"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.3.1"
+      ],
+      "title" : "Results"
+    },
+    {
+      "code" : {
+        "code" : "304251008",
+        "codeSystem" : "2.16.840.1.113883.6.96",
+        "displayName" : "Resuscitation"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.21.1"
+      ],
+      "title" : "Advance Directives"
+    },
+    {
+      "code" : {
+        "code" : "46240-8",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of encounters"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.22.1"
+      ],
+      "title" : "Encounters"
+    },
+    {
+      "code" : {
+        "code" : "10157-6",
+        "codeSystem" : "2.16.840.1.113883.6.1"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.15"
+      ],
+      "title" : "Family history"
+    },
+    {
+      "code" : {
+        "code" : "11369-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of immunizations"
+      },
+      "entryCount" : 4,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.2"
+      ],
+      "title" : "Immunizations"
+    },
+    {
+      "code" : {
+        "code" : "46264-8",
+        "codeSystem" : "2.16.840.1.113883.6.1"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.23"
+      ],
+      "title" : "Medical Equipment"
+    },
+    {
+      "code" : {
+        "code" : "48768-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Payments"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.18"
+      ],
+      "title" : "Insurance Providers"
+    },
+    {
+      "code" : {
+        "code" : "18776-5",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Treatment plan"
+      },
+      "entryCount" : 4,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.10"
+      ],
+      "title" : "Plan of Care"
+    },
+    {
+      "code" : {
+        "code" : "29762-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Social History"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.17"
+      ],
+      "title" : "Social History"
+    },
+    {
+      "code" : {
+        "code" : "8716-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "VITAL SIGNS"
+      },
+      "entryCount" : 2,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.4.1"
+      ],
+      "title" : "Vital Signs"
+    }
+  ],
+  "title" : "Good Health Health Summary"
+}

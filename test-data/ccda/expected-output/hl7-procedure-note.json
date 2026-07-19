@@ -1,0 +1,351 @@
+{
+  "documentCode" : {
+    "code" : "28570-0",
+    "codeSystem" : "2.16.840.1.113883.6.1",
+    "displayName" : "Procedure Note"
+  },
+  "documentId" : "2.16.840.1.113883.19 / 999021",
+  "fileName" : "hl7-procedure-note.xml",
+  "patientBirthTime" : "19541125",
+  "patientName" : "Mr. Adam Frankie Everyman",
+  "sectionCount" : 26,
+  "sections" : [
+    {
+      "code" : {
+        "code" : "48765-2",
+        "codeSystem" : "2.16.840.1.113883.6.1"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.6.1"
+      ],
+      "title" : "Allergies, Adverse Reactions, Alerts"
+    },
+    {
+      "code" : {
+        "code" : "59774-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE ANESTHESIA"
+      },
+      "entryCount" : 2,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.25"
+      ],
+      "title" : "Procedure Anesthesia"
+    },
+    {
+      "code" : {
+        "code" : "51848-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "ASSESSMENT"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.8"
+      ],
+      "title" : "ASSESSMENT"
+    },
+    {
+      "code" : {
+        "code" : "46239-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "REASON FOR VISIT + CHIEF COMPLAINT"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.13"
+      ],
+      "title" : "REASON FOR VISIT/CHIEF COMPLAINT"
+    },
+    {
+      "code" : {
+        "code" : "55109-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Complications"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.37"
+      ],
+      "title" : "Complications"
+    },
+    {
+      "code" : {
+        "code" : "10157-6",
+        "codeSystem" : "2.16.840.1.113883.6.1"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.15"
+      ],
+      "title" : "Family history"
+    },
+    {
+      "code" : {
+        "code" : "11348-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "HISTORY OF PAST ILLNESS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.20"
+      ],
+      "title" : "PAST MEDICAL HISTORY"
+    },
+    {
+      "code" : {
+        "code" : "10164-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "HISTORY OF PRESENT ILLNESS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "1.3.6.1.4.1.19376.1.5.3.1.3.4"
+      ],
+      "title" : "HISTORY OF PRESENT ILLNESS"
+    },
+    {
+      "code" : {
+        "code" : "11329-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "MEDICAL (GENERAL) HISTORY"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.39"
+      ],
+      "title" : "MEDICAL (GENERAL) HISTORY"
+    },
+    {
+      "code" : {
+        "code" : "10160-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "HISTORY OF MEDICATION USE"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.1.1"
+      ],
+      "title" : "MEDICATIONS"
+    },
+    {
+      "code" : {
+        "code" : "29545-1",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PHYSICAL FINDINGS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.2.10"
+      ],
+      "title" : "PHYSICAL EXAMINATION"
+    },
+    {
+      "code" : {
+        "code" : "18776-5",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Treatment plan"
+      },
+      "entryCount" : 4,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.10"
+      ],
+      "title" : "Plan of Care"
+    },
+    {
+      "code" : {
+        "code" : "59772-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Planned Procedure"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.30"
+      ],
+      "title" : "Planned Procedure"
+    },
+    {
+      "code" : {
+        "code" : "10218-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "POSTOPERATIVE DIAGNOSIS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.35"
+      ],
+      "title" : "Postoperative Diagnosis"
+    },
+    {
+      "code" : {
+        "code" : "10219-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "SURGICAL OPERATION NOTE PREOPERATIVE DX"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.34"
+      ],
+      "title" : "Preoperative Diagnosis"
+    },
+    {
+      "code" : {
+        "code" : "59769-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "POSTPROCEDURE DIAGNOSIS"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.36"
+      ],
+      "title" : "Postprocedure Diagnosis"
+    },
+    {
+      "code" : {
+        "code" : "29554-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE DESCRIPTION"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.27"
+      ],
+      "title" : "Procedure Description"
+    },
+    {
+      "code" : {
+        "code" : "59775-7",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE DISPOSITION"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.18.2.12"
+      ],
+      "title" : "PROCEDURE DISPOSITION"
+    },
+    {
+      "code" : {
+        "code" : "59770-8",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE ESTIMATED BLOOD LOSS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.18.2.9"
+      ],
+      "title" : "Procedure Estimated Blood Loss"
+    },
+    {
+      "code" : {
+        "code" : "59776-5",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE FINDINGS"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.28"
+      ],
+      "title" : "Procedure Findings"
+    },
+    {
+      "code" : {
+        "code" : "59771-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE IMPLANTS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.40"
+      ],
+      "title" : "Procedure Implants"
+    },
+    {
+      "code" : {
+        "code" : "59768-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE INDICATIONS"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.29"
+      ],
+      "title" : "Procedure Indications"
+    },
+    {
+      "code" : {
+        "code" : "59773-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE SPECIMENS TAKEN"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.31"
+      ],
+      "title" : "Procedure Specimens Taken"
+    },
+    {
+      "code" : {
+        "code" : "10187-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "REVIEW OF SYSTEMS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "1.3.6.1.4.1.19376.1.5.3.1.3.18"
+      ],
+      "title" : "REVIEW OF SYSTEMS"
+    },
+    {
+      "code" : {
+        "code" : "29762-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Social History"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.17"
+      ],
+      "title" : "Social History"
+    },
+    {
+      "code" : {
+        "code" : "11537-8",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "SURGICAL DRAINS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.7.13"
+      ],
+      "title" : "Surgical Drains"
+    }
+  ],
+  "title" : "Good Health Clinic Procedure Note"
+}

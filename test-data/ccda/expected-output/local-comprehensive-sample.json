@@ -1,0 +1,223 @@
+{
+  "documentCode" : {
+    "code" : "34133-9",
+    "codeSystem" : "2.16.840.1.113883.6.1",
+    "displayName" : "Summarization of Episode Note"
+  },
+  "documentId" : "2.16.840.1.113883.19.5.99999.1 / CCD-20260703-0001",
+  "fileName" : "local-comprehensive-sample.xml",
+  "patientBirthTime" : "19800515",
+  "patientName" : "John Johnny Doe",
+  "sectionCount" : 16,
+  "sections" : [
+    {
+      "code" : {
+        "code" : "48765-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Allergies and adverse reactions"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.6.1"
+      ],
+      "title" : "Allergies and Adverse Reactions"
+    },
+    {
+      "code" : {
+        "code" : "10160-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of Medication Use"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.1.1"
+      ],
+      "title" : "Medications"
+    },
+    {
+      "code" : {
+        "code" : "11450-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Problem list"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.5.1"
+      ],
+      "title" : "Problems"
+    },
+    {
+      "code" : {
+        "code" : "8716-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Vital signs"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.4.1"
+      ],
+      "title" : "Vital Signs"
+    },
+    {
+      "code" : {
+        "code" : "30954-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Relevant diagnostic tests/laboratory data"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.3.1"
+      ],
+      "title" : "Results"
+    },
+    {
+      "code" : {
+        "code" : "47519-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of Procedures"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.7.1"
+      ],
+      "title" : "Procedures"
+    },
+    {
+      "code" : {
+        "code" : "11369-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of Immunizations"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.2.1"
+      ],
+      "title" : "Immunizations"
+    },
+    {
+      "code" : {
+        "code" : "46240-8",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of encounters"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.22.1"
+      ],
+      "title" : "Encounters"
+    },
+    {
+      "code" : {
+        "code" : "29762-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Social history"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.17"
+      ],
+      "title" : "Social History"
+    },
+    {
+      "code" : {
+        "code" : "10157-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of family member diseases"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.15"
+      ],
+      "title" : "Family History"
+    },
+    {
+      "code" : {
+        "code" : "47420-5",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Functional status assessment"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.14"
+      ],
+      "title" : "Functional Status"
+    },
+    {
+      "code" : {
+        "code" : "46264-8",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of medical device use"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.23"
+      ],
+      "title" : "Medical Equipment"
+    },
+    {
+      "code" : {
+        "code" : "18776-5",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Treatment plan"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.10"
+      ],
+      "title" : "Plan of Care"
+    },
+    {
+      "code" : {
+        "code" : "42348-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Advance directives"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.21.1"
+      ],
+      "title" : "Advance Directives"
+    },
+    {
+      "code" : {
+        "code" : "48768-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Payment sources"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.18"
+      ],
+      "title" : "Payers"
+    },
+    {
+      "code" : {
+        "code" : "18748-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Diagnostic imaging study"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 1,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.6.1.1"
+      ],
+      "title" : "Images and Media"
+    }
+  ],
+  "title" : "Continuity of Care Document (CCD)"
+}

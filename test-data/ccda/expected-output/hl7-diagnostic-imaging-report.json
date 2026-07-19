@@ -1,0 +1,79 @@
+{
+  "documentCode" : {
+    "code" : "18748-4",
+    "codeSystem" : "2.16.840.1.113883.6.1",
+    "displayName" : "Diagnostic Imaging Report"
+  },
+  "documentId" : "2.16.840.1.113883.19.4.27 / 20060828170821659",
+  "fileName" : "hl7-diagnostic-imaging-report.xml",
+  "patientBirthTime" : "19541125",
+  "patientName" : "Adam Everyman",
+  "sectionCount" : 5,
+  "sections" : [
+    {
+      "code" : {
+        "code" : "121181",
+        "codeSystem" : "1.2.840.10008.2.16.4",
+        "displayName" : "DICOM Object Catalog"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.6.1.1"
+      ]
+    },
+    {
+      "code" : {
+        "code" : "121109",
+        "codeSystem" : "1.2.840.10008.2.16.4",
+        "displayName" : "Indications for Procedure"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+
+      ],
+      "title" : "Indications for Procedure"
+    },
+    {
+      "code" : {
+        "code" : "11329-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+
+      ],
+      "title" : "History"
+    },
+    {
+      "code" : {
+        "code" : "121070",
+        "codeSystem" : "1.2.840.10008.2.16.4",
+        "displayName" : "Findings"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.6.1.2"
+      ],
+      "title" : "Findings"
+    },
+    {
+      "code" : {
+        "code" : "121072",
+        "codeSystem" : "1.2.840.10008.2.16.4",
+        "displayName" : "Impressions"
+      },
+      "entryCount" : 2,
+      "mediaCount" : 0,
+      "templateIds" : [
+
+      ],
+      "title" : "Impressions"
+    }
+  ],
+  "title" : "Chest X-Ray, PA and LAT View"
+}

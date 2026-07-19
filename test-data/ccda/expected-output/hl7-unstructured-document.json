@@ -1,0 +1,16 @@
+{
+  "documentCode" : {
+    "code" : "11490-0",
+    "codeSystem" : "2.16.840.1.113883.6.1",
+    "displayName" : "Discharge summarization note"
+  },
+  "documentId" : "2.16.840.1.113883.19 / 999021",
+  "fileName" : "hl7-unstructured-document.xml",
+  "patientBirthTime" : "19541125",
+  "patientName" : "Mr. Adam Frankie Everyman",
+  "sectionCount" : 0,
+  "sections" : [
+
+  ],
+  "title" : "Discharge Summary (UD)"
+}

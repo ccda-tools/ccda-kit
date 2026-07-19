@@ -1,0 +1,223 @@
+{
+  "documentCode" : {
+    "code" : "11504-8",
+    "codeSystem" : "2.16.840.1.113883.6.1",
+    "displayName" : "Surgical Operation Note"
+  },
+  "documentId" : "2.16.840.1.113883.19 / 999021",
+  "fileName" : "hl7-operative-note.xml",
+  "patientBirthTime" : "19541125",
+  "patientName" : "Mr. Adam Frankie Everyman",
+  "sectionCount" : 16,
+  "sections" : [
+    {
+      "code" : {
+        "code" : "59774-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE ANESTHESIA"
+      },
+      "entryCount" : 2,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.25"
+      ],
+      "title" : "Procedure Anesthesia"
+    },
+    {
+      "code" : {
+        "code" : "55109-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Complications"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.37"
+      ],
+      "title" : "Complications"
+    },
+    {
+      "code" : {
+        "code" : "10216-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "SURGICAL OPERATION NOTE FLUIDS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.7.12"
+      ],
+      "title" : "Operative Note Fluids"
+    },
+    {
+      "code" : {
+        "code" : "10223-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "SURGICAL OPERATION NOTE SURGICAL PROCEDURE"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.7.14"
+      ],
+      "title" : "Surgical Procedure"
+    },
+    {
+      "code" : {
+        "code" : "18776-5",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Treatment plan"
+      },
+      "entryCount" : 4,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.10"
+      ],
+      "title" : "Plan of Care"
+    },
+    {
+      "code" : {
+        "code" : "59772-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Planned Procedure"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.30"
+      ],
+      "title" : "Planned Procedure"
+    },
+    {
+      "code" : {
+        "code" : "10218-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "POSTOPERATIVE DIAGNOSIS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.35"
+      ],
+      "title" : "Postoperative Diagnosis"
+    },
+    {
+      "code" : {
+        "code" : "10219-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "SURGICAL OPERATION NOTE PREOPERATIVE DX"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.34"
+      ],
+      "title" : "Preoperative Diagnosis"
+    },
+    {
+      "code" : {
+        "code" : "29554-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE DESCRIPTION"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.27"
+      ],
+      "title" : "Procedure Description"
+    },
+    {
+      "code" : {
+        "code" : "59775-7",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE DISPOSITION"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.18.2.12"
+      ],
+      "title" : "Procedure Disposition"
+    },
+    {
+      "code" : {
+        "code" : "59770-8",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE ESTIMATED BLOOD LOSS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.18.2.9"
+      ],
+      "title" : "Procedure Estimated Blood Loss"
+    },
+    {
+      "code" : {
+        "code" : "59776-5",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE FINDINGS"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.28"
+      ],
+      "title" : "Procedure Findings"
+    },
+    {
+      "code" : {
+        "code" : "59771-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE IMPLANTS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.40"
+      ],
+      "title" : "Procedure Implants"
+    },
+    {
+      "code" : {
+        "code" : "59768-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE INDICATIONS"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.29"
+      ],
+      "title" : "Procedure Indications"
+    },
+    {
+      "code" : {
+        "code" : "59773-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURE SPECIMENS TAKEN"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.31"
+      ],
+      "title" : "Procedure Specimens Taken"
+    },
+    {
+      "code" : {
+        "code" : "11537-8",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "SURGICAL DRAINS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.7.13"
+      ],
+      "title" : "Surgical Drains"
+    }
+  ],
+  "title" : "Good Health Clinic Operative Note"
+}

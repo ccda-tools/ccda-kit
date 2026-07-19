@@ -1,0 +1,171 @@
+{
+  "documentCode" : {
+    "code" : "34133-9",
+    "codeSystem" : "2.16.840.1.113883.6.1",
+    "displayName" : "Summarization of episode note"
+  },
+  "documentId" : "2.16.840.1.113883.3.3388.1.1.1 / 310936",
+  "fileName" : "practicefusion-clinical-summary.xml",
+  "patientBirthTime" : "19870321",
+  "patientName" : "Mary Grant",
+  "sectionCount" : 12,
+  "sections" : [
+    {
+      "code" : {
+        "code" : "48765-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Allergies, Adverse Reactions, Alerts"
+      },
+      "entryCount" : 2,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.6.1"
+      ],
+      "title" : "Allergies"
+    },
+    {
+      "code" : {
+        "code" : "51847-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Assessment and Plan"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.9"
+      ],
+      "title" : "Assessment and Plan"
+    },
+    {
+      "code" : {
+        "code" : "46239-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Chief Complaint and Reason For Visit"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.13"
+      ],
+      "title" : "Chief Complaint and Reason For Visit"
+    },
+    {
+      "code" : {
+        "code" : "46240-8",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of Encounters"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.22.1"
+      ],
+      "title" : "Encounters"
+    },
+    {
+      "code" : {
+        "code" : "11369-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of Immunizations"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.2.1"
+      ],
+      "title" : "Immunizations"
+    },
+    {
+      "code" : {
+        "code" : "69730-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Instructions"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.45"
+      ],
+      "title" : "Instructions"
+    },
+    {
+      "code" : {
+        "code" : "10160-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of Medication Use"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.1.1"
+      ],
+      "title" : "Medications"
+    },
+    {
+      "code" : {
+        "code" : "11450-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Problem List"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.5.1"
+      ],
+      "title" : "Problem List"
+    },
+    {
+      "code" : {
+        "code" : "47519-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Procedures"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.7.1"
+      ],
+      "title" : "Procedures"
+    },
+    {
+      "code" : {
+        "code" : "30954-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Results"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.3.1"
+      ],
+      "title" : "Results"
+    },
+    {
+      "code" : {
+        "code" : "29762-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Social History"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.17"
+      ],
+      "title" : "Social History"
+    },
+    {
+      "code" : {
+        "code" : "8716-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Vital Signs"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.4"
+      ],
+      "title" : "Vital Signs"
+    }
+  ],
+  "title" : "Summary of Care"
+}

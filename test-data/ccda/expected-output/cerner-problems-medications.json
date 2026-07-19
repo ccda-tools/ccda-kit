@@ -1,0 +1,41 @@
+{
+  "documentCode" : {
+    "code" : "34133-9",
+    "codeSystem" : "2.16.840.1.113883.6.1",
+    "displayName" : "Summarization of episode note"
+  },
+  "documentId" : "28A334FE-9348-4AE5-A48C-6174F3D766A4",
+  "fileName" : "cerner-problems-medications.xml",
+  "patientBirthTime" : "19540323000000.000-0600",
+  "patientName" : "Victoria E Wade",
+  "sectionCount" : 2,
+  "sections" : [
+    {
+      "code" : {
+        "code" : "11450-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Problem List"
+      },
+      "entryCount" : 5,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.5.1"
+      ],
+      "title" : "Problem List"
+    },
+    {
+      "code" : {
+        "code" : "10160-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of medication use"
+      },
+      "entryCount" : 6,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.1.1"
+      ],
+      "title" : "Medications"
+    }
+  ],
+  "title" : "Continuity of Care Document: 10/26/2010 to 10/28/2010"
+}

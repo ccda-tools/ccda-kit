@@ -1,0 +1,298 @@
+{
+  "documentCode" : {
+    "code" : "18842-5",
+    "codeSystem" : "2.16.840.1.113883.6.1",
+    "displayName" : "Discharge summarization note"
+  },
+  "documentId" : "2.16.840.1.113883.19 / 999021",
+  "fileName" : "hl7-discharge-summary.xml",
+  "patientBirthTime" : "19541125",
+  "patientName" : "Mr. Adam Frankie Everyman",
+  "sectionCount" : 22,
+  "sections" : [
+    {
+      "code" : {
+        "code" : "48765-2",
+        "codeSystem" : "2.16.840.1.113883.6.1"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.6.1"
+      ],
+      "title" : "Allergies, Adverse Reactions, Alerts"
+    },
+    {
+      "code" : {
+        "code" : "46239-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "REASON FOR VISIT + CHIEF COMPLAINT"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.13"
+      ],
+      "title" : "Reason for Visit/Chief Complaint"
+    },
+    {
+      "code" : {
+        "code" : "42344-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "DISCHARGE DIET"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "1.3.6.1.4.1.19376.1.5.3.1.3.33"
+      ],
+      "title" : "Discharge Diet"
+    },
+    {
+      "code" : {
+        "code" : "10157-6",
+        "codeSystem" : "2.16.840.1.113883.6.1"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.15"
+      ],
+      "title" : "Family history"
+    },
+    {
+      "code" : {
+        "code" : "47420-5",
+        "codeSystem" : "2.16.840.1.113883.6.1"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.14"
+      ],
+      "title" : "Functional Status"
+    },
+    {
+      "code" : {
+        "code" : "11348-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "HISTORY OF PAST ILLNESS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.20"
+      ],
+      "title" : "Past Medical History"
+    },
+    {
+      "code" : {
+        "code" : "10164-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "HISTORY OF PRESENT ILLNESS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "1.3.6.1.4.1.19376.1.5.3.1.3.4"
+      ],
+      "title" : "History of Present Illness"
+    },
+    {
+      "code" : {
+        "code" : "46241-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Hospital Admission Diagnosis"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.43"
+      ],
+      "title" : "Hospital Admission Diagnosis"
+    },
+    {
+      "code" : {
+        "code" : "8648-8",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "HOSPITAL COURSE"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "1.3.6.1.4.1.19376.1.5.3.1.3.5"
+      ],
+      "title" : "Hospital Course"
+    },
+    {
+      "code" : {
+        "code" : "11535-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Hospital Discharge Diagnosis"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.24"
+      ],
+      "title" : "Hospital Discharge Diagnosis"
+    },
+    {
+      "code" : {
+        "code" : "10183-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : " HOSPITAL DISCHARGE MEDICATIONS "
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.11"
+      ],
+      "title" : "Hospital Discharge Medications"
+    },
+    {
+      "code" : {
+        "code" : "10184-0",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "HOSPITAL DISCHARGE PHYSICAL"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "1.3.6.1.4.1.19376.1.5.3.1.3.26"
+      ],
+      "title" : "Hospital Discharge Physical"
+    },
+    {
+      "code" : {
+        "code" : "11493-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "HOSPITAL DISCHARGE STUDIES SUMMARY"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.16"
+      ],
+      "title" : "Hospital Discharge Studies Summary"
+    },
+    {
+      "code" : {
+        "code" : "11369-6",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "History of immunizations"
+      },
+      "entryCount" : 4,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.2"
+      ],
+      "title" : "Immunizations"
+    },
+    {
+      "code" : {
+        "code" : "18776-5",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Treatment plan"
+      },
+      "entryCount" : 4,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.10"
+      ],
+      "title" : "Plan of Care"
+    },
+    {
+      "code" : {
+        "code" : "11450-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROBLEM LIST"
+      },
+      "entryCount" : 1,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.5"
+      ],
+      "title" : "Problems"
+    },
+    {
+      "code" : {
+        "code" : "47519-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "PROCEDURES"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.7"
+      ],
+      "title" : "Procedures"
+    },
+    {
+      "code" : {
+        "code" : "10187-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "REVIEW OF SYSTEMS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "1.3.6.1.4.1.19376.1.5.3.1.3.18"
+      ],
+      "title" : "Review of Systems"
+    },
+    {
+      "code" : {
+        "code" : "29762-2",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Social History"
+      },
+      "entryCount" : 3,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.17"
+      ],
+      "title" : "Social History"
+    },
+    {
+      "code" : {
+        "code" : "8716-3",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "VITAL SIGNS"
+      },
+      "entryCount" : 2,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.4.1"
+      ],
+      "title" : "Vital Signs"
+    },
+    {
+      "code" : {
+        "code" : "18841-7",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Hospital Consultations Section"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.42"
+      ],
+      "title" : "Hospital Consultations"
+    },
+    {
+      "code" : {
+        "code" : "8653-8",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "HOSPITAL DISCHARGE INSTRUCTIONS"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 0,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.22.2.41"
+      ],
+      "title" : "Hospital Discharge Instructions"
+    }
+  ],
+  "title" : "Good Health Discharge Summary"
+}

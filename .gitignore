@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# Xcode
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcscmblueprint
+
+# Xcode build outputs
+build/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Internal planning notes
+OPEN_SOURCE_PLAN.md
