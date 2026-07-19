@@ -1,15 +1,34 @@
 import Foundation
 
-public struct CCDAAddress: Hashable {
+/// Postal address information from a C-CDA patient role or related party.
+public struct CCDAAddress: Hashable, Sendable {
+    /// C-CDA address use code, such as home or work.
     public let use: String?
+    /// Street address lines in document order.
     public let streetLines: [String]
+    /// City or locality.
     public let city: String?
+    /// State, province, or region.
     public let state: String?
+    /// Postal or ZIP code.
     public let postalCode: String?
+    /// Country text or code.
     public let country: String?
 
-    public var display: String {
-        (streetLines + [city, state, postalCode, country].compactMap { $0 })
-            .joined(separator: ", ")
+    /// Creates a postal address value.
+    public init(
+        use: String? = nil,
+        streetLines: [String] = [],
+        city: String? = nil,
+        state: String? = nil,
+        postalCode: String? = nil,
+        country: String? = nil
+    ) {
+        self.use = use
+        self.streetLines = streetLines
+        self.city = city
+        self.state = state
+        self.postalCode = postalCode
+        self.country = country
     }
 }

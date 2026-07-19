@@ -16,6 +16,7 @@ struct CCDASampleFixtures {
         "hl7-unstructured-document.xml",
         "kareo-summary-of-care.xml",
         "local-comprehensive-sample.xml",
+        "local-media-attachments.xml",
         "nist-ccd-ambulatory.xml",
         "partners-ccda.xml",
         "practicefusion-clinical-summary.xml",

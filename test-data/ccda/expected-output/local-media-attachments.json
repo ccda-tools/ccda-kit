@@ -1,0 +1,28 @@
+{
+  "documentCode" : {
+    "code" : "34133-9",
+    "codeSystem" : "2.16.840.1.113883.6.1",
+    "displayName" : "Summarization of Episode Note"
+  },
+  "documentId" : "2.16.840.1.113883.19.5.99999.1 / CCD-MEDIA-0001",
+  "fileName" : "local-media-attachments.xml",
+  "patientBirthTime" : "19900101",
+  "patientName" : "Media Patient",
+  "sectionCount" : 1,
+  "sections" : [
+    {
+      "code" : {
+        "code" : "18748-4",
+        "codeSystem" : "2.16.840.1.113883.6.1",
+        "displayName" : "Diagnostic imaging study"
+      },
+      "entryCount" : 0,
+      "mediaCount" : 4,
+      "templateIds" : [
+        "2.16.840.1.113883.10.20.6.1.1"
+      ],
+      "title" : "Media Attachments"
+    }
+  ],
+  "title" : "Media Attachments Sample"
+}
