@@ -18,7 +18,7 @@ The first implementation is focused on Apple platforms:
 
 - `CCDAEngine`: Swift parser, normalized models, media extraction, timestamps, and engine-level errors.
 - `CCDAUI`: optional SwiftUI views and Apple-specific formatting helpers.
-- `examples/ios`: iOS example app using shared sample data.
+- `apple/Examples/iOS`: iOS example app using shared sample data.
 
 ## Current Limitations
 
@@ -28,46 +28,44 @@ The first implementation is focused on Apple platforms:
 - Current media handling is basic and focuses on inline base64 `observationMedia`.
 - Shared test data must remain public, synthetic, or explicitly approved for test use; real PHI must never be committed.
 
-## Next Apple Work
+## Prioritized Milestones
 
-- Expand parsing coverage for common C-CDA sections and entries.
-- Harden parser behavior around malformed, incomplete, and vendor-specific XML.
-- Add search APIs over a parsed `CCDADocument`.
-- Continue growing public, synthetic, and test-safe sample coverage.
+### 1. Apple UI Snapshot Testing
 
-## Later Apple Iterations
+- Add snapshot tests for the default `CCDAUI` document, section, entry, and media rendering.
+- Cover representative light and dark appearances and supported Apple layouts where practical.
+- Use public, synthetic, and test-safe fixtures so UI changes can be reviewed without exposing PHI.
+- Keep the existing parser, conformance, and performance test suites passing while visual coverage is added.
 
-Search:
+### 2. Native Kotlin Implementation
 
-- Search across header, patient, section titles, narrative text, entry codes, entry values, timestamps, and media metadata.
-- Return structured search results that identify the matched document area.
-- Keep search independent from `CCDAUI`.
+- Build a native Kotlin parser and normalized model layer that follows the Apple implementation's boundaries.
+- Add native Android UI helpers while keeping parsing independent from presentation.
+- Reuse the shared C-CDA samples and expected summaries to verify equivalent behavior across Swift and Kotlin.
 
-Large files:
+### 3. React Native
 
-- Move toward streaming XML parsing for very large C-CDA documents.
-- Add larger synthetic performance fixtures and baseline performance tests.
+- Provide a JavaScript and TypeScript package surface backed by the native Swift and Kotlin implementations.
+- Add native iOS and Android bridges instead of introducing another parser implementation.
+- Provide React Native components for rendering parsed document structures.
 
-Media:
+### 4. Flutter
 
-- Add configurable media policies for ignoring media, capturing metadata only, caching media to disk, or keeping small media inline up to a caller-defined size.
-- Add media cache cleanup and lifecycle APIs.
-- Support referenced external media in addition to inline base64 media.
-- Decide the supported behavior for audio, video, and opaque binary attachments.
+- Provide a Dart package surface and Flutter widgets backed by the native Swift and Kotlin implementations.
+- Reuse the native iOS and Android parsers instead of introducing another parser implementation.
+- Validate Flutter behavior with the same shared fixtures and normalized expectations.
 
-Typed models and UI:
+### 5. Further Capabilities
 
-- Add more section-specific typed clinical models.
-- Add DocC generation when the public API stabilizes.
-- Add snapshot or visual tests for default UI rendering.
+After the initial Apple, Kotlin, React Native, and Flutter foundations are in place, continue with:
 
-## Multi-Platform Direction
-
-Android is planned as a native Kotlin implementation that follows the same parser concepts and shared test-data expectations as Apple.
-
-React Native is planned as a JavaScript and TypeScript package backed by the native Apple and Android parsers. It should not introduce a third parser implementation.
-
-Flutter is planned after React Native, using Dart APIs and Flutter widgets backed by the native Apple and Android parser implementations.
+- Expanded parsing coverage for common C-CDA sections, entries, and vendor-specific XML.
+- Search APIs across headers, patients, sections, narrative text, codes, values, timestamps, and media metadata.
+- Structured search results that identify the matched document area while remaining independent from UI layers.
+- Streaming XML parsing, larger synthetic fixtures, and performance baselines for very large documents.
+- Configurable media policies, cache lifecycle APIs, referenced external media, and additional attachment types.
+- More section-specific typed clinical models and DocC generation as public APIs stabilize.
+- Continued growth of public, synthetic, and test-safe sample coverage.
 
 ## Shared Validation
 

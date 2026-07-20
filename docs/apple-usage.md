@@ -8,7 +8,7 @@ Add the package to your app with Swift Package Manager:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/shahzaibiqbal/ccda-kit.git", from: "<latest-version>")
+    .package(url: "https://github.com/ccda-tools/ccda-swift.git", from: "<latest-version>")
 ]
 ```
 
@@ -18,7 +18,7 @@ Use `CCDAEngine` when you only need parsing and normalized model objects:
 .target(
     name: "YourApp",
     dependencies: [
-        .product(name: "CCDAEngine", package: "ccda-kit")
+        .product(name: "CCDAEngine", package: "ccda-swift")
     ]
 )
 ```
@@ -29,8 +29,8 @@ Use `CCDAUI` when you also want SwiftUI rendering helpers:
 .target(
     name: "YourApp",
     dependencies: [
-        .product(name: "CCDAEngine", package: "ccda-kit"),
-        .product(name: "CCDAUI", package: "ccda-kit")
+        .product(name: "CCDAEngine", package: "ccda-swift"),
+        .product(name: "CCDAUI", package: "ccda-swift")
     ]
 )
 ```
@@ -213,7 +213,7 @@ case .unknown:
 Open the example project:
 
 ```bash
-open examples/ios/Example.xcodeproj
+open apple/Examples/iOS/Example.xcodeproj
 ```
 
 The example app loads bundled XML files and lets you select a sample C-CDA document from a list.
@@ -223,5 +223,7 @@ The example app loads bundled XML files and lets you select a sample C-CDA docum
 Run the Apple package tests from the repository root:
 
 ```bash
-swift test
+swift test --package-path apple
 ```
+
+The test suite includes macOS 26 reference-image coverage for the default SwiftUI document renderer in light and dark appearances, nested entry rows, and media rows.

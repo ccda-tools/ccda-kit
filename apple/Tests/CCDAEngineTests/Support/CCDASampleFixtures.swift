@@ -25,8 +25,7 @@ struct CCDASampleFixtures {
 
     static func ccdaSampleURLs() throws -> [URL] {
         try contentsOfDirectory(
-            at: packageRootURL()
-                .appendingPathComponent("test-data")
+            at: testDataRootURL()
                 .appendingPathComponent("ccda")
                 .appendingPathComponent("samples"),
             includingPropertiesForKeys: [.fileSizeKey]
@@ -36,8 +35,7 @@ struct CCDASampleFixtures {
     }
 
     static func ccdaSampleURL(fileName: String) -> URL {
-        packageRootURL()
-            .appendingPathComponent("test-data")
+        testDataRootURL()
             .appendingPathComponent("ccda")
             .appendingPathComponent("samples")
             .appendingPathComponent(fileName)
@@ -45,8 +43,7 @@ struct CCDASampleFixtures {
 
     static func conformanceExpectedOutputURLs() throws -> [URL] {
         try contentsOfDirectory(
-            at: packageRootURL()
-                .appendingPathComponent("test-data")
+            at: testDataRootURL()
                 .appendingPathComponent("ccda")
                 .appendingPathComponent("expected-output")
         )
@@ -55,8 +52,7 @@ struct CCDASampleFixtures {
     }
 
     static func conformanceExpectedOutputURL(for sampleURL: URL) -> URL {
-        packageRootURL()
-            .appendingPathComponent("test-data")
+        testDataRootURL()
             .appendingPathComponent("ccda")
             .appendingPathComponent("expected-output")
             .appendingPathComponent(sampleURL.deletingPathExtension().lastPathComponent)
@@ -68,14 +64,26 @@ struct CCDASampleFixtures {
         return values?.fileSize ?? 0
     }
 
-    private static func packageRootURL() -> URL {
+    private static func testDataRootURL() -> URL {
+        if let configuredPath = ProcessInfo.processInfo.environment["CCDA_TEST_DATA_ROOT"] {
+            return URL(fileURLWithPath: configuredPath, isDirectory: true)
+        }
+
         let testFileURL = URL(fileURLWithPath: #filePath)
-        return testFileURL
-            .deletingLastPathComponent() // Support
-            .deletingLastPathComponent() // CCDAEngineTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // apple
+        let applePackageRoot = testFileURL
+            .deletingLastPathComponent() // file -> Support
+            .deletingLastPathComponent() // Support -> CCDAEngineTests
+            .deletingLastPathComponent() // CCDAEngineTests -> Tests
+            .deletingLastPathComponent() // Tests -> apple package root
+        let distributionTestData = applePackageRoot.appendingPathComponent("TestData")
+
+        if FileManager.default.fileExists(atPath: distributionTestData.path) {
+            return distributionTestData
+        }
+
+        return applePackageRoot
             .deletingLastPathComponent() // repo root
+            .appendingPathComponent("test-data")
     }
 
     private static func contentsOfDirectory(

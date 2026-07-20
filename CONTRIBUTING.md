@@ -16,13 +16,21 @@ Thanks for helping improve `ccda-kit`.
 Run Swift package tests:
 
 ```bash
-swift test
+swift test --package-path apple
 ```
+
+SwiftUI reference images are recorded on macOS 26. After reviewing an intentional UI change, regenerate them with:
+
+```bash
+SNAPSHOT_TESTING_RECORD=all swift test --package-path apple --filter CCDAUISnapshotTests
+```
+
+Run the tests again without record mode before committing the updated references.
 
 Regenerate conformance output after intentional parser behavior changes:
 
 ```bash
-swift run CCDAConformanceGenerator
+swift run --package-path apple CCDAConformanceGenerator
 ```
 
 Shared C-CDA test files live under `test-data/ccda/samples/`, and expected parser summaries live under `test-data/ccda/expected-output/`.

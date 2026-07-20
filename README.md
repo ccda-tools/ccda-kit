@@ -23,12 +23,16 @@ C-CDA documents can be large, inconsistent, and full of nested clinical sections
 
 The first implementation is for Apple platforms.
 
+Swift Package Manager users should install the generated [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) distribution. Apple development and pull requests remain in this `ccda-kit` monorepo under `apple/`.
+
 Available Swift products:
 
 - `CCDAEngine`: parser, normalized models, and engine-level errors.
 - `CCDAUI`: optional SwiftUI views built on top of `CCDAEngine`.
 
 The Swift package intentionally exposes only these two products. Repository tooling and test-data helpers are not public SwiftPM products.
+
+Platform implementations are developed together in this monorepo. The Apple package and iOS example live under `apple/`; future Android, React Native, and Flutter packages will own their builds and examples under their respective platform directories.
 
 Supported Apple platforms:
 
@@ -60,9 +64,9 @@ Testing and conformance commands are documented in [Apple Usage](docs/apple-usag
 
 ## Versioning And Releases
 
-This repository uses global semantic version tags, such as `v0.1.0`, so Swift Package Manager can resolve package versions correctly.
+The Apple subtree is published to [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) with semantic version tags so Swift Package Manager can resolve package versions correctly. Android will publish Maven artifacts, React Native will publish an npm package, and Flutter will publish through pub.dev directly from their monorepo directories.
 
-Pull requests that change Apple source, the iOS example, shared test data, or `Package.swift` run the Apple test workflow. After those changes merge to `main`, the release workflow runs tests again, creates the next global tag, and publishes a GitHub Release.
+Pull requests that change Apple source, the iOS example, shared test data, or `apple/Package.swift` run the Apple package tests and build the example app. Completed changes can be merged to `main` without publishing a release. When a release is ready, a maintainer manually runs the central release workflow and selects a patch, minor, or major version bump. That workflow calculates the version once and passes its tag to reusable platform publishers. The Apple publisher updates `ccda-swift`, and the coordinator applies the same tag name to the corresponding `ccda-kit` commit. Future Android, React Native, and Flutter publishers will consume the same coordinated version.
 
 Release notes are generated from commits since the previous tag. Human-authored release history should be tracked in [CHANGELOG.md](CHANGELOG.md).
 
