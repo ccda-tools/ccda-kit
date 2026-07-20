@@ -1,6 +1,7 @@
-import AppKit
+#if canImport(UIKit)
 import SnapshotTesting
 import SwiftUI
+import UIKit
 import XCTest
 @testable import CCDAEngine
 @testable import CCDAUI
@@ -8,7 +9,7 @@ import XCTest
 @MainActor
 final class CCDAUISnapshotTests: XCTestCase {
     private let snapshotSize = CGSize(width: 720, height: 760)
-    private var snapshotWindows: [NSWindow] = []
+    private var snapshotWindows: [UIWindow] = []
 
     func testDefaultDocumentViewLightAppearance() {
         assertSnapshot(
@@ -95,31 +96,24 @@ final class CCDAUISnapshotTests: XCTestCase {
         _ content: Content,
         colorScheme: ColorScheme,
         size: CGSize
-    ) -> NSHostingController<some View> {
-        let controller = NSHostingController(
+    ) -> UIHostingController<some View> {
+        let controller = UIHostingController(
             rootView: content
                 .environment(\.colorScheme, colorScheme)
                 .environment(\.locale, Locale(identifier: "en_US_POSIX"))
                 .frame(width: size.width, height: size.height)
-                .background(Color(nsColor: .windowBackgroundColor))
+                .background(Color(uiColor: .systemBackground))
         )
-        controller.view.appearance = NSAppearance(
-            named: colorScheme == .dark ? .darkAqua : .aqua
-        )
+        controller.overrideUserInterfaceStyle = colorScheme == .dark ? .dark : .light
         controller.view.frame = CGRect(origin: .zero, size: size)
-        let window = NSWindow(
-            contentRect: CGRect(origin: .zero, size: size),
-            styleMask: [.borderless],
-            backing: .buffered,
-            defer: false
-        )
-        window.appearance = controller.view.appearance
-        window.contentViewController = controller
-        window.makeKeyAndOrderFront(nil)
-        controller.view.layoutSubtreeIfNeeded()
+        let window = UIWindow(frame: CGRect(origin: .zero, size: size))
+        window.overrideUserInterfaceStyle = controller.overrideUserInterfaceStyle
+        window.rootViewController = controller
+        window.makeKeyAndVisible()
+        controller.view.setNeedsLayout()
+        controller.view.layoutIfNeeded()
         RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1))
-        controller.view.layoutSubtreeIfNeeded()
-        controller.view.displayIfNeeded()
+        controller.view.layoutIfNeeded()
         snapshotWindows.append(window)
         return controller
     }
@@ -220,3 +214,4 @@ final class CCDAUISnapshotTests: XCTestCase {
         )
     }
 }
+#endif

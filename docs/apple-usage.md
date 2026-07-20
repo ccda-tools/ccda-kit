@@ -226,4 +226,15 @@ Run the Apple package tests from the repository root:
 swift test --package-path apple
 ```
 
-The test suite includes macOS 26 reference-image coverage for the default SwiftUI document renderer in light and dark appearances, nested entry rows, and media rows.
+Run the UIKit reference-image tests on the pinned iOS Simulator:
+
+```bash
+cd apple
+xcodebuild test \
+  -scheme ccda-swift-Package \
+  -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' \
+  -only-testing:CCDAUITests/CCDAUISnapshotTests \
+  CODE_SIGNING_ALLOWED=NO
+```
+
+The snapshot suite renders the default SwiftUI document in light and dark appearances, nested entry rows, and media rows through `UIHostingController`. It runs on iOS rather than using AppKit, so the references represent the UI shipped to iPhone and iPad apps.
