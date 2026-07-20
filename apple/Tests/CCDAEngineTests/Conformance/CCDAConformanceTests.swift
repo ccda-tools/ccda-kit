@@ -17,7 +17,7 @@ final class CCDAConformanceTests: XCTestCase {
 
             XCTAssertTrue(
                 FileManager.default.fileExists(atPath: expectedURL.path),
-                "Missing conformance output for \(url.lastPathComponent). Run `swift run CCDAConformanceGenerator`."
+                "Missing conformance output for \(url.lastPathComponent). Run `swift run --package-path apple CCDAConformanceGenerator`."
             )
 
             let expected = try decoder.decode(

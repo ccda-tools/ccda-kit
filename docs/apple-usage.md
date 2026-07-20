@@ -8,7 +8,7 @@ Add the package to your app with Swift Package Manager:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/shahzaibiqbal/ccda-kit.git", from: "<latest-version>")
+    .package(url: "https://github.com/ccda-tools/ccda-swift.git", from: "<latest-version>")
 ]
 ```
 
@@ -18,7 +18,7 @@ Use `CCDAEngine` when you only need parsing and normalized model objects:
 .target(
     name: "YourApp",
     dependencies: [
-        .product(name: "CCDAEngine", package: "ccda-kit")
+        .product(name: "CCDAEngine", package: "ccda-swift")
     ]
 )
 ```
@@ -29,8 +29,8 @@ Use `CCDAUI` when you also want SwiftUI rendering helpers:
 .target(
     name: "YourApp",
     dependencies: [
-        .product(name: "CCDAEngine", package: "ccda-kit"),
-        .product(name: "CCDAUI", package: "ccda-kit")
+        .product(name: "CCDAEngine", package: "ccda-swift"),
+        .product(name: "CCDAUI", package: "ccda-swift")
     ]
 )
 ```
@@ -213,7 +213,7 @@ case .unknown:
 Open the example project:
 
 ```bash
-open examples/ios/Example.xcodeproj
+open apple/Examples/iOS/Example.xcodeproj
 ```
 
 The example app loads bundled XML files and lets you select a sample C-CDA document from a list.
@@ -223,5 +223,18 @@ The example app loads bundled XML files and lets you select a sample C-CDA docum
 Run the Apple package tests from the repository root:
 
 ```bash
-swift test
+swift test --package-path apple
 ```
+
+Run the UIKit reference-image tests on the pinned iOS Simulator:
+
+```bash
+cd apple
+xcodebuild test \
+  -scheme ccda-swift-Package \
+  -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' \
+  -only-testing:CCDAUITests/CCDAUISnapshotTests \
+  CODE_SIGNING_ALLOWED=NO
+```
+
+The snapshot suite renders the default SwiftUI document in light and dark appearances, nested entry rows, and media rows through `UIHostingController`. It runs on iOS rather than using AppKit, so the references represent the UI shipped to iPhone and iPad apps.

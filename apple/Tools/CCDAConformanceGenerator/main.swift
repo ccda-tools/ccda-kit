@@ -27,13 +27,20 @@ struct CodedSummary: Codable, Equatable {
 }
 
 let fileManager = FileManager.default
-let packageRoot = URL(fileURLWithPath: fileManager.currentDirectoryPath)
-let inputDirectory = packageRoot
-    .appendingPathComponent("test-data")
+let workingDirectory = URL(fileURLWithPath: fileManager.currentDirectoryPath)
+let configuredTestDataRoot = ProcessInfo.processInfo.environment["CCDA_TEST_DATA_ROOT"]
+    .map { URL(fileURLWithPath: $0, isDirectory: true) }
+let testDataRoot = configuredTestDataRoot
+    ?? [
+        workingDirectory.appendingPathComponent("test-data"),
+        workingDirectory.appendingPathComponent("TestData"),
+        workingDirectory.deletingLastPathComponent().appendingPathComponent("test-data")
+    ].first { fileManager.fileExists(atPath: $0.path) }
+    ?? workingDirectory.appendingPathComponent("test-data")
+let inputDirectory = testDataRoot
     .appendingPathComponent("ccda")
     .appendingPathComponent("samples")
-let outputDirectory = packageRoot
-    .appendingPathComponent("test-data")
+let outputDirectory = testDataRoot
     .appendingPathComponent("ccda")
     .appendingPathComponent("expected-output")
 

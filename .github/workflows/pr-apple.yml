@@ -8,22 +8,41 @@ on:
       - reopened
       - ready_for_review
     paths:
-      - "Package.swift"
       - "apple/**"
-      - "examples/ios/**"
       - "test-data/**"
       - "docs/**"
       - "CHANGELOG.md"
       - ".github/workflows/pr-apple.yml"
+      - ".github/workflows/publish-apple.yml"
+      - ".github/workflows/release.yml"
 
 jobs:
   swift-test:
     name: Swift Test
-    runs-on: macos-latest
+    runs-on: macos-26
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Run Swift tests
-        run: swift test
+        run: swift test --package-path apple
+
+      - name: Run iOS snapshot tests
+        working-directory: apple
+        run: |
+          xcodebuild test \
+            -scheme ccda-swift-Package \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' \
+            -only-testing:CCDAUITests/CCDAUISnapshotTests \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Build iOS example
+        run: |
+          xcodebuild \
+            -project apple/Examples/iOS/Example.xcodeproj \
+            -scheme Example \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build

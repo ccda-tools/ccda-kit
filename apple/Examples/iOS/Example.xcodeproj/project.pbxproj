@@ -137,7 +137,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/../../test-data/ccda/samples",
 			);
 			name = "Copy Shared CCDA Samples";
 			outputFileListPaths = (
@@ -146,7 +145,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -eu\nSOURCE_DIR=\"${SRCROOT}/../../test-data/ccda/samples\"\nDEST_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/CCDAExamples\"\n\nif [ ! -d \"${SOURCE_DIR}\" ]; then\n  echo \"error: Shared C-CDA sample directory not found: ${SOURCE_DIR}\"\n  exit 1\nfi\n\nmkdir -p \"${DEST_DIR}\"\nfind \"${SOURCE_DIR}\" -maxdepth 1 -type f -name '*.xml' -exec cp {} \"${DEST_DIR}/\" \\;\necho \"Copied shared C-CDA samples from ${SOURCE_DIR} to ${DEST_DIR}\"\n";
+			shellScript = "set -eu\nMONOREPO_SOURCE_DIR=\"${SRCROOT}/../../../test-data/ccda/samples\"\nDISTRIBUTION_SOURCE_DIR=\"${SRCROOT}/../../TestData/ccda/samples\"\nDEST_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/CCDAExamples\"\n\nif [ -d \"${MONOREPO_SOURCE_DIR}\" ]; then\n  SOURCE_DIR=\"${MONOREPO_SOURCE_DIR}\"\nelif [ -d \"${DISTRIBUTION_SOURCE_DIR}\" ]; then\n  SOURCE_DIR=\"${DISTRIBUTION_SOURCE_DIR}\"\nelse\n  echo \"error: Shared C-CDA sample directory was not found\"\n  exit 1\nfi\n\nmkdir -p \"${DEST_DIR}\"\nfind \"${SOURCE_DIR}\" -maxdepth 1 -type f -name '*.xml' -exec cp {} \"${DEST_DIR}/\" \\;\necho \"Copied shared C-CDA samples from ${SOURCE_DIR} to ${DEST_DIR}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

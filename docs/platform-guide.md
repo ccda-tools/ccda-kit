@@ -52,9 +52,13 @@ Docs own:
 
 SwiftPM package surface:
 
-- `Package.swift` is the source of truth for public SwiftPM products.
+- `apple/Package.swift` is the source of truth for public SwiftPM products.
 - Public SwiftPM products should represent supported app-facing APIs.
 - Internal tools and conformance helpers should not be exposed as public SwiftPM products.
+- The `apple/` subtree is published to `ccda-tools/ccda-swift`; development and pull requests remain in this monorepo.
+- Apple publishing uses the `SWIFT_DISTRIBUTION_TOKEN` repository secret with write access to the generated repository.
+- A release uses the same semantic tag name in `ccda-kit` and `ccda-swift`, even though each tag points to its repository-specific commit.
+- The manually triggered central release workflow calculates the version; reusable platform workflows receive it as an input and do not calculate their own versions.
 
 ## Current Platform
 
@@ -62,7 +66,7 @@ Apple is the first implementation:
 
 - `CCDAEngine`: Swift parser and normalized C-CDA model layer.
 - `CCDAUI`: optional SwiftUI views, including default image, PDF, text, and HTML media rendering.
-- `examples/ios`: iOS example app.
+- `apple/Examples/iOS`: iOS example app.
 
 See [Apple Usage](apple-usage.md).
 
@@ -73,6 +77,8 @@ Android:
 - Native Kotlin parser.
 - Native Android UI helpers.
 - Shared test data from `test-data/ccda/`.
+- Gradle modules, tests, and the example app under `android/`.
+- Compiled libraries published as Maven artifacts without requiring a separate source repository.
 
 React Native:
 
@@ -80,6 +86,7 @@ React Native:
 - Native iOS bridge backed by the Swift Apple implementation.
 - Native Android bridge backed by the Kotlin Android implementation.
 - React Native components for rendering parsed document structures.
+- Package source and its example under `react-native/`, published to npm.
 
 Flutter:
 
@@ -87,6 +94,7 @@ Flutter:
 - Native iOS bridge backed by the Swift Apple implementation.
 - Native Android bridge backed by the Kotlin Android implementation.
 - Flutter widgets for rendering parsed document structures.
+- Package source and its example under `flutter/`, published directly to pub.dev.
 
 ## Shared Test Data
 

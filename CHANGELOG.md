@@ -8,11 +8,13 @@ This project follows semantic versioning before and after `1.0.0`, with the expe
 
 ### Added
 
-- Nothing yet.
+- SwiftUI snapshot coverage for default document rendering in light and dark appearances, nested entries, and media rows.
 
 ### Changed
 
-- Nothing yet.
+- Moved the Swift package manifest and iOS example under the platform-owned `apple/` directory.
+- Prepared the Apple subtree for generated SwiftPM distribution while keeping Android, React Native, and Flutter publishing in the monorepo.
+- Coordinated toolkit and Swift distribution tags through GitHub Actions without package-owned release scripts.
 
 ### Fixed
 
