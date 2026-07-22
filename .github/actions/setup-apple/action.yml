@@ -1,0 +1,21 @@
+name: Setup Apple toolchain
+description: Identify Xcode and restore SwiftPM and Xcode build caches.
+
+runs:
+  using: composite
+  steps:
+    - name: Identify Xcode toolchain
+      id: xcode
+      shell: bash
+      run: echo "version=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)" >> "${GITHUB_OUTPUT}"
+
+    - name: Cache Swift and Xcode builds
+      uses: actions/cache@v4
+      with:
+        path: |
+          apple/.build
+          ~/Library/Caches/org.swift.swiftpm
+          ~/Library/Developer/Xcode/DerivedData
+        key: ${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode.outputs.version }}-${{ hashFiles('apple/Package.swift') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode.outputs.version }}-

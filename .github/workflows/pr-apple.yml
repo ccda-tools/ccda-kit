@@ -15,6 +15,7 @@ on:
       - ".github/workflows/pr-apple.yml"
       - ".github/workflows/publish-apple.yml"
       - ".github/workflows/release.yml"
+      - ".github/actions/setup-apple/**"
 
 jobs:
   swift-test:
@@ -24,6 +25,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Apple toolchain
+        uses: ./.github/actions/setup-apple
 
       - name: Run Swift tests
         run: swift test --package-path apple
