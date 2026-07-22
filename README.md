@@ -64,7 +64,7 @@ Testing and conformance commands are documented in [Apple Usage](docs/apple-usag
 
 ## Versioning And Releases
 
-The Apple subtree is published to [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) with semantic version tags so Swift Package Manager can resolve package versions correctly. Android will publish Maven artifacts, React Native will publish an npm package, and Flutter will publish through pub.dev directly from their monorepo directories.
+A tracked snapshot of the Apple package is published to [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) with semantic version tags so Swift Package Manager can resolve package versions correctly. Android will publish Maven artifacts, React Native will publish an npm package, and Flutter will publish through pub.dev directly from their monorepo directories.
 
 Pull requests that change Apple source, the iOS example, shared test data, or `apple/Package.swift` run the Apple package tests and build the example app. Completed changes can be merged to `main` without publishing a release. When a release is ready, a maintainer manually runs the central release workflow and selects a patch, minor, or major version bump. That workflow calculates the version once and passes its tag to reusable platform publishers. The Apple publisher updates `ccda-swift`, and the coordinator applies the same tag name to the corresponding `ccda-kit` commit. Future Android, React Native, and Flutter publishers will consume the same coordinated version.
 

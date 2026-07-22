@@ -55,7 +55,7 @@ SwiftPM package surface:
 - `apple/Package.swift` is the source of truth for public SwiftPM products.
 - Public SwiftPM products should represent supported app-facing APIs.
 - Internal tools and conformance helpers should not be exposed as public SwiftPM products.
-- The `apple/` subtree is published to `ccda-tools/ccda-swift`; development and pull requests remain in this monorepo.
+- Each Apple release exports the tracked contents of `apple/` as a linear snapshot commit in `ccda-tools/ccda-swift`; development and pull requests remain in this monorepo.
 - Platform publishing uses the `CCDA_PUBLISHER_APP_ID` and `CCDA_PUBLISHER_PRIVATE_KEY` repository secrets to create short-lived GitHub App tokens. The publisher App is granted access only to generated distribution repositories such as `ccda-swift`.
 - A release uses the same semantic tag name in `ccda-kit` and `ccda-swift`, even though each tag points to its repository-specific commit.
 - The manually triggered central release workflow calculates the version; reusable platform workflows receive it as an input and do not calculate their own versions.
