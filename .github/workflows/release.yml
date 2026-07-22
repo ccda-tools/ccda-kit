@@ -105,7 +105,8 @@ jobs:
     with:
       release_tag: ${{ needs.version.outputs.tag }}
     secrets:
-      SWIFT_DISTRIBUTION_TOKEN: ${{ secrets.SWIFT_DISTRIBUTION_TOKEN }}
+      CCDA_PUBLISHER_APP_ID: ${{ secrets.CCDA_PUBLISHER_APP_ID }}
+      CCDA_PUBLISHER_PRIVATE_KEY: ${{ secrets.CCDA_PUBLISHER_PRIVATE_KEY }}
 
   toolkit:
     name: Tag And Release Toolkit
