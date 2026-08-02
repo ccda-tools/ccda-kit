@@ -47,6 +47,26 @@ class CCDAMediaTest {
         assertArrayEquals("Hello".toByteArray(), payload.file.readBytes())
     }
 
+    @Test
+    fun cachesSectionMediaBeforeLaterXmlFailure() {
+        val cacheDirectory = createTempDirectory(prefix = "ccda-media-test").toFile()
+        val engine = CCDAEngine(
+            CCDAEngineConfiguration(
+                mediaStoragePolicy = CCDAMediaStoragePolicy.CacheToDisk,
+                mediaCacheDirectory = cacheDirectory,
+            ),
+        )
+
+        val result = runCatching {
+            engine.parse(mediaXmlWithBrokenTrailingSection().toByteArray())
+        }
+
+        assertTrue(result.isFailure)
+        val cachedFiles = cacheDirectory.listFiles().orEmpty()
+        assertEquals(1, cachedFiles.size)
+        assertArrayEquals("Hello".toByteArray(), cachedFiles.single().readBytes())
+    }
+
     private fun mediaXml(): String = """
         <ClinicalDocument xmlns="urn:hl7-org:v3">
           <id root="1.2.3" extension="doc-1"/>
@@ -62,6 +82,29 @@ class CCDAMediaTest {
                   </entry>
                 </section>
               </component>
+            </structuredBody>
+          </component>
+        </ClinicalDocument>
+    """.trimIndent()
+
+    private fun mediaXmlWithBrokenTrailingSection(): String = """
+        <ClinicalDocument xmlns="urn:hl7-org:v3">
+          <id root="1.2.3" extension="doc-1"/>
+          <component>
+            <structuredBody>
+              <component>
+                <section>
+                  <title>Media</title>
+                  <entry>
+                    <observationMedia ID="media:1">
+                      <value mediaType="text/plain" representation="B64">SGVsbG8=</value>
+                    </observationMedia>
+                  </entry>
+                </section>
+              </component>
+              <component>
+                <section>
+                  <title>Broken
             </structuredBody>
           </component>
         </ClinicalDocument>

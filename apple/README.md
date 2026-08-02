@@ -95,6 +95,15 @@ You can also parse in-memory data:
 let document = try CCDAEngine().parse(data: xmlData)
 ```
 
+Or provide an `InputStream` directly:
+
+```swift
+let stream = InputStream(url: ccdaURL)!
+let document = try CCDAEngine().parse(stream: stream)
+```
+
+When parsing `Data`, the engine writes the bytes to a temporary file and then uses the same stream-backed parser path as file URLs. During parsing, document-level metadata is retained separately and each structured body section is mapped as its XML subtree closes, so media in that section can be cached before the parser moves to the next section.
+
 ## Handle XML Errors
 
 `CCDAEngine` keeps XML failures under one error case and includes parser context.

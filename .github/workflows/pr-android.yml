@@ -17,6 +17,10 @@ on:
       - ".github/workflows/release.yml"
       - ".github/actions/setup-android/**"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   android-test:
     name: Android Test

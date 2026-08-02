@@ -58,6 +58,17 @@ val document = CCDAEngine().parse(ccdaFile)
 val sections = document.sections
 ```
 
+You can also parse bytes or an `InputStream`:
+
+```kotlin
+val fromBytes = CCDAEngine().parse(ccdaBytes)
+val fromStream = ccdaFile.inputStream().use { stream ->
+    CCDAEngine().parse(stream)
+}
+```
+
+When parsing a `ByteArray`, the engine writes the bytes to a temporary file and then uses the same stream-backed parser path as files. During parsing, document-level metadata is retained separately and each structured body section is mapped from a section-scoped XML subtree.
+
 ### Engine With Compose UI
 
 Use `ccda-compose` when your app also wants default Jetpack Compose rendering helpers. `ccda-compose` depends on `ccda-engine`, so most apps only need the UI artifact:

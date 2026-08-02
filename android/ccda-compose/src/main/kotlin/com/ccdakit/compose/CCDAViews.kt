@@ -3,15 +3,17 @@ package com.ccdakit.compose
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -128,7 +130,7 @@ fun CCDAHeaderView(header: CCDAHeader, modifier: Modifier = Modifier) {
                 )
             }
 
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 CCDASummaryPill("Document ID", header.documentId.stringValue, Icons.Outlined.Numbers)
                 header.effectiveTime?.let {
                     CCDASummaryPill("Effective", it.formattedDateTime(), Icons.Outlined.CalendarMonth)
@@ -207,15 +209,100 @@ fun CCDAEntryRow(entry: CCDAEntry, modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.titleSmall,
             )
         }
-        entry.status?.let { Text("Status: ${it.rawValue}", style = MaterialTheme.typography.bodySmall) }
-        entry.effectiveTime?.let {
-            Text("Time: ${it.formattedDateTime()}", style = MaterialTheme.typography.bodySmall)
-        }
-        entry.value?.let { Text(it.formattedValue(), style = MaterialTheme.typography.bodySmall) }
-        for (child in entry.children) {
-            CCDAEntryRow(child, Modifier.padding(start = 12.dp))
+        Column(
+            modifier = Modifier.padding(start = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            entry.status?.let { CCDAEntryMetadata("Status", it.rawValue) }
+            entry.effectiveTime?.let { CCDAEntryMetadata("Time", it.formattedDateTime()) }
+            entry.value?.let { Text(it.formattedValue(), style = MaterialTheme.typography.bodySmall) }
+
+            val details = remember(entry.children) {
+                flattenedEntryDetails(entry.children)
+            }
+            if (details.isNotEmpty()) {
+                Column(
+                    modifier = Modifier.padding(top = 4.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    details.forEach { detail ->
+                        CCDAEntryDetailRow(detail)
+                    }
+                }
+            }
         }
     }
+}
+
+private data class CCDAEntryDetail(
+    val id: String,
+    val title: String,
+    val value: String?,
+    val status: String?,
+    val time: String?,
+)
+
+private fun flattenedEntryDetails(entries: List<CCDAEntry>): List<CCDAEntryDetail> =
+    entries.flatMap { entry ->
+        listOf(
+            CCDAEntryDetail(
+                id = entry.id,
+                title = entry.code?.displayName ?: entry.code?.code ?: entry.type.rawValue,
+                value = entry.value?.formattedValue(),
+                status = entry.status?.rawValue,
+                time = entry.effectiveTime?.formattedDateTime(),
+            ),
+        ) + flattenedEntryDetails(entry.children)
+    }
+
+@Composable
+private fun CCDAEntryDetailRow(detail: CCDAEntryDetail) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .width(2.dp)
+                .height(44.dp)
+                .background(CCDATheme.Secondary.copy(alpha = 0.32f)),
+        )
+
+        Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    text = detail.title,
+                    style = MaterialTheme.typography.labelMedium,
+                )
+                detail.value?.takeIf { it.isNotBlank() }?.let {
+                    Text(text = it, style = MaterialTheme.typography.bodySmall)
+                }
+            }
+
+            CCDAEntryDetailMetadata(detail)
+        }
+    }
+}
+
+@Composable
+private fun CCDAEntryDetailMetadata(detail: CCDAEntryDetail) {
+    BoxWithConstraints {
+        if (maxWidth >= 220.dp) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                detail.status?.let { CCDAEntryMetadata("Status", it) }
+                detail.time?.let { CCDAEntryMetadata("Time", it) }
+            }
+        } else {
+            Column(verticalArrangement = Arrangement.spacedBy(1.dp)) {
+                detail.status?.let { CCDAEntryMetadata("Status", it) }
+                detail.time?.let { CCDAEntryMetadata("Time", it) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CCDAEntryMetadata(label: String, value: String) {
+    Text("$label: $value", style = MaterialTheme.typography.bodySmall)
 }
 
 /** Default media renderer using built-in preview behavior. */
@@ -325,10 +412,10 @@ private fun CCDALabeledText(label: String, value: String) {
 }
 
 @Composable
-private fun RowScope.CCDASummaryPill(title: String, value: String, icon: ImageVector) {
+private fun CCDASummaryPill(title: String, value: String, icon: ImageVector, modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier
-            .weight(1f)
+        modifier = modifier
+            .fillMaxWidth()
             .background(
                 color = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.14f),
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(CCDATheme.CornerRadius),

@@ -40,7 +40,7 @@ private struct CCDADocumentHeaderPanel: View {
                 .font(.title2.weight(.semibold))
                 .foregroundStyle(.white)
 
-            HStack(alignment: .top, spacing: 12) {
+//            HStack(alignment: .top, spacing: 12) {
                 CCDASummaryPill(title: "Document ID", value: header.documentId.stringValue, systemImage: "number")
                 if let date = header.effectiveTime {
                     CCDASummaryPill(title: "Effective", value: date.formattedDateTime, systemImage: "calendar")
@@ -48,7 +48,7 @@ private struct CCDADocumentHeaderPanel: View {
                 if let language = header.languageCode {
                     CCDASummaryPill(title: "Language", value: language, systemImage: "globe")
                 }
-            }
+//            }
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
