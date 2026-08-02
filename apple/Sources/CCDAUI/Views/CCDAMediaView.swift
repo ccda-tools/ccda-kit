@@ -21,14 +21,12 @@ public struct CCDAMediaView: View {
                 CCDAMediaWebView(media: media)
                     .navigationTitle(title)
             } label: {
-                Label(title, systemImage: systemImageName)
+                CCDAMediaLabel(title: title, systemImageName: systemImageName)
             }
         case .unsupported(let mimeType):
-            Label("Unsupported attachment: \(mimeType)", systemImage: "paperclip")
-                .foregroundStyle(.secondary)
+            CCDAMediaLabel(title: "Unsupported attachment: \(mimeType)", systemImageName: "paperclip")
         case .unknown:
-            Label("Attachment", systemImage: "paperclip")
-                .foregroundStyle(.secondary)
+            CCDAMediaLabel(title: "Attachment", systemImageName: "paperclip")
         }
     }
 
@@ -60,5 +58,20 @@ public struct CCDAMediaView: View {
         default:
             return "paperclip"
         }
+    }
+}
+
+private struct CCDAMediaLabel: View {
+    let title: String
+    let systemImageName: String
+
+    var body: some View {
+        Label(title, systemImage: systemImageName)
+            .font(.subheadline.weight(.medium))
+            .foregroundStyle(CCDATheme.attachment)
+            .padding(10)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(CCDATheme.attachment.opacity(0.10))
+            .clipShape(RoundedRectangle(cornerRadius: CCDATheme.cornerRadius, style: .continuous))
     }
 }

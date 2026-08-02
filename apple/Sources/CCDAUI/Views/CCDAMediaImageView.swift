@@ -27,6 +27,11 @@ public struct CCDAMediaImageView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(maxHeight: 180)
+                    .clipShape(RoundedRectangle(cornerRadius: CCDATheme.cornerRadius, style: .continuous))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: CCDATheme.cornerRadius, style: .continuous)
+                            .stroke(Color.secondary.opacity(0.18), lineWidth: 1)
+                    }
             }
         }
         .task(id: media.id) {

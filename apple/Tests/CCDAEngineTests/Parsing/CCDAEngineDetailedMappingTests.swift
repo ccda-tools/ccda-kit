@@ -12,6 +12,7 @@ final class CCDAEngineDetailedMappingTests: XCTestCase {
         )
 
         let document = try engine.parse(data: Data(Self.comprehensiveXML.utf8))
+        let reparsedDocument = try engine.parse(data: Data(Self.comprehensiveXML.utf8))
 
         XCTAssertEqual(document.header.realmCode, "US")
         XCTAssertEqual(document.header.typeId?.root, "2.16.840.1.113883.1.3")
@@ -58,7 +59,7 @@ final class CCDAEngineDetailedMappingTests: XCTestCase {
         XCTAssertEqual(patient.telecoms, ["tel:+1-555-0100", "mailto:john@example.com"])
 
         let address = try XCTUnwrap(patient.addresses.first)
-        XCTAssertEqual(address.use, "HP")
+        XCTAssertEqual(address.use, .primaryHome)
         XCTAssertEqual(address.streetLines, ["123 Main St", "Apt 4B"])
         XCTAssertEqual(address.city, "Boston")
         XCTAssertEqual(address.state, "MA")
@@ -78,29 +79,36 @@ final class CCDAEngineDetailedMappingTests: XCTestCase {
         XCTAssertEqual(problems.media.count, 1)
 
         let problemEntry = problems.entries[0]
-        XCTAssertEqual(problemEntry.type, "act")
+        XCTAssertTrue(problems.id.hasPrefix("s:"))
+        XCTAssertTrue(problemEntry.id.hasPrefix("e:"))
+        XCTAssertEqual(problemEntry.type, .act)
         XCTAssertEqual(problemEntry.templateIds.first?.root, "2.16.840.1.113883.10.20.22.4.3")
         XCTAssertEqual(problemEntry.identifiers.first?.root, "problem-act-1")
         XCTAssertEqual(problemEntry.code?.code, "CONC")
-        XCTAssertEqual(problemEntry.status, "active")
+        XCTAssertEqual(problemEntry.status, .active)
         XCTAssertEqual(problemEntry.effectiveTime?.rawValue, "20200101")
         XCTAssertEqual(problemEntry.textReference, "#problem-1")
         XCTAssertEqual(problemEntry.children.count, 1)
 
         let nestedObservation = problemEntry.children[0]
-        XCTAssertEqual(nestedObservation.type, "observation")
+        XCTAssertTrue(nestedObservation.id.hasPrefix("e:"))
+        XCTAssertEqual(nestedObservation.type, .observation)
         XCTAssertEqual(nestedObservation.code?.displayName, "Problem Observation")
-        XCTAssertEqual(nestedObservation.status, "completed")
+        XCTAssertEqual(nestedObservation.status, .completed)
         XCTAssertEqual(nestedObservation.effectiveTime?.rawValue, "20200115")
         XCTAssertEqual(nestedObservation.value?.type, "CD")
         XCTAssertEqual(nestedObservation.value?.code, "38341003")
         XCTAssertEqual(nestedObservation.value?.displayName, "Hypertensive disorder")
 
         let media = try XCTUnwrap(problems.media.first)
-        XCTAssertEqual(media.id, "media-1")
+        XCTAssertTrue(media.id.hasPrefix("m:"))
         XCTAssertEqual(media.mediaType, .textHTML)
         XCTAssertEqual(media.representation, .base64)
         XCTAssertEqual(try media.loadData(), Data("<p>note</p>".utf8))
+        XCTAssertEqual(reparsedDocument.sections[0].id, problems.id)
+        XCTAssertEqual(reparsedDocument.sections[0].entries[0].id, problemEntry.id)
+        XCTAssertEqual(reparsedDocument.sections[0].entries[0].children[0].id, nestedObservation.id)
+        XCTAssertEqual(reparsedDocument.sections[0].media[0].id, media.id)
 
         let vitals = document.sections[1]
         XCTAssertEqual(vitals.title, "Vital Signs")
@@ -108,12 +116,14 @@ final class CCDAEngineDetailedMappingTests: XCTestCase {
         XCTAssertEqual(vitals.entries.count, 1)
 
         let organizer = vitals.entries[0]
-        XCTAssertEqual(organizer.type, "organizer")
+        XCTAssertTrue(vitals.id.hasPrefix("s:"))
+        XCTAssertTrue(organizer.id.hasPrefix("e:"))
+        XCTAssertEqual(organizer.type, .organizer)
         XCTAssertEqual(organizer.effectiveTime?.rawValue, "20260701")
         XCTAssertEqual(organizer.children.count, 1)
 
         let componentObservation = organizer.children[0]
-        XCTAssertEqual(componentObservation.type, "observation")
+        XCTAssertEqual(componentObservation.type, .observation)
         XCTAssertEqual(componentObservation.effectiveTime?.rawValue, "20260702")
         XCTAssertEqual(componentObservation.value?.type, "PQ")
         XCTAssertEqual(componentObservation.value?.value, "120")

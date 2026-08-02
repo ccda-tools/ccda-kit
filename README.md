@@ -21,7 +21,7 @@ C-CDA documents can be large, inconsistent, and full of nested clinical sections
 
 ## Current Status
 
-The first implementation is for Apple platforms.
+The first implementations are available for Apple and Android platforms.
 
 Swift Package Manager users should install the generated [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) distribution. Apple development and pull requests remain in this `ccda-kit` monorepo under `apple/`.
 
@@ -32,7 +32,7 @@ Available Swift products:
 
 The Swift package intentionally exposes only these two products. Repository tooling and test-data helpers are not public SwiftPM products.
 
-Platform implementations are developed together in this monorepo. The Apple package and iOS example live under `apple/`; future Android, React Native, and Flutter packages will own their builds and examples under their respective platform directories.
+Platform implementations are developed together in this monorepo. The Apple package and iOS example live under `apple/`; Android source lives under `android/`; future React Native and Flutter packages will own their builds and examples under their respective platform directories.
 
 Supported Apple platforms:
 
@@ -40,15 +40,21 @@ Supported Apple platforms:
 - iPadOS through SwiftPM's `.iOS` platform
 - macOS
 
+Android modules:
+
+- Native Kotlin parser and model layer
+- Jetpack Compose rendering helpers
+- Android sample app using shared C-CDA test data
+
 Planned platforms:
 
-- Android with Kotlin
 - React Native through native iOS and Android bridges
 - Flutter through native iOS and Android bridges after React Native
 
 ## Guides
 
-- [Apple Usage Guide](docs/apple-usage.md): SwiftPM setup, parsing, XML errors, SwiftUI rendering, example app, and tests.
+- [Apple README](apple/README.md): SwiftPM setup, parsing, XML errors, SwiftUI rendering, example app, and tests.
+- [Android README](android/README.md): Gradle setup, Kotlin parsing, Compose UI, Android sample app, and packaging.
 - [Platform Guide](docs/platform-guide.md): library philosophy, package boundaries, and Apple, Android, React Native, and Flutter direction.
 - [Roadmap](docs/roadmap.md): public project direction, milestones, and release priorities.
 - [Changelog](CHANGELOG.md): user-facing release history and unreleased changes.
@@ -58,15 +64,19 @@ Planned platforms:
 
 ## Testing
 
-The Apple package includes parser behavior tests, XML error tests, public model construction tests, SwiftUI helper tests, shared sample corpus checks, conformance snapshot checks, and parser performance measurements.
+The Apple package includes parser behavior tests, XML error tests, public model construction tests, SwiftUI helper tests, shared sample corpus checks, conformance output checks, and parser performance measurements.
 
-Testing and conformance commands are documented in [Apple Usage](docs/apple-usage.md).
+The Android project includes Kotlin parser tests, shared sample corpus checks, Compose module compilation, Maven artifact packaging, and an Android sample app build.
+
+Testing and conformance commands are documented in the [Apple README](apple/README.md) and [Android README](android/README.md).
 
 ## Versioning And Releases
 
-A tracked snapshot of the Apple package is published to [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) with semantic version tags so Swift Package Manager can resolve package versions correctly. Android will publish Maven artifacts, React Native will publish an npm package, and Flutter will publish through pub.dev directly from their monorepo directories.
+A tracked snapshot of the Apple package is published to [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) with semantic version tags so Swift Package Manager can resolve package versions correctly. Android publishes Maven-style artifacts directly from this monorepo; a separate Android source repository is not required. React Native will publish an npm package, and Flutter will publish through pub.dev directly from their monorepo directories.
 
-Pull requests that change Apple source, the iOS example, shared test data, or `apple/Package.swift` run the Apple package tests and build the example app. Completed changes can be merged to `main` without publishing a release. When a release is ready, a maintainer manually runs the central release workflow and selects a patch, minor, or major version bump. That workflow calculates the version once and passes its tag to reusable platform publishers. The Apple publisher updates `ccda-swift`, and the coordinator applies the same tag name to the corresponding `ccda-kit` commit. Future Android, React Native, and Flutter publishers will consume the same coordinated version.
+Pull requests that change Apple source, the iOS example, shared test data, or `apple/Package.swift` run the Apple package tests and build the example app. Pull requests that change Android source, shared test data, or Android Gradle configuration run Android tests and build the Android sample app. Completed changes can be merged to `main` without publishing a release.
+
+When a release is ready, a maintainer manually runs the central release workflow and selects a patch, minor, or major version bump. That workflow calculates the version once and passes its tag to reusable platform publishers. The Apple publisher updates `ccda-swift`, the Android publisher validates and packages Maven artifacts, and the coordinator applies the same tag name to the corresponding `ccda-kit` commit. Future React Native and Flutter publishers will consume the same coordinated version.
 
 Release notes are generated from commits since the previous tag. Human-authored release history should be tracked in [CHANGELOG.md](CHANGELOG.md).
 

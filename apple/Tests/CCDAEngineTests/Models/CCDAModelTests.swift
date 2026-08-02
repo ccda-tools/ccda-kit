@@ -49,8 +49,9 @@ final class CCDAModelTests: XCTestCase {
         XCTAssertEqual(document.id, "2.16.840 / doc-1")
     }
 
-    func testSectionIdPrefersCodeThenTitle() {
+    func testSectionUsesProvidedId() {
         let codedSection = CCDASection(
+            id: "section-medications",
             templateIds: [],
             code: CCDACodedValue(
                 code: "10160-0",
@@ -66,6 +67,7 @@ final class CCDAModelTests: XCTestCase {
         )
 
         let titledSection = CCDASection(
+            id: "section-allergies",
             templateIds: [],
             code: nil,
             kind: .unknown(code: nil),
@@ -75,8 +77,8 @@ final class CCDAModelTests: XCTestCase {
             media: []
         )
 
-        XCTAssertEqual(codedSection.id, "10160-0")
-        XCTAssertEqual(titledSection.id, "Allergies")
+        XCTAssertEqual(codedSection.id, "section-medications")
+        XCTAssertEqual(titledSection.id, "section-allergies")
     }
 
     func testSectionKindMapsCommonCCDASectionCodes() {

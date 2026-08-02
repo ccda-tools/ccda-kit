@@ -1,0 +1,50 @@
+name: publish-android
+
+on:
+  workflow_call:
+    inputs:
+      release_tag:
+        description: Coordinated semantic release tag
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Test And Package Android
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Android toolchain
+        uses: ./.github/actions/setup-android
+
+      - name: Run Android tests
+        working-directory: android
+        run: ./gradlew test
+
+      - name: Build Android sample
+        working-directory: android
+        run: ./gradlew :sample-app:assembleDebug
+
+      - name: Build Maven artifacts
+        working-directory: android
+        env:
+          RELEASE_VERSION: ${{ inputs.release_tag }}
+        run: |
+          version="${RELEASE_VERSION#v}"
+          ./gradlew publishReleasePublicationToLocalReleaseRepository -PVERSION_NAME="${version}"
+
+      - name: Upload Android Maven artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-maven-artifacts-${{ inputs.release_tag }}
+          path: |
+            android/ccda-engine/build/maven-releases/**
+            android/ccda-compose/build/maven-releases/**

@@ -9,11 +9,12 @@ final class CCDAPublicInitializerTests: XCTestCase {
         let code = CCDACodedValue(code: "11450-4", displayName: "Problem List")
         let value = CCDAValue(type: "CD", code: "38341003", displayName: "Hypertension")
         let entry = CCDAEntry(
-            type: "observation",
+            id: "entry-1",
+            type: .observation,
             templateIds: [templateId],
             identifiers: [CCDAIdentifier(root: "entry-1")],
             code: code,
-            status: "completed",
+            status: .completed,
             effectiveTime: timestamp,
             value: value,
             textReference: "#problem-1"
@@ -25,6 +26,7 @@ final class CCDAPublicInitializerTests: XCTestCase {
             payload: .inlineBase64("SGVsbG8=")
         )
         let section = CCDASection(
+            id: "section-problems",
             templateIds: [templateId],
             code: code,
             title: "Problems",
@@ -39,7 +41,7 @@ final class CCDAPublicInitializerTests: XCTestCase {
             birthTime: CCDATimestamp(rawValue: "19800515"),
             addresses: [
                 CCDAAddress(
-                    use: "HP",
+                    use: .primaryHome,
                     streetLines: ["123 Main St"],
                     city: "Boston",
                     state: "MA",
@@ -66,5 +68,28 @@ final class CCDAPublicInitializerTests: XCTestCase {
         XCTAssertEqual(document.patient?.name?.given, ["Jane"])
         XCTAssertEqual(document.sections.first?.kind, .problems)
         XCTAssertEqual(document.sections.first?.entries.first?.value?.displayName, "Hypertension")
+    }
+
+    func testAddressUseMapsKnownUnknownAndUnsupportedCodes() {
+        XCTAssertEqual(CCDAAddressUse(code: "HP"), .primaryHome)
+        XCTAssertEqual(CCDAAddressUse(code: "wp"), .workPlace)
+        XCTAssertEqual(CCDAAddressUse(code: nil), .unknown)
+        XCTAssertEqual(CCDAAddressUse(code: "VACATION"), .unsupported("VACATION"))
+        XCTAssertEqual(CCDAAddressUse.primaryHome.code, "HP")
+    }
+
+    func testEntryTypeMapsKnownAndUnsupportedElementNames() {
+        XCTAssertEqual(CCDAEntryType(elementName: "act"), .act)
+        XCTAssertEqual(CCDAEntryType(elementName: "observation"), .observation)
+        XCTAssertEqual(CCDAEntryType(elementName: "substanceAdministration"), .substanceAdministration)
+        XCTAssertEqual(CCDAEntryType(elementName: "customEntry"), .unsupported("customEntry"))
+        XCTAssertEqual(CCDAEntryType.observation.rawValue, "observation")
+    }
+
+    func testEntryStatusMapsKnownAndUnsupportedCodes() {
+        XCTAssertEqual(CCDAEntryStatus(code: "active"), .active)
+        XCTAssertEqual(CCDAEntryStatus(code: "completed"), .completed)
+        XCTAssertEqual(CCDAEntryStatus(code: "custom-status"), .unsupported("custom-status"))
+        XCTAssertEqual(CCDAEntryStatus.completed.rawValue, "completed")
     }
 }

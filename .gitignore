@@ -6,6 +6,10 @@
 .swiftpm/
 Package.resolved
 
+# Gradle
+.gradle/
+local.properties
+
 # Xcode
 DerivedData/
 *.xcuserstate

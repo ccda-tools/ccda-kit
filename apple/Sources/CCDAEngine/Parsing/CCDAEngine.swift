@@ -85,54 +85,76 @@ public final class CCDAEngine: Sendable {
             return []
         }
 
-        return try structuredBody.direct(.component).compactMap { component in
+        return try structuredBody.direct(.component).enumerated().compactMap { sectionIndex, component in
             guard let section = component.first(.section) else { return nil }
             let code = section.first(.code).map(codedValue)
+            let title = section.first(.title)?.cleanText
+            let mediaNodes = section.direct(.entry).flatMap { entry in
+                entry.children.filter { $0.isNamed(.observationMedia) }
+            }
             return CCDASection(
+                id: CCDAStableID.section(index: sectionIndex, code: code?.code, title: title),
                 templateIds: section.direct(.templateId).map(templateId),
                 code: code,
                 kind: CCDASectionKind(code: code?.code),
-                title: section.first(.title)?.cleanText,
+                title: title,
                 narrativeText: section.first(.text)?.cleanText ?? "",
-                entries: section.direct(.entry).flatMap { entry in
+                entries: section.direct(.entry).enumerated().flatMap { entryIndex, entry in
                     entry.children
                         .filter { !$0.isNamed(.observationMedia) }
-                        .map(mapEntry)
+                        .enumerated()
+                        .map { childIndex, child in
+                            mapEntry(
+                                child,
+                                path: [String(sectionIndex), String(entryIndex), String(childIndex)]
+                            )
+                        }
                 },
-                media: try section.direct(.entry).flatMap { entry in
-                    try entry.children
-                        .filter { $0.isNamed(.observationMedia) }
-                        .compactMap { try mapMedia($0) }
+                media: try mediaNodes.enumerated().compactMap { mediaIndex, mediaNode in
+                    try mapMedia(mediaNode, sectionIndex: sectionIndex, mediaIndex: mediaIndex)
                 }
             )
         }
     }
 
     /// Maps a clinical entry and its nested child entries.
-    private func mapEntry(_ node: CCDAXMLNode) -> CCDAEntry {
+    private func mapEntry(_ node: CCDAXMLNode, path: [String]) -> CCDAEntry {
         let directValue = node.first(.value)
+        let identifiers = node.direct(.id).map(identifier)
         
         return CCDAEntry(
-            type: node.name,
+            id: CCDAStableID.entry(path: path, sourceId: identifiers.first?.stringValue),
+            type: CCDAEntryType(elementName: node.name),
             templateIds: node.direct(.templateId).map(templateId),
-            identifiers: node.direct(.id).map(identifier),
+            identifiers: identifiers,
             code: node.first(.code).map(codedValue),
-            status: node.first(.statusCode)?.attribute(.code),
+            status: node.first(.statusCode)?.attribute(.code).map(CCDAEntryStatus.init(code:)),
             effectiveTime: effectiveTimeValue(from: node.first(.effectiveTime)),
             value: directValue.map(ccdaValue),
             textReference: node.first(.text)?.first(.reference)?.attribute(.value),
-            children: node.direct(.entryRelationship).flatMap { relationship in
-                relationship.children.map(mapEntry)
-            } + node.direct(.component).flatMap { component in
-                component.children.map(mapEntry)
+            children: node.direct(.entryRelationship).enumerated().flatMap { relationshipIndex, relationship in
+                relationship.children.enumerated().map { childIndex, child in
+                    mapEntry(
+                        child,
+                        path: path + ["r", String(relationshipIndex), String(childIndex)]
+                    )
+                }
+            } + node.direct(.component).enumerated().flatMap { componentIndex, component in
+                component.children.enumerated().map { childIndex, child in
+                    mapEntry(
+                        child,
+                        path: path + ["c", String(componentIndex), String(childIndex)]
+                    )
+                }
             }
         )
     }
 
     /// Maps observationMedia into the current embedded media model.
-    private func mapMedia(_ node: CCDAXMLNode) throws -> CCDAMedia? {
+    private func mapMedia(_ node: CCDAXMLNode, sectionIndex: Int, mediaIndex: Int) throws -> CCDAMedia? {
         guard let value = node.first(.value) else { return nil }
-        let id = node.attribute(.id) ?? node.first(.id)?.attribute(.root) ?? UUID().uuidString
+        let sourceId = node.attribute(.id) ?? node.first(.id)?.attribute(.root)
+        let id = CCDAStableID.media(sectionIndex: sectionIndex, mediaIndex: mediaIndex, sourceId: sourceId)
         let mediaType = CCDAMediaType(mimeType: value.attribute(.mediaType))
         let representation = CCDAMediaRepresentation(rawValue: value.attribute(.representation))
         let base64Value = value.cleanText
@@ -198,7 +220,7 @@ public final class CCDAEngine: Sendable {
     /// Maps a C-CDA addr element.
     private func address(_ node: CCDAXMLNode) -> CCDAAddress {
         CCDAAddress(
-            use: node.attribute(.use),
+            use: CCDAAddressUse(code: node.attribute(.use)),
             streetLines: node.direct(.streetAddressLine).map(\.cleanText),
             city: node.first(.city)?.cleanText,
             state: node.first(.state)?.cleanText,

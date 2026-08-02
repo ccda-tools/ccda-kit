@@ -26,7 +26,7 @@ final class CCDAViewConstructionTests: XCTestCase {
                 Text(section.title ?? "")
             },
             entry: { entry in
-                Text(entry.type)
+                Text(entry.type.rawValue)
             },
             media: { media in
                 Text(media.id)
@@ -62,6 +62,7 @@ final class CCDAViewConstructionTests: XCTestCase {
             ),
             sections: [
                 CCDASection(
+                    id: "section-problems",
                     templateIds: [],
                     code: CCDACodedValue(
                         code: "11450-4",
