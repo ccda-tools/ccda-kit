@@ -14,7 +14,7 @@ The project is organized around three principles:
 
 ## Current Status
 
-The first implementation is focused on Apple platforms, with an initial Android implementation now started:
+The first implementations are available for Apple and Android platforms:
 
 - `CCDAEngine`: Swift parser, normalized models, media extraction, timestamps, and engine-level errors.
 - `CCDAUI`: optional SwiftUI views and Apple-specific formatting helpers.
@@ -27,24 +27,24 @@ The first implementation is focused on Apple platforms, with an initial Android 
 
 - `ccda-kit` parses C-CDA XML but is not a clinical validator.
 - `ccda-kit` does not perform full C-CDA conformance validation.
-- The current parser builds an internal DOM and is not streaming-first yet.
+- The current parser is stream-backed and maps structured body sections as each section closes; extremely large individual sections and inline media can still be memory-heavy.
 - Current media handling is basic and focuses on inline base64 `observationMedia`.
 - Shared test data must remain public, synthetic, or explicitly approved for test use; real PHI must never be committed.
 
 ## Prioritized Milestones
 
-### 1. Cross-Platform UI Snapshot Testing
+### 1. Release Polish
+
+- Keep Apple and Android public APIs stable enough for early adopters.
+- Keep README badges, platform guides, changelog, and release notes aligned with published versions.
+- Continue validating both platforms against the shared sample corpus before each release.
+
+### 2. Cross-Platform UI Testing
 
 - Add snapshot or golden tests for default Apple and Android document, section, entry, and media rendering once the shared UI theme stabilizes.
 - Cover representative light and dark appearances and supported mobile layouts where practical.
 - Use public, synthetic, and test-safe fixtures so UI changes can be reviewed without exposing PHI.
 - Keep parser, conformance, and performance test suites passing while visual coverage is added.
-
-### 2. Native Kotlin Implementation
-
-- Build a native Kotlin parser and normalized model layer that follows the Apple implementation's boundaries.
-- Add Jetpack Compose UI helpers while keeping parsing independent from presentation.
-- Reuse the shared C-CDA samples and expected summaries to verify equivalent behavior across Swift and Kotlin.
 
 ### 3. React Native
 
@@ -60,13 +60,13 @@ The first implementation is focused on Apple platforms, with an initial Android 
 
 ### 5. Further Capabilities
 
-After the initial Apple, Kotlin, React Native, and Flutter foundations are in place, continue with:
+After the initial Apple, Android, React Native, and Flutter foundations are in place, continue with:
 
-- Expanded parsing coverage for common C-CDA sections, entries, and vendor-specific XML.
 - Search APIs across headers, patients, sections, narrative text, codes, values, timestamps, and media metadata.
 - Structured search results that identify the matched document area while remaining independent from UI layers.
-- Streaming XML parsing, larger synthetic fixtures, and performance baselines for very large documents.
+- Larger synthetic fixtures and performance baselines for very large documents.
 - Configurable media policies, cache lifecycle APIs, referenced external media, and additional attachment types.
+- Expanded parsing coverage for common C-CDA sections, entries, and vendor-specific XML.
 - More section-specific typed clinical models and DocC generation as public APIs stabilize.
 - Continued growth of public, synthetic, and test-safe sample coverage.
 

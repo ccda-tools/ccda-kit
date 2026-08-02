@@ -4,6 +4,8 @@ import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
+import java.io.ByteArrayInputStream
+import java.io.File
 
 class CCDAEngineMappingTest {
     @Test
@@ -65,6 +67,41 @@ class CCDAEngineMappingTest {
         assertEquals(CCDASectionKind.VitalSigns, vitals.kind)
         assertEquals("120", vitals.entries[0].children[0].value?.value)
     }
+
+    @Test
+    fun dataFileAndStreamParsingProduceEquivalentDocuments() {
+        val data = comprehensiveXml.toByteArray()
+        val file = File.createTempFile("ccda-entry-point-", ".xml")
+        file.writeBytes(data)
+        try {
+            val engine = CCDAEngine(
+                CCDAEngineConfiguration(mediaStoragePolicy = CCDAMediaStoragePolicy.Inline),
+            )
+
+            val dataDocument = engine.parse(data)
+            val fileDocument = engine.parse(file)
+            val streamDocument = engine.parse(ByteArrayInputStream(data))
+
+            assertEquals(summary(dataDocument), summary(fileDocument))
+            assertEquals(summary(dataDocument), summary(streamDocument))
+        } finally {
+            file.delete()
+        }
+    }
+
+    private fun summary(document: CCDADocument): List<String> =
+        listOf(
+            document.header.documentId.stringValue,
+            document.header.title.orEmpty(),
+            document.patient?.name?.given?.joinToString(" ").orEmpty(),
+            document.patient?.name?.family.orEmpty(),
+            document.sections.size.toString(),
+            document.sections.firstOrNull()?.id.orEmpty(),
+            document.sections.firstOrNull()?.title.orEmpty(),
+            document.sections.firstOrNull()?.entries?.firstOrNull()?.id.orEmpty(),
+            document.sections.firstOrNull()?.entries?.firstOrNull()?.status?.rawValue.orEmpty(),
+            document.sections.firstOrNull()?.media?.firstOrNull()?.id.orEmpty(),
+        )
 
     private val comprehensiveXml = """
         <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">

@@ -44,6 +44,24 @@ final class CCDAEngineParsingTests: XCTestCase {
         XCTAssertEqual(document.sections.first?.narrativeText, "Lisinopril")
     }
 
+    func testDataURLAndStreamParsingProduceEquivalentDocuments() throws {
+        let data = Data(Self.entryPointXML.utf8)
+        let fileURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("ccda-entry-point-\(UUID().uuidString)")
+            .appendingPathExtension("xml")
+        try data.write(to: fileURL)
+        defer { try? FileManager.default.removeItem(at: fileURL) }
+
+        let engine = CCDAEngine()
+        let dataDocument = try engine.parse(data: data)
+        let urlDocument = try engine.parse(url: fileURL)
+        let stream = InputStream(data: data)
+        let streamDocument = try engine.parse(stream: stream)
+
+        XCTAssertEqual(summary(dataDocument), summary(urlDocument))
+        XCTAssertEqual(summary(dataDocument), summary(streamDocument))
+    }
+
     func testParsesSharedCCDASampleFiles() throws {
         let sampleURLs = try CCDASampleFixtures.ccdaSampleURLs()
 
@@ -64,4 +82,58 @@ final class CCDAEngineParsingTests: XCTestCase {
             )
         }
     }
+
+    private func summary(_ document: CCDADocument) -> [String] {
+        [
+            document.header.documentId.stringValue,
+            document.header.title ?? "",
+            document.patient?.name?.given.joined(separator: " ") ?? "",
+            document.patient?.name?.family ?? "",
+            String(document.sections.count),
+            document.sections.first?.id ?? "",
+            document.sections.first?.title ?? "",
+            document.sections.first?.entries.first?.id ?? "",
+            document.sections.first?.entries.first?.status?.rawValue ?? "",
+            document.sections.first?.media.first?.id ?? ""
+        ]
+    }
+
+    private static let entryPointXML = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <id root="1.2.3" extension="doc-1"/>
+        <title>Entry Point CCD</title>
+        <recordTarget>
+            <patientRole>
+                <id root="patient-1"/>
+                <patient>
+                    <name><given>Jane</given><family>Public</family></name>
+                </patient>
+            </patientRole>
+        </recordTarget>
+        <component>
+            <structuredBody>
+                <component>
+                    <section>
+                        <code code="11450-4" displayName="Problem List"/>
+                        <title>Problems</title>
+                        <text>Hypertension</text>
+                        <entry>
+                            <observation>
+                                <id root="problem-1"/>
+                                <statusCode code="active"/>
+                                <value xsi:type="CD" code="38341003" displayName="Hypertension"/>
+                            </observation>
+                        </entry>
+                        <entry>
+                            <observationMedia ID="media-1">
+                                <value mediaType="text/plain" representation="B64">aGVsbG8=</value>
+                            </observationMedia>
+                        </entry>
+                    </section>
+                </component>
+            </structuredBody>
+        </component>
+    </ClinicalDocument>
+    """
 }

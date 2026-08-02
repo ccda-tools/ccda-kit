@@ -106,6 +106,31 @@ final class CCDAMediaCacheTests: XCTestCase {
         XCTAssertEqual(cacheURL.pathExtension, "txt")
     }
 
+    func testCachesSectionMediaBeforeLaterXMLFailure() throws {
+        let cacheDirectory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString)
+        defer {
+            try? FileManager.default.removeItem(at: cacheDirectory)
+        }
+
+        let engine = CCDAEngine(
+            configuration: CCDAEngineConfiguration(
+                mediaStoragePolicy: .cacheToDisk,
+                mediaCacheDirectory: cacheDirectory
+            )
+        )
+
+        XCTAssertThrowsError(try engine.parse(data: Data(Self.mediaXMLWithBrokenTrailingSection.utf8)))
+
+        let cachedFiles = try FileManager.default.contentsOfDirectory(
+            at: cacheDirectory,
+            includingPropertiesForKeys: nil
+        )
+
+        XCTAssertEqual(cachedFiles.count, 1)
+        XCTAssertEqual(try Data(contentsOf: cachedFiles[0]), Data("hello".utf8))
+    }
+
     private static let mediaXML = """
     <?xml version="1.0" encoding="UTF-8"?>
     <ClinicalDocument xmlns="urn:hl7-org:v3">
@@ -145,4 +170,20 @@ final class CCDAMediaCacheTests: XCTestCase {
     private static let unsupportedMediaXML = mediaXML
         .replacingOccurrences(of: #"mediaType="text/plain""#, with: #"mediaType="application/dicom""#)
         .replacingOccurrences(of: #"representation="B64""#, with: #"representation="CUSTOM""#)
+
+    private static let mediaXMLWithBrokenTrailingSection = mediaXML
+        .replacingOccurrences(
+            of: """
+                    </structuredBody>
+                </component>
+            </ClinicalDocument>
+            """,
+            with: """
+                    <component>
+                        <section>
+                            <title>Broken
+                </structuredBody>
+            </ClinicalDocument>
+            """
+        )
 }

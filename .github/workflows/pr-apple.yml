@@ -17,6 +17,10 @@ on:
       - ".github/workflows/release.yml"
       - ".github/actions/setup-apple/**"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   swift-test:
     name: Swift Test

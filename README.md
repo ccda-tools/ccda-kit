@@ -1,8 +1,7 @@
 # ccda-kit
 
-![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)
-![Platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20iPadOS%20%7C%20macOS-blue.svg)
-![SwiftPM](https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg)
+![Platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20iPadOS%20%7C%20macOS%20%7C%20Android-blue.svg)
+![Release](https://img.shields.io/github/v/release/shahzaibiqbal/ccda-kit?sort=semver)
 ![Status](https://img.shields.io/badge/status-alpha-yellow.svg)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)
 
