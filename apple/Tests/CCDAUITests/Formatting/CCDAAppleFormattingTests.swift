@@ -17,7 +17,7 @@ final class CCDAAppleFormattingTests: XCTestCase {
 
     func testAddressProvidesPostalAddress() {
         let address = CCDAAddress(
-            use: "HP",
+            use: .primaryHome,
             streetLines: ["123 Main St", "Apt 4B"],
             city: "Boston",
             state: "MA",

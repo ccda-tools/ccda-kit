@@ -108,11 +108,19 @@ jobs:
       CCDA_PUBLISHER_APP_ID: ${{ secrets.CCDA_PUBLISHER_APP_ID }}
       CCDA_PUBLISHER_PRIVATE_KEY: ${{ secrets.CCDA_PUBLISHER_PRIVATE_KEY }}
 
+  android:
+    name: Publish Android
+    needs: version
+    uses: ./.github/workflows/publish-android.yml
+    with:
+      release_tag: ${{ needs.version.outputs.tag }}
+
   toolkit:
     name: Tag And Release Toolkit
     needs:
       - version
       - apple
+      - android
     runs-on: ubuntu-latest
 
     steps:

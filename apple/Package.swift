@@ -18,12 +18,7 @@ let package = Package(
             targets: ["CCDAUI"]
         )
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/pointfreeco/swift-snapshot-testing",
-            exact: "1.19.3"
-        )
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "CCDAEngine",
@@ -43,14 +38,9 @@ let package = Package(
             name: "CCDAUITests",
             dependencies: [
                 "CCDAEngine",
-                "CCDAUI",
-                .product(
-                    name: "SnapshotTesting",
-                    package: "swift-snapshot-testing"
-                )
+                "CCDAUI"
             ],
-            path: "Tests/CCDAUITests",
-            exclude: ["Views/__Snapshots__"]
+            path: "Tests/CCDAUITests"
         )
     ]
 )

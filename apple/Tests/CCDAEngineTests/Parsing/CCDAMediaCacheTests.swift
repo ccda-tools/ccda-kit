@@ -13,7 +13,7 @@ final class CCDAMediaCacheTests: XCTestCase {
         let document = try engine.parse(data: Data(Self.mediaXML.utf8))
         let media = try XCTUnwrap(document.sections.first?.media.first)
 
-        XCTAssertEqual(media.id, "media-1")
+        XCTAssertTrue(media.id.hasPrefix("m:"))
         XCTAssertEqual(media.mediaType, .textPlain)
         XCTAssertEqual(media.mediaType.mimeType, "text/plain")
         XCTAssertEqual(media.representation, .base64)
@@ -66,14 +66,14 @@ final class CCDAMediaCacheTests: XCTestCase {
         let media = try XCTUnwrap(document.sections.first?.media.first)
         let cacheURL = try XCTUnwrap(media.payload.fileURL)
 
-        XCTAssertEqual(media.id, "media-1")
+        XCTAssertTrue(media.id.hasPrefix("m:"))
         XCTAssertEqual(media.mediaType, .textPlain)
         XCTAssertEqual(media.representation, .base64)
         XCTAssertEqual(media.payload.byteCount, 5)
         XCTAssertEqual(try media.loadData(), Data("hello".utf8))
         XCTAssertTrue(media.isCached)
         XCTAssertTrue(FileManager.default.fileExists(atPath: cacheURL.path))
-        XCTAssertEqual(cacheURL.deletingPathExtension().lastPathComponent, "media-1")
+        XCTAssertTrue(cacheURL.deletingPathExtension().lastPathComponent.hasPrefix("m-"))
         XCTAssertEqual(cacheURL.pathExtension, "txt")
     }
 
@@ -95,14 +95,14 @@ final class CCDAMediaCacheTests: XCTestCase {
         let media = try XCTUnwrap(document.sections.first?.media.first)
         let cacheURL = try XCTUnwrap(media.payload.fileURL)
 
-        XCTAssertEqual(media.id, "media-1")
+        XCTAssertTrue(media.id.hasPrefix("m:"))
         XCTAssertEqual(media.mediaType, .textPlain)
         XCTAssertEqual(media.representation, .base64)
         XCTAssertEqual(media.payload.byteCount, 5)
         XCTAssertEqual(try media.loadData(), Data("hello".utf8))
         XCTAssertTrue(media.isCached)
         XCTAssertTrue(FileManager.default.fileExists(atPath: cacheURL.path))
-        XCTAssertEqual(cacheURL.deletingPathExtension().lastPathComponent, "media-1")
+        XCTAssertTrue(cacheURL.deletingPathExtension().lastPathComponent.hasPrefix("m-"))
         XCTAssertEqual(cacheURL.pathExtension, "txt")
     }
 

@@ -13,23 +13,29 @@ public struct CCDAEntryRow: View {
 
     /// SwiftUI view body.
     public var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(entry.code?.displayName ?? entry.code?.code ?? entry.type)
-                .font(.headline)
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Image(systemName: "waveform.path.ecg")
+                    .font(.caption)
+                    .foregroundStyle(CCDATheme.secondary)
+
+                Text(entry.code?.displayName ?? entry.code?.code ?? entry.type.rawValue)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.primary)
+            }
 
             if let status = entry.status {
-                Text("Status: \(status)")
-                    .font(.subheadline)
+                CCDAEntryMetadata(label: "Status", value: status.rawValue)
             }
 
             if let effectiveTime = entry.effectiveTime {
-                Text("Time: \(effectiveTime.formattedDateTime)")
-                    .font(.subheadline)
+                CCDAEntryMetadata(label: "Time", value: effectiveTime.formattedDateTime)
             }
 
             if let value = entry.value {
                 Text(value.formattedValue)
                     .font(.subheadline)
+                    .foregroundStyle(.primary)
             }
 
             ForEach(entry.children) { child in
@@ -37,6 +43,20 @@ public struct CCDAEntryRow: View {
                     .padding(.leading, 12)
             }
         }
-        .padding(.vertical, 4)
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(CCDATheme.rowBackground)
+        .clipShape(RoundedRectangle(cornerRadius: CCDATheme.cornerRadius, style: .continuous))
+    }
+}
+
+private struct CCDAEntryMetadata: View {
+    let label: String
+    let value: String
+
+    var body: some View {
+        Text("\(label): \(value)")
+            .font(.caption)
+            .foregroundStyle(.secondary)
     }
 }

@@ -10,7 +10,7 @@ The parser layer should understand C-CDA XML and produce stable model objects. I
 
 The UI layer should be optional. Default views should make parsed documents easy to inspect, but host apps should always be able to replace every header, patient, section, entry, and media renderer with their own native components.
 
-The platform layer should feel native on each platform. Apple uses Swift and SwiftUI. Android will use Kotlin and native Android UI helpers. React Native and Flutter should wrap the native Apple and Android parsers instead of adding separate parser implementations.
+The platform layer should feel native on each platform. Apple uses Swift and SwiftUI. Android uses Kotlin and Jetpack Compose helpers. React Native and Flutter should wrap the native Apple and Android parsers instead of adding separate parser implementations.
 
 Shared test data should keep behavior aligned across platforms. Each parser can expose idiomatic APIs, but the same C-CDA input should produce equivalent normalized summaries wherever possible.
 
@@ -68,17 +68,22 @@ Apple is the first implementation:
 - `CCDAUI`: optional SwiftUI views, including default image, PDF, text, and HTML media rendering.
 - `apple/Examples/iOS`: iOS example app.
 
-See [Apple Usage](apple-usage.md).
+See the [Apple README](../apple/README.md).
 
-## Planned Platforms
+See the [Android README](../android/README.md) for Kotlin, Jetpack Compose, tests, and packaging.
+
+## Android Implementation
 
 Android:
 
 - Native Kotlin parser.
-- Native Android UI helpers.
+- Jetpack Compose UI helpers.
 - Shared test data from `test-data/ccda/`.
 - Gradle modules, tests, and the example app under `android/`.
 - Compiled libraries published as Maven artifacts without requiring a separate source repository.
+- Android release automation validates tests, builds the sample app, and produces versioned Maven artifacts from the monorepo.
+
+## Planned Platforms
 
 React Native:
 

@@ -14,11 +14,14 @@ The project is organized around three principles:
 
 ## Current Status
 
-The first implementation is focused on Apple platforms:
+The first implementation is focused on Apple platforms, with an initial Android implementation now started:
 
 - `CCDAEngine`: Swift parser, normalized models, media extraction, timestamps, and engine-level errors.
 - `CCDAUI`: optional SwiftUI views and Apple-specific formatting helpers.
 - `apple/Examples/iOS`: iOS example app using shared sample data.
+- `android/ccda-engine`: Kotlin parser and normalized model layer.
+- `android/ccda-compose`: optional Jetpack Compose rendering helpers.
+- `android/sample-app`: Android example app using shared sample data.
 
 ## Current Limitations
 
@@ -30,17 +33,17 @@ The first implementation is focused on Apple platforms:
 
 ## Prioritized Milestones
 
-### 1. Apple UI Snapshot Testing
+### 1. Cross-Platform UI Snapshot Testing
 
-- Add snapshot tests for the default `CCDAUI` document, section, entry, and media rendering.
-- Cover representative light and dark appearances and supported Apple layouts where practical.
+- Add snapshot or golden tests for default Apple and Android document, section, entry, and media rendering once the shared UI theme stabilizes.
+- Cover representative light and dark appearances and supported mobile layouts where practical.
 - Use public, synthetic, and test-safe fixtures so UI changes can be reviewed without exposing PHI.
-- Keep the existing parser, conformance, and performance test suites passing while visual coverage is added.
+- Keep parser, conformance, and performance test suites passing while visual coverage is added.
 
 ### 2. Native Kotlin Implementation
 
 - Build a native Kotlin parser and normalized model layer that follows the Apple implementation's boundaries.
-- Add native Android UI helpers while keeping parsing independent from presentation.
+- Add Jetpack Compose UI helpers while keeping parsing independent from presentation.
 - Reuse the shared C-CDA samples and expected summaries to verify equivalent behavior across Swift and Kotlin.
 
 ### 3. React Native
