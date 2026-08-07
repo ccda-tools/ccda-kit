@@ -19,14 +19,6 @@ Run Swift package tests:
 swift test --package-path apple
 ```
 
-SwiftUI reference images are recorded on macOS 26. After reviewing an intentional UI change, regenerate them with:
-
-```bash
-SNAPSHOT_TESTING_RECORD=all swift test --package-path apple --filter CCDAUISnapshotTests
-```
-
-Run the tests again without record mode before committing the updated references.
-
 Regenerate conformance output after intentional parser behavior changes:
 
 ```bash

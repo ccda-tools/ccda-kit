@@ -114,6 +114,11 @@ jobs:
     uses: ./.github/workflows/publish-android.yml
     with:
       release_tag: ${{ needs.version.outputs.tag }}
+    secrets:
+      MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      MAVEN_SIGNING_KEY: ${{ secrets.MAVEN_SIGNING_KEY }}
+      MAVEN_SIGNING_PASSWORD: ${{ secrets.MAVEN_SIGNING_PASSWORD }}
 
   toolkit:
     name: Tag And Release Toolkit

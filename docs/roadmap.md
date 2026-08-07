@@ -65,9 +65,9 @@ After the initial Apple, Android, React Native, and Flutter foundations are in p
 - Search APIs across headers, patients, sections, narrative text, codes, values, timestamps, and media metadata.
 - Structured search results that identify the matched document area while remaining independent from UI layers.
 - Larger synthetic fixtures and performance baselines for very large documents.
-- Configurable media policies, cache lifecycle APIs, referenced external media, and additional attachment types.
+- Public cache lifecycle APIs, referenced external media, and additional attachment types.
 - Expanded parsing coverage for common C-CDA sections, entries, and vendor-specific XML.
-- More section-specific typed clinical models and DocC generation as public APIs stabilize.
+- More section-specific typed clinical models and platform-native API documentation, including DocC for Apple and Dokka for Android, as public APIs stabilize.
 - Continued growth of public, synthetic, and test-safe sample coverage.
 
 ## Shared Validation

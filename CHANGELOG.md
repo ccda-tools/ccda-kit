@@ -9,7 +9,7 @@ This project follows semantic versioning before and after `1.0.0`, with the expe
 ### Added
 
 - Initial Android Kotlin implementation with parser models, media handling, Jetpack Compose rendering helpers, sample app, and unit coverage against shared C-CDA fixtures.
-- SwiftUI snapshot coverage for default document rendering in light and dark appearances, nested entries, and media rows.
+- Maven Central deployment automation for signed Android engine and Compose artifacts.
 
 ### Changed
 
