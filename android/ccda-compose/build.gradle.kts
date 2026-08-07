@@ -3,6 +3,12 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("maven-publish")
+    signing
+}
+
+val javadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+    from(rootProject.file("README.md"))
 }
 
 android {
@@ -50,6 +56,7 @@ afterEvaluate {
         publications {
             create<MavenPublication>("release") {
                 from(components["release"])
+                artifact(javadocJar)
                 groupId = "io.github.shahzaibiqbal.ccdakit"
                 artifactId = "ccda-compose"
                 version = findProperty("VERSION_NAME")?.toString() ?: "0.0.0-SNAPSHOT"
@@ -84,6 +91,18 @@ afterEvaluate {
                 name = "LocalRelease"
                 url = layout.buildDirectory.dir("maven-releases").get().asFile.toURI()
             }
+        }
+    }
+}
+
+val signingKey = providers.environmentVariable("MAVEN_SIGNING_KEY")
+val signingPassword = providers.environmentVariable("MAVEN_SIGNING_PASSWORD")
+
+afterEvaluate {
+    signing {
+        if (signingKey.isPresent && signingPassword.isPresent) {
+            useInMemoryPgpKeys(signingKey.get(), signingPassword.get())
+            sign(publishing.publications["release"])
         }
     }
 }

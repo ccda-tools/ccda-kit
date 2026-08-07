@@ -7,6 +7,15 @@ on:
         description: Coordinated semantic release tag
         required: true
         type: string
+    secrets:
+      MAVEN_CENTRAL_USERNAME:
+        required: true
+      MAVEN_CENTRAL_PASSWORD:
+        required: true
+      MAVEN_SIGNING_KEY:
+        required: true
+      MAVEN_SIGNING_PASSWORD:
+        required: true
 
 permissions:
   contents: read
@@ -41,9 +50,48 @@ jobs:
         working-directory: android
         env:
           RELEASE_VERSION: ${{ inputs.release_tag }}
+          MAVEN_SIGNING_KEY: ${{ secrets.MAVEN_SIGNING_KEY }}
+          MAVEN_SIGNING_PASSWORD: ${{ secrets.MAVEN_SIGNING_PASSWORD }}
         run: |
           version="${RELEASE_VERSION#v}"
           ./gradlew publishReleasePublicationToLocalReleaseRepository -PVERSION_NAME="${version}"
+
+      - name: Build Maven Central bundle
+        working-directory: android
+        run: |
+          set -euo pipefail
+
+          staging_directory="${RUNNER_TEMP}/central-staging"
+          bundle_path="${RUNNER_TEMP}/ccda-kit-android-${{ inputs.release_tag }}.zip"
+          mkdir -p "${staging_directory}"
+          cp -R ccda-engine/build/maven-releases/. "${staging_directory}/"
+          cp -R ccda-compose/build/maven-releases/. "${staging_directory}/"
+
+          find "${staging_directory}" -type f -name 'maven-metadata*' -delete
+          find "${staging_directory}" -type f ! -name '*.asc' ! -name '*.md5' ! -name '*.sha1' -print0 |
+            while IFS= read -r -d '' artifact; do
+              md5sum "${artifact}" | awk '{print $1}' > "${artifact}.md5"
+              sha1sum "${artifact}" | awk '{print $1}' > "${artifact}.sha1"
+            done
+
+          (cd "${staging_directory}" && zip -q -r "${bundle_path}" .)
+          echo "CENTRAL_BUNDLE_PATH=${bundle_path}" >> "${GITHUB_ENV}"
+
+      - name: Upload Maven Central deployment for validation
+        env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          authorization="$(printf '%s:%s' "${MAVEN_CENTRAL_USERNAME}" "${MAVEN_CENTRAL_PASSWORD}" | base64 | tr -d '\n')"
+          deployment_id="$(curl --fail-with-body --silent --show-error \
+            --header "Authorization: Bearer ${authorization}" \
+            --form "bundle=@${CENTRAL_BUNDLE_PATH};type=application/octet-stream" \
+            "https://central.sonatype.com/api/v1/publisher/upload?name=ccda-kit-android-${{ inputs.release_tag }}&publishingType=USER_MANAGED")"
+
+          echo "Maven Central deployment: ${deployment_id}"
+          echo "Review and publish it at https://central.sonatype.com/publishing/deployments"
 
       - name: Upload Android Maven artifacts
         uses: actions/upload-artifact@v4
@@ -52,3 +100,4 @@ jobs:
           path: |
             android/ccda-engine/build/maven-releases/**
             android/ccda-compose/build/maven-releases/**
+            ${{ env.CENTRAL_BUNDLE_PATH }}

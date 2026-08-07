@@ -16,7 +16,7 @@ Shared test data should keep behavior aligned across platforms. Each parser can 
 
 ## What Goes Where
 
-`CCDAEngine` owns:
+The Apple `CCDAEngine` product and Android `ccda-engine` module own:
 
 - XML parsing.
 - Normalized C-CDA models.
@@ -25,10 +25,10 @@ Shared test data should keep behavior aligned across platforms. Each parser can 
 - Media storage references and cache-backed payload handling.
 - Search and document indexing APIs when they are added.
 
-`CCDAUI` owns:
+The Apple `CCDAUI` product and Android `ccda-compose` module own:
 
-- SwiftUI rendering helpers.
-- Apple-specific formatting, such as names, postal addresses, and display timestamps.
+- SwiftUI and Jetpack Compose rendering helpers.
+- Platform-specific formatting, such as names, postal addresses, values, and display timestamps.
 - Default media presentation for images, PDFs, text, and HTML.
 - Composable views that let host apps provide their own native UI.
 
@@ -60,19 +60,21 @@ SwiftPM package surface:
 - A release uses the same semantic tag name in `ccda-kit` and `ccda-swift`, even though each tag points to its repository-specific commit.
 - The manually triggered central release workflow calculates the version; reusable platform workflows receive it as an input and do not calculate their own versions.
 
-## Current Platform
+Android publication surface:
 
-Apple is the first implementation:
+- `android/ccda-engine` defines the `io.github.shahzaibiqbal.ccdakit:ccda-engine` publication.
+- `android/ccda-compose` defines the `io.github.shahzaibiqbal.ccdakit:ccda-compose` publication and depends on `ccda-engine`.
+- Android development, tests, and releases remain in this monorepo; no separate Android source repository is required.
+- Release signing uses `MAVEN_SIGNING_KEY` and `MAVEN_SIGNING_PASSWORD`. Central upload uses `MAVEN_CENTRAL_USERNAME` and `MAVEN_CENTRAL_PASSWORD`.
+- The Android publisher builds and signs a Maven Central bundle, then uploads it as a user-managed deployment. A maintainer must approve a validated deployment before it becomes publicly available from Maven Central.
+
+## Current Platforms
+
+Apple:
 
 - `CCDAEngine`: Swift parser and normalized C-CDA model layer.
 - `CCDAUI`: optional SwiftUI views, including default image, PDF, text, and HTML media rendering.
 - `apple/Examples/iOS`: iOS example app.
-
-See the [Apple README](../apple/README.md).
-
-See the [Android README](../android/README.md) for Kotlin, Jetpack Compose, tests, and packaging.
-
-## Android Implementation
 
 Android:
 
@@ -80,8 +82,10 @@ Android:
 - Jetpack Compose UI helpers.
 - Shared test data from `test-data/ccda/`.
 - Gradle modules, tests, and the example app under `android/`.
-- Compiled libraries published as Maven artifacts without requiring a separate source repository.
-- Android release automation validates tests, builds the sample app, and produces versioned Maven artifacts from the monorepo.
+- Compiled libraries packaged as Maven artifacts without requiring a separate source repository.
+- Android release automation runs tests, builds the sample app, signs versioned artifacts, and uploads them for Maven Central validation and maintainer approval.
+
+See the [Apple README](../apple/README.md) and [Android README](../android/README.md) for installation, parsing, native UI, media handling, examples, tests, and packaging.
 
 ## Planned Platforms
 

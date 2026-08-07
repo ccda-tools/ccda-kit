@@ -1,13 +1,20 @@
 # ccda-kit
 
 ![Platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20iPadOS%20%7C%20macOS%20%7C%20Android-blue.svg)
-![Release](https://img.shields.io/github/v/release/shahzaibiqbal/ccda-kit?sort=semver)
+![Release](https://img.shields.io/github/v/release/ccda-tools/ccda-kit?sort=semver)
 ![Status](https://img.shields.io/badge/status-alpha-yellow.svg)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)
 
 `ccda-kit` is an open-source toolkit for parsing C-CDA XML documents into structured models that apps can inspect, transform, and render with native UI.
 
 C-CDA documents can be large, inconsistent, and full of nested clinical sections. This project aims to provide a practical parser layer, shared test data, and platform-native rendering helpers without forcing every app into one UI.
+
+## Previews
+
+<p align="center">
+  <img src="docs/Previews/preview_1.gif" alt="C-CDA document list and rendering preview" width="295">
+  <img src="docs/Previews/preview_2.gif" alt="C-CDA document details and media preview" width="295">
+</p>
 
 ## Goals
 
@@ -53,7 +60,7 @@ Planned platforms:
 ## Guides
 
 - [Apple README](apple/README.md): SwiftPM setup, parsing, XML errors, SwiftUI rendering, example app, and tests.
-- [Android README](android/README.md): Gradle setup, Kotlin parsing, Compose UI, Android sample app, and packaging.
+- [Android README](android/README.md): Gradle setup, parsing and XML errors, Compose rendering, media handling, example app, tests, and packaging.
 - [Platform Guide](docs/platform-guide.md): library philosophy, package boundaries, and Apple, Android, React Native, and Flutter direction.
 - [Roadmap](docs/roadmap.md): public project direction, milestones, and release priorities.
 - [Changelog](CHANGELOG.md): user-facing release history and unreleased changes.
@@ -71,11 +78,11 @@ Testing and conformance commands are documented in the [Apple README](apple/READ
 
 ## Versioning And Releases
 
-A tracked snapshot of the Apple package is published to [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) with semantic version tags so Swift Package Manager can resolve package versions correctly. Android publishes Maven-style artifacts directly from this monorepo; a separate Android source repository is not required. React Native will publish an npm package, and Flutter will publish through pub.dev directly from their monorepo directories.
+A tracked snapshot of the Apple package is published to [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) with semantic version tags so Swift Package Manager can resolve package versions correctly. Android releases are packaged in this monorepo and uploaded to Maven Central for validation and maintainer approval; a separate Android source repository is not required. React Native will publish an npm package, and Flutter will publish through pub.dev directly from their monorepo directories.
 
 Pull requests that change Apple source, the iOS example, shared test data, or `apple/Package.swift` run the Apple package tests and build the example app. Pull requests that change Android source, shared test data, or Android Gradle configuration run Android tests and build the Android sample app. Completed changes can be merged to `main` without publishing a release.
 
-When a release is ready, a maintainer manually runs the central release workflow and selects a patch, minor, or major version bump. That workflow calculates the version once and passes its tag to reusable platform publishers. The Apple publisher updates `ccda-swift`, the Android publisher validates and packages Maven artifacts, and the coordinator applies the same tag name to the corresponding `ccda-kit` commit. Future React Native and Flutter publishers will consume the same coordinated version.
+When a release is ready, a maintainer manually runs the central release workflow and selects a patch, minor, or major version bump. That workflow calculates the version once and passes its tag to reusable platform publishers. The Apple publisher updates `ccda-swift`; the Android publisher builds, signs, and uploads Maven artifacts for Central validation and maintainer approval; and the coordinator applies the same tag name to the corresponding `ccda-kit` commit. Future React Native and Flutter publishers will consume the same coordinated version.
 
 Release notes are generated from commits since the previous tag. Human-authored release history should be tracked in [CHANGELOG.md](CHANGELOG.md).
 
