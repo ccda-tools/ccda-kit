@@ -1,5 +1,5 @@
 {
-  "name": "@ccda-kit/react-native-example",
+  "name": "@ccda-tools/react-native-example",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
     "prepare:package": "npm --prefix .. run build"
   },
   "dependencies": {
-    "@ccda-kit/react-native": "file:..",
+    "@ccda-tools/react-native": "file:..",
     "@react-navigation/native": "6.1.18",
     "@react-navigation/native-stack": "6.11.0",
     "react": "18.2.0",

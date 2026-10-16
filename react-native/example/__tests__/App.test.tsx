@@ -3,12 +3,12 @@ import {Button, Pressable, Text} from 'react-native';
 import renderer, {act} from 'react-test-renderer';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
-import {parseCCDAXml} from '@ccda-kit/react-native';
+import {parseCCDAXml} from '@ccda-tools/react-native';
 import {NativeStackView} from '@react-navigation/native-stack';
 import App from '../App';
 import {samples} from '../src/samples';
 
-jest.mock('@ccda-kit/react-native', () => {
+jest.mock('@ccda-tools/react-native', () => {
   const ReactRuntime = require('react');
   const NativeText = require('react-native').Text;
   return {
