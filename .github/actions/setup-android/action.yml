@@ -1,5 +1,5 @@
 name: Setup Android toolchain
-description: Install Java and restore Gradle caches.
+description: Install Java and restore Gradle dependencies, wrapper, and task-output caches.
 
 runs:
   using: composite
@@ -12,3 +12,7 @@ runs:
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
+      with:
+        # Let repository PRs refresh their branch caches, rather than only saving
+        # on main. setup-gradle separates keys by workflow, job, and matrix.
+        cache-read-only: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork }}

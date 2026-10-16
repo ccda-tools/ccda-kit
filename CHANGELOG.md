@@ -10,6 +10,14 @@ This project follows semantic versioning before and after `1.0.0`, with the expe
 
 - Initial Android Kotlin implementation with parser models, media handling, Jetpack Compose rendering helpers, sample app, and unit coverage against shared C-CDA fixtures.
 - Maven Central deployment automation for signed Android engine and Compose artifacts.
+- Initial React Native package with TypeScript models, native parser bridges for iOS and Android, and lightweight default rendering components.
+- React Native CocoaPods helper that wires the matching published Swift engine
+  into the bridge during pod installation, with a local-source override for development.
+- Example-owned local native-engine overrides and separate local/published
+  dependency CI modes; distributed React Native dependencies default to releases.
+- React Native Jest, TypeScript, package-build, pull-request, and coordinated npm publishing workflows.
+- React Native shared-sample example, light and dark theme tokens, complete
+  document renderer overrides, inline images, and optional in-app attachment previews.
 
 ### Changed
 

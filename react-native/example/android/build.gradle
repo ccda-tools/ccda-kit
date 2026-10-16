@@ -1,0 +1,34 @@
+buildscript {
+    ext {
+        buildToolsVersion = "35.0.0"
+        minSdkVersion = 26
+        compileSdkVersion = 35
+        targetSdkVersion = 35
+        ndkVersion = "26.1.10909125"
+        kotlinVersion = "2.0.21"
+        // Used by published-dependency checks; local mode substitutes source below.
+        ccdaKitVersion = new groovy.json.JsonSlurper().parse(file("../engine-version.json")).version
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.7.3")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+    }
+}
+
+apply plugin: "com.facebook.react.rootproject"
+
+// Development substitution belongs to this host, not the published RN library.
+if ((System.getenv('CCDA_EXAMPLE_ENGINE_SOURCE') ?: 'local') == 'local') {
+    allprojects {
+        configurations.configureEach {
+            resolutionStrategy.dependencySubstitution {
+                substitute module('io.github.shahzaibiqbal.ccdakit:ccda-engine') using project(':ccda-engine')
+            }
+        }
+    }
+}

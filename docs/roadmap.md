@@ -22,6 +22,7 @@ The first implementations are available for Apple and Android platforms:
 - `android/ccda-engine`: Kotlin parser and normalized model layer.
 - `android/ccda-compose`: optional Jetpack Compose rendering helpers.
 - `android/sample-app`: Android example app using shared sample data.
+- `react-native`: initial TypeScript API, native parser bridges, and lightweight rendering components.
 
 ## Current Limitations
 
@@ -48,9 +49,15 @@ The first implementations are available for Apple and Android platforms:
 
 ### 3. React Native
 
-- Provide a JavaScript and TypeScript package surface backed by the native Swift and Kotlin implementations.
-- Add native iOS and Android bridges instead of introducing another parser implementation.
-- Provide React Native components for rendering parsed document structures.
+- Harden the initial JavaScript and TypeScript package surface backed by the native Swift and Kotlin implementations.
+- Expand React Native example app coverage and harden native installation and
+  release packaging for npm.
+- Expand React Native rendering components as the native UI theme stabilizes.
+- Add an XML document picker to the example; file selection and permissions
+  remain host-app responsibilities.
+- Reuse presentation entry points from `CCDAUI` and `ccda-compose` for attachment
+  previews in a future refactor. Current bridge-owned previews remain optional,
+  with `renderMedia` and `onOpenMedia` preserving host control.
 
 ### 4. Flutter
 
