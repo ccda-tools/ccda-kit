@@ -6,6 +6,8 @@ buildscript {
         targetSdkVersion = 35
         ndkVersion = "26.1.10909125"
         kotlinVersion = "2.0.21"
+        // Used by published-dependency checks; local mode substitutes source below.
+        ccdaKitVersion = new groovy.json.JsonSlurper().parse(file("../engine-version.json")).version
     }
     repositories {
         google()
@@ -19,3 +21,14 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+// Development substitution belongs to this host, not the published RN library.
+if ((System.getenv('CCDA_EXAMPLE_ENGINE_SOURCE') ?: 'local') == 'local') {
+    allprojects {
+        configurations.configureEach {
+            resolutionStrategy.dependencySubstitution {
+                substitute module('io.github.shahzaibiqbal.ccdakit:ccda-engine') using project(':ccda-engine')
+            }
+        }
+    }
+}

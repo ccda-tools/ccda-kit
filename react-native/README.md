@@ -37,18 +37,41 @@ npm install @ccda-kit/react-native
 
 ### iOS
 
-The iOS bridge imports `CCDAEngine`. Apps should add the generated Swift package distribution to their Xcode project:
+The iOS bridge imports `CCDAEngine` from the published Swift package. Add the
+library's helper near the top of your app's `ios/Podfile` (Node resolution also
+supports hoisted dependencies):
 
-```text
-https://github.com/ccda-tools/ccda-swift.git
+```ruby
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve("@ccda-kit/react-native/ios/ccda_pods.rb", {paths: [process.argv[1]]})',
+  __dir__]).strip
 ```
 
-Attach the `CCDAEngine` product to the `ccda-kit-react-native` CocoaPods target
-and add the package's build products directory to that target's Swift import
-paths. The example app's `ios/Podfile` does this in its `post_install` hook
-because the Swift bridge is compiled as part of the CocoaPods target. The app
-receives the engine through the bridge's static library, so it should not also
-link the engine directly.
+Then call it in your existing `post_install` block, after
+`react_native_post_install`:
+
+```ruby
+post_install do |installer|
+  react_native_post_install(installer, config[:reactNativePath])
+  ccda_post_install(installer)
+end
+```
+
+Run `bundle exec pod install` from `ios/`. The helper adds
+`https://github.com/ccda-tools/ccda-swift.git` to the generated Pods project,
+pins it to the npm package's exact release version, links `CCDAEngine` to the
+bridge target, and configures its Swift module search path. No manual Xcode
+package setup is needed. Xcode resolves/downloads the Swift package during
+package resolution or the next build; `pod install` configures the reference.
+The matching Swift release must already be published.
+
+The host receives the engine through the bridge; do not also link it directly
+to the app. Remove any previous manual engine wiring from the Podfile when
+adopting the helper. Monorepo development can pass
+`engine_path: File.expand_path('/path/to/apple')` to use local source, as the
+example does explicitly. Local source is never selected automatically.
+An explicit `engine_version: '1.0.0'` selects a different published release for
+compatibility testing. iOS 16 or newer is required.
 
 ### Android
 
@@ -61,7 +84,9 @@ repositories {
 }
 ```
 
-Inside this monorepo, the React Native Android module can use the local `:ccda-engine` project when it is included by the host Gradle build.
+The library always declares a Maven dependency. The monorepo example supplies
+its own Gradle dependency substitution for local development; the library does
+not detect or select local projects.
 Android requires API 26 or newer, compile SDK 35 or newer, Java 17, and Kotlin
 2.0.21 or newer to consume the native engine artifacts. The example uses Gradle
 8.9 and Android Gradle Plugin 8.7.3. The
@@ -189,4 +214,8 @@ Release publishing is handled by `.github/workflows/publish-react-native.yml`. T
 
 ## Example App
 
-The complete runnable example lives under [`example/`](example/README.md). It includes the React Native package metadata, Metro/Babel setup, Android and iOS projects, a local Android `:ccda-engine` dependency, and the local Apple `CCDAEngine` Swift package.
+The runnable example lives under [`example/`](example/README.md). It uses the
+local React Native wrapper with example-owned native engine overrides by
+default. Set `CCDA_EXAMPLE_ENGINE_SOURCE=published` to exercise the published
+native engines pinned in `example/engine-version.json`. PR CI checks both modes.
+The example and its overrides are excluded from the npm package.

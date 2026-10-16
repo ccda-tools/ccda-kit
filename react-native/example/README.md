@@ -60,13 +60,56 @@ cd ios
 ruby -rshellwords -e 'puts "export NODE_BINARY=#{Shellwords.escape(ARGV.fetch(0))}"' "$(node -p process.execPath)" > .xcode.env.local
 ```
 
-The Podfile attaches the local `apple/` Swift package's `CCDAEngine` product
-to the React Native bridge pod target and adds its module search path.
+By default, this example passes the local `apple/` package path to
+`ccda_post_install`. Android substitutes the published engine coordinate with
+the local `android/ccda-engine` project. Both overrides are explicitly configured
+in this example; the library defaults to published dependencies.
 The app receives the engine through the bridge's static library; linking the
 engine directly to the app as well would produce duplicate symbols.
 The example requires iOS 16 or newer. The Podfile applies that minimum to
 pod targets as well; rerun `bundle exec pod install --no-repo-update` after
 updating the Podfile to refresh the generated Pods project.
+
+## Native dependency modes
+
+The example always uses the local React Native wrapper (`file:..`). Native engine
+selection is separate:
+
+| Mode | iOS engine | Android engine |
+| --- | --- | --- |
+| `local` (default) | Local `apple/` Swift package | Local Gradle project via dependency substitution |
+| `published` | Versioned `ccda-tools/ccda-swift` package | Maven Central artifact |
+
+To check the consumer dependency setup, set this in the terminal used for pod
+installation and app commands:
+
+```bash
+export CCDA_EXAMPLE_ENGINE_SOURCE=published
+```
+
+Published mode reads the same exact engine version for both platforms from
+`engine-version.json` (currently `1.0.0`). This pin is independent of the
+unreleased wrapper's development version. Update it only after that engine
+version is available in both distribution locations. A missing release fails
+resolution; it does not fall back to local source.
+
+To return to source development:
+
+```bash
+unset CCDA_EXAMPLE_ENGINE_SOURCE
+```
+
+After switching modes, rerun pod installation for iOS and rebuild the native
+app when builds are permitted. Metro reloads cannot change native dependencies.
+PR CI has separate local and published jobs for both platforms. The native
+Apple and Android suites validate engine source; published-mode example jobs
+validate the wrapper against released engines. This does not install the wrapper
+from npm; a registry smoke check remains a separate release verification step.
+
+All example files, local paths, substitutions, and the compatibility version pin
+are excluded from the npm package. Published hosts use the library defaults:
+Maven Central on Android and `ccda_post_install(installer)` on iOS, both matching
+the npm release version.
 
 ## Run
 

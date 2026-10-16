@@ -24,6 +24,18 @@ and inspect the snapshot diff.
 
 ## Native iOS bridge
 
+The CocoaPods integration helper has library tests that create temporary Xcode
+projects without building or downloading packages. With the example's pinned
+Ruby dependencies installed, run from `react-native/example/`:
+
+```bash
+bundle exec ruby ../ios/Tests/ccda_pods_test.rb
+```
+
+These cover published version pinning and explicit version overrides, local
+source selection, repeat installs, source switching, bridge-only linking,
+search paths, and installation errors.
+
 `ios/Tests/CCDAMediaBridgeTests.m` belongs to the pod's optional `Native` test
 specification. It is not an example-app test target. Opt a development test host
 into it with the normal pod dependency:
@@ -56,6 +68,12 @@ existing monorepo Gradle host the module task is:
 ```
 
 ## Release verification
+
+PR native jobs run the same host in separate `local` and `published` engine
+modes. Example-owned overrides select source in local mode; published mode uses
+the release pinned in `example/engine-version.json` and never falls back to
+source. Both modes use the local RN wrapper. See the example's README for mode
+selection and how this differs from installing the wrapper from npm.
 
 Native suites require compilation and a simulator/device. Adding their source
 does not mean they have run. Device pixel baselines, measured scroll performance,

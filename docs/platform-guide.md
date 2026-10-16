@@ -97,6 +97,12 @@ React Native:
 
 - JavaScript/TypeScript package surface under `react-native/src`.
 - Native iOS bridge backed by the Swift Apple implementation.
+- The library's CocoaPods `post_install` helper links the matching published
+  Swift engine into the bridge. Android always declares its Maven coordinate.
+- The example owns explicit local-engine overrides for development. Separate
+  CI modes check local engines and pinned published engines; example overrides
+  are excluded from npm. Native source suites remain in the Apple and Android
+  projects.
 - Native Android bridge backed by the Kotlin Android implementation.
 - React Native components for rendering parsed document structures.
 - Package source and example entry point under `react-native/`.

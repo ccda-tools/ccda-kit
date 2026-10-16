@@ -2,5 +2,12 @@ rootProject.name = 'CCDAExample'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
-include ':ccda-engine'
-project(':ccda-engine').projectDir = file('../../../android/ccda-engine')
+
+def engineSource = System.getenv('CCDA_EXAMPLE_ENGINE_SOURCE') ?: 'local'
+if (!(engineSource in ['local', 'published'])) {
+    throw new GradleException('CCDA_EXAMPLE_ENGINE_SOURCE must be local or published')
+}
+if (engineSource == 'local') {
+    include ':ccda-engine'
+    project(':ccda-engine').projectDir = file('../../../android/ccda-engine')
+}

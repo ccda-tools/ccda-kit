@@ -7,6 +7,12 @@ require Pod::Executable.execute_command('node', ['-p',
 
 platform :ios, '16.0'
 prepare_react_native_project!
+require_relative '../../ios/ccda_pods'
+
+# This development override is confined to the example. Published consumers
+# simply call ccda_post_install(installer), which defaults to the remote release.
+engine_source = ENV.fetch('CCDA_EXAMPLE_ENGINE_SOURCE', 'local')
+raise 'CCDA_EXAMPLE_ENGINE_SOURCE must be local or published' unless %w[local published].include?(engine_source)
 
 # Xcode launched from Finder does not inherit nvm's PATH. Capture the real
 # executable during pod installation, while preserving explicit local overrides.
@@ -59,39 +65,11 @@ target 'CCDAExample' do
       end
     end
 
-    # The bridge owns the engine link. Linking it directly to the app as well
-    # would duplicate the SwiftPM objects embedded in the bridge's archive.
-    package_reference = pods_project.root_object.package_references.find do |reference|
-      reference.relative_path == '../../../../apple'
-    end
-    unless package_reference
-      package_reference = pods_project.new(Xcodeproj::Project::Object::XCLocalSwiftPackageReference)
-      package_reference.relative_path = '../../../../apple'
-      pods_project.root_object.package_references << package_reference
-    end
-
-    bridge_target = pods_project.targets.find { |target| target.name == 'ccda-kit-react-native' }
-    if bridge_target
-      # CocoaPods puts this target in a product subdirectory; SwiftPM emits
-      # CCDAEngine.swiftmodule in the shared configuration products directory.
-      bridge_target.build_configurations.each do |build_configuration|
-        include_paths = Array(build_configuration.build_settings['SWIFT_INCLUDE_PATHS'] || '$(inherited)')
-        build_configuration.build_settings['SWIFT_INCLUDE_PATHS'] = (include_paths + ['$(PODS_CONFIGURATION_BUILD_DIR)']).uniq
-      end
-
-      package_product = bridge_target.package_product_dependencies.find { |dependency| dependency.product_name == 'CCDAEngine' }
-      unless package_product
-        package_product = pods_project.new(Xcodeproj::Project::Object::XCSwiftPackageProductDependency)
-        package_product.package = package_reference
-        package_product.product_name = 'CCDAEngine'
-        bridge_target.package_product_dependencies << package_product
-      end
-
-      unless bridge_target.frameworks_build_phase.files.any? { |file| file.product_ref == package_product }
-        build_file = pods_project.new(Xcodeproj::Project::Object::PBXBuildFile)
-        build_file.product_ref = package_product
-        bridge_target.frameworks_build_phase.files << build_file
-      end
+    if engine_source == 'local'
+      ccda_post_install(installer, engine_path: File.expand_path('../../../apple', __dir__))
+    else
+      engine_version = JSON.parse(File.read(File.join(__dir__, '..', 'engine-version.json'))).fetch('version')
+      ccda_post_install(installer, engine_version: engine_version)
     end
   end
 end

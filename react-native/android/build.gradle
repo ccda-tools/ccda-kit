@@ -51,10 +51,6 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:1.2.1"
     androidTestImplementation "androidx.test:runner:1.6.2"
 
-    if (findProject(":ccda-engine") != null) {
-        implementation project(":ccda-engine")
-    } else {
-        def packageVersion = new groovy.json.JsonSlurper().parse(file("../package.json")).version
-        implementation "io.github.shahzaibiqbal.ccdakit:ccda-engine:${getExtOrDefault("ccdaKitVersion", packageVersion)}"
-    }
+    def packageVersion = new groovy.json.JsonSlurper().parse(file("../package.json")).version
+    implementation "io.github.shahzaibiqbal.ccdakit:ccda-engine:${getExtOrDefault("ccdaKitVersion", packageVersion)}"
 }

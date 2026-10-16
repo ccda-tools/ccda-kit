@@ -70,8 +70,14 @@ jobs:
           npx --no-install react-native bundle --platform android --dev false --entry-file index.js --bundle-output "${RUNNER_TEMP}/example.android.js" --max-workers 2
 
   android-build:
-    name: React Native Android Build
+    name: React Native Android (${{ matrix.engine_source }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine_source: [local, published]
+    env:
+      CCDA_EXAMPLE_ENGINE_SOURCE: ${{ matrix.engine_source }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -93,8 +99,14 @@ jobs:
         run: ./gradlew :app:assembleDebug
 
   ios-build:
-    name: React Native iOS Build
+    name: React Native iOS (${{ matrix.engine_source }})
     runs-on: macos-26
+    strategy:
+      fail-fast: false
+      matrix:
+        engine_source: [local, published]
+    env:
+      CCDA_EXAMPLE_ENGINE_SOURCE: ${{ matrix.engine_source }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-apple
@@ -116,6 +128,9 @@ jobs:
           npm ci
           npm run build
           npm ci --prefix example
+      - name: Test library CocoaPods integration
+        working-directory: react-native/example
+        run: bundle exec ruby ../ios/Tests/ccda_pods_test.rb
       - name: Install pods
         working-directory: react-native/example/ios
         run: bundle exec pod install --no-repo-update

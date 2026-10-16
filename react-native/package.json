@@ -15,6 +15,7 @@
     "android/build.gradle",
     "android/src/main",
     "ios/*.{h,m,mm,swift}",
+    "ios/*.rb",
     "ios/Tests/*.m",
     "src/index.ts",
     "src/types.ts",
