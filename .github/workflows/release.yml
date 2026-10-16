@@ -120,12 +120,25 @@ jobs:
       MAVEN_SIGNING_KEY: ${{ secrets.MAVEN_SIGNING_KEY }}
       MAVEN_SIGNING_PASSWORD: ${{ secrets.MAVEN_SIGNING_PASSWORD }}
 
+  react-native:
+    name: Publish React Native
+    needs: version
+    permissions:
+      contents: read
+      id-token: write
+    uses: ./.github/workflows/publish-react-native.yml
+    with:
+      release_tag: ${{ needs.version.outputs.tag }}
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   toolkit:
     name: Tag And Release Toolkit
     needs:
       - version
       - apple
       - android
+      - react-native
     runs-on: ubuntu-latest
 
     steps:

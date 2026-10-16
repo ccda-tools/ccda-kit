@@ -2,7 +2,8 @@
 
 Default UI components should make C-CDA documents feel readable, calm, and clinically useful without pretending to be a full host app design system.
 
-This guide applies to `CCDAUI` on Apple and `ccda-compose` on Android.
+This guide applies to `CCDAUI` on Apple, `ccda-compose` on Android, and the
+default React Native components.
 
 ## Design Goals
 
@@ -90,6 +91,12 @@ Android tokens live in `CCDATheme`:
 
 When adding new default components, use these tokens first. Add new tokens only when the component has a repeated need across multiple views.
 
+React Native tokens live in `CCDATheme.light` and `CCDATheme.dark` under
+`react-native/src/theme.ts`. `useCCDATheme()` selects the system appearance.
+The palettes share the native primary (`#1A6D7A`), secondary (`#474F9E`),
+attachment (`#BD5E1F`), and 8-point corner radius. Dark appearance uses lighter
+text accents against dark panels while retaining the teal header background.
+
 ## Native Feel
 
 Apple:
@@ -103,6 +110,16 @@ Android:
 - Use Jetpack Compose and Material 3.
 - Use Material icons for action buttons and section identity.
 - Keep layouts compatible with light and dark Material color schemes.
+
+React Native:
+
+- Keep one virtualized `FlatList` for the document, joining consecutive rows
+  visually into section panels.
+- Use labeled header metadata and patient fields, including postal addresses.
+- Preserve timestamp precision, fractional seconds, and source time-zone offsets
+  when formatting clinical dates and times.
+- Keep header, patient, section, entry, and media renderer overrides available
+  to host apps.
 
 ## Boundaries
 

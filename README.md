@@ -38,7 +38,7 @@ Available Swift products:
 
 The Swift package intentionally exposes only these two products. Repository tooling and test-data helpers are not public SwiftPM products.
 
-Platform implementations are developed together in this monorepo. The Apple package and iOS example live under `apple/`; Android source lives under `android/`; future React Native and Flutter packages will own their builds and examples under their respective platform directories.
+Platform implementations are developed together in this monorepo. The Apple package and iOS example live under `apple/`; Android source lives under `android/`; the initial React Native package lives under `react-native/`; future Flutter work will own its build and example under `flutter/`.
 
 Supported Apple platforms:
 
@@ -52,9 +52,14 @@ Android modules:
 - Jetpack Compose rendering helpers
 - Android sample app using shared C-CDA test data
 
+React Native package:
+
+- TypeScript API and normalized model types
+- Native iOS and Android parser bridges backed by the Swift and Kotlin implementations
+- Lightweight default React Native rendering components
+
 Planned platforms:
 
-- React Native through native iOS and Android bridges
 - Flutter through native iOS and Android bridges after React Native
 
 ## Guides
@@ -62,6 +67,7 @@ Planned platforms:
 - [Apple README](apple/README.md): SwiftPM setup, parsing, XML errors, SwiftUI rendering, example app, and tests.
 - [Android README](android/README.md): Gradle setup, parsing and XML errors, Compose rendering, media handling, example app, tests, and packaging.
 - [Platform Guide](docs/platform-guide.md): library philosophy, package boundaries, and Apple, Android, React Native, and Flutter direction.
+- [React Native README](react-native/README.md): TypeScript setup, native bridge behavior, parsing, and default components.
 - [Roadmap](docs/roadmap.md): public project direction, milestones, and release priorities.
 - [Changelog](CHANGELOG.md): user-facing release history and unreleased changes.
 - [Contributing Guide](CONTRIBUTING.md): local development, test expectations, and pull request notes.
@@ -78,11 +84,11 @@ Testing and conformance commands are documented in the [Apple README](apple/READ
 
 ## Versioning And Releases
 
-A tracked snapshot of the Apple package is published to [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) with semantic version tags so Swift Package Manager can resolve package versions correctly. Android releases are packaged in this monorepo and uploaded to Maven Central for validation and maintainer approval; a separate Android source repository is not required. React Native will publish an npm package, and Flutter will publish through pub.dev directly from their monorepo directories.
+A tracked snapshot of the Apple package is published to [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) with semantic version tags so Swift Package Manager can resolve package versions correctly. Android releases are packaged in this monorepo and uploaded to Maven Central for validation and maintainer approval; a separate Android source repository is not required. React Native packages are built and published to npm from `react-native/`, and Flutter will publish through pub.dev directly from its monorepo directory.
 
 Pull requests that change Apple source, the iOS example, shared test data, or `apple/Package.swift` run the Apple package tests and build the example app. Pull requests that change Android source, shared test data, or Android Gradle configuration run Android tests and build the Android sample app. Completed changes can be merged to `main` without publishing a release.
 
-When a release is ready, a maintainer manually runs the central release workflow and selects a patch, minor, or major version bump. That workflow calculates the version once and passes its tag to reusable platform publishers. The Apple publisher updates `ccda-swift`; the Android publisher builds, signs, and uploads Maven artifacts for Central validation and maintainer approval; and the coordinator applies the same tag name to the corresponding `ccda-kit` commit. Future React Native and Flutter publishers will consume the same coordinated version.
+When a release is ready, a maintainer manually runs the central release workflow and selects a patch, minor, or major version bump. That workflow calculates the version once and passes its tag to reusable platform publishers. The Apple publisher updates `ccda-swift`; the Android publisher builds, signs, and uploads Maven artifacts for Central validation and maintainer approval; the React Native publisher tests, builds, and publishes the npm package; and the coordinator applies the same tag name to the corresponding `ccda-kit` commit. Future Flutter publishing will consume the same coordinated version.
 
 Release notes are generated from commits since the previous tag. Human-authored release history should be tracked in [CHANGELOG.md](CHANGELOG.md).
 

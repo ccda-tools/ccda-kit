@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "lib/typescript",
+    "emitDeclarationOnly": false,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "jsx": "react",
+    "noEmit": false,
+    "outDir": "lib/commonjs",
+    "sourceMap": true
+  },
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/__tests__/**"]
+}

@@ -1,0 +1,1683 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`default UI appearance snapshots preserves the dark document appearance 1`] = `
+<RCTScrollView
+  contentContainerStyle={
+    {
+      "padding": 16,
+    }
+  }
+  data={
+    [
+      {
+        "document": {
+          "header": {
+            "documentId": {
+              "extensionValue": "doc-1",
+              "root": "2.16.840.1.113883.3.72",
+              "stringValue": "2.16.840.1.113883.3.72 / doc-1",
+            },
+            "effectiveTime": {
+              "day": 15,
+              "fractionalSecond": null,
+              "hasTime": false,
+              "hour": null,
+              "minute": null,
+              "month": 1,
+              "rawValue": "20260115",
+              "second": null,
+              "timeZoneOffset": null,
+              "year": 2026,
+            },
+            "templateIds": [],
+            "title": "Synthetic Summary of Care",
+          },
+          "id": "2.16.840.1.113883.3.72 / doc-1",
+          "patient": {
+            "addresses": [],
+            "birthTime": null,
+            "ethnicity": null,
+            "gender": {
+              "code": "F",
+              "displayName": "Female",
+            },
+            "ids": [],
+            "maritalStatus": null,
+            "name": {
+              "family": "Patient",
+              "given": [
+                "Test",
+              ],
+              "prefix": null,
+            },
+            "race": null,
+            "telecoms": [],
+          },
+          "sections": [
+            {
+              "code": {
+                "code": "11450-4",
+                "displayName": "Problem List",
+              },
+              "entries": [
+                {
+                  "children": [
+                    {
+                      "children": [],
+                      "code": {
+                        "displayName": "Child detail",
+                      },
+                      "effectiveTime": null,
+                      "id": "entry-1-child",
+                      "identifiers": [],
+                      "status": null,
+                      "templateIds": [],
+                      "textReference": null,
+                      "type": "observation",
+                      "value": {
+                        "type": "ST",
+                        "value": "Controlled",
+                      },
+                    },
+                  ],
+                  "code": {
+                    "code": "38341003",
+                    "displayName": "Hypertension",
+                  },
+                  "effectiveTime": null,
+                  "id": "entry-1",
+                  "identifiers": [],
+                  "status": "active",
+                  "templateIds": [],
+                  "textReference": null,
+                  "type": "observation",
+                  "value": null,
+                },
+              ],
+              "id": "section-1",
+              "kind": "problems",
+              "media": [
+                {
+                  "id": "media-1",
+                  "isCached": false,
+                  "isImage": false,
+                  "mediaType": {
+                    "kind": "applicationPDF",
+                    "mimeType": "application/pdf",
+                  },
+                  "payload": {
+                    "kind": "unavailable",
+                  },
+                  "representation": {
+                    "kind": "base64",
+                    "rawValue": "B64",
+                  },
+                },
+              ],
+              "narrativeText": "Synthetic problem narrative.",
+              "templateIds": [],
+              "title": "Problems",
+            },
+          ],
+        },
+        "key": "header",
+        "kind": "header",
+      },
+      {
+        "key": "patient",
+        "kind": "patient",
+        "patient": {
+          "addresses": [],
+          "birthTime": null,
+          "ethnicity": null,
+          "gender": {
+            "code": "F",
+            "displayName": "Female",
+          },
+          "ids": [],
+          "maritalStatus": null,
+          "name": {
+            "family": "Patient",
+            "given": [
+              "Test",
+            ],
+            "prefix": null,
+          },
+          "race": null,
+          "telecoms": [],
+        },
+      },
+      {
+        "key": "section-section-1",
+        "kind": "section",
+        "section": {
+          "code": {
+            "code": "11450-4",
+            "displayName": "Problem List",
+          },
+          "entries": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "code": {
+                    "displayName": "Child detail",
+                  },
+                  "effectiveTime": null,
+                  "id": "entry-1-child",
+                  "identifiers": [],
+                  "status": null,
+                  "templateIds": [],
+                  "textReference": null,
+                  "type": "observation",
+                  "value": {
+                    "type": "ST",
+                    "value": "Controlled",
+                  },
+                },
+              ],
+              "code": {
+                "code": "38341003",
+                "displayName": "Hypertension",
+              },
+              "effectiveTime": null,
+              "id": "entry-1",
+              "identifiers": [],
+              "status": "active",
+              "templateIds": [],
+              "textReference": null,
+              "type": "observation",
+              "value": null,
+            },
+          ],
+          "id": "section-1",
+          "kind": "problems",
+          "media": [
+            {
+              "id": "media-1",
+              "isCached": false,
+              "isImage": false,
+              "mediaType": {
+                "kind": "applicationPDF",
+                "mimeType": "application/pdf",
+              },
+              "payload": {
+                "kind": "unavailable",
+              },
+              "representation": {
+                "kind": "base64",
+                "rawValue": "B64",
+              },
+            },
+          ],
+          "narrativeText": "Synthetic problem narrative.",
+          "templateIds": [],
+          "title": "Problems",
+        },
+      },
+      {
+        "entry": {
+          "children": [
+            {
+              "children": [],
+              "code": {
+                "displayName": "Child detail",
+              },
+              "effectiveTime": null,
+              "id": "entry-1-child",
+              "identifiers": [],
+              "status": null,
+              "templateIds": [],
+              "textReference": null,
+              "type": "observation",
+              "value": {
+                "type": "ST",
+                "value": "Controlled",
+              },
+            },
+          ],
+          "code": {
+            "code": "38341003",
+            "displayName": "Hypertension",
+          },
+          "effectiveTime": null,
+          "id": "entry-1",
+          "identifiers": [],
+          "status": "active",
+          "templateIds": [],
+          "textReference": null,
+          "type": "observation",
+          "value": null,
+        },
+        "key": "entry-section-1-entry-1",
+        "kind": "entry",
+      },
+      {
+        "endsSection": true,
+        "key": "media-section-1-media-1",
+        "kind": "media",
+        "media": {
+          "id": "media-1",
+          "isCached": false,
+          "isImage": false,
+          "mediaType": {
+            "kind": "applicationPDF",
+            "mimeType": "application/pdf",
+          },
+          "payload": {
+            "kind": "unavailable",
+          },
+          "representation": {
+            "kind": "base64",
+            "rawValue": "B64",
+          },
+        },
+      },
+    ]
+  }
+  getItem={[Function]}
+  getItemCount={[Function]}
+  initialNumToRender={8}
+  keyExtractor={[Function]}
+  maxToRenderPerBatch={8}
+  onContentSizeChange={[Function]}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={true}
+  renderItem={[Function]}
+  scrollEventThrottle={0.0001}
+  stickyHeaderIndices={[]}
+  style={
+    {
+      "backgroundColor": "#101719",
+      "flex": 1,
+    }
+  }
+  viewabilityConfigCallbackPairs={[]}
+  windowSize={7}
+>
+  <View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#1A6D7A",
+            "borderRadius": 8,
+            "gap": 12,
+            "marginBottom": 14,
+            "padding": 16,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "row",
+              "gap": 8,
+            }
+          }
+        >
+          <Text
+            accessible={false}
+            style={
+              {
+                "color": "#FFFFFF",
+                "fontSize": 24,
+              }
+            }
+          >
+            ▤
+          </Text>
+          <Text
+            accessibilityRole="header"
+            style={
+              {
+                "color": "#FFFFFF",
+                "flex": 1,
+                "fontSize": 22,
+                "fontWeight": "600",
+              }
+            }
+          >
+            Synthetic Summary of Care
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "backgroundColor": "#FFFFFF24",
+              "borderRadius": 8,
+              "gap": 2,
+              "padding": 10,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#D9EDF0",
+                "fontSize": 11,
+                "fontWeight": "600",
+              }
+            }
+          >
+            Document ID
+          </Text>
+          <Text
+            selectable={true}
+            style={
+              {
+                "color": "#FFFFFF",
+                "fontSize": 13,
+                "lineHeight": 19,
+              }
+            }
+          >
+            2.16.840.1.113883.3.72 / doc-1
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "backgroundColor": "#FFFFFF24",
+              "borderRadius": 8,
+              "gap": 2,
+              "padding": 10,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#D9EDF0",
+                "fontSize": 11,
+                "fontWeight": "600",
+              }
+            }
+          >
+            Effective
+          </Text>
+          <Text
+            selectable={true}
+            style={
+              {
+                "color": "#FFFFFF",
+                "fontSize": 13,
+                "lineHeight": 19,
+              }
+            }
+          >
+            Jan 15, 2026
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#1C2529",
+            "borderRadius": 8,
+            "gap": 12,
+            "padding": 14,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "row",
+              "gap": 8,
+            }
+          }
+        >
+          <Text
+            accessible={false}
+            style={
+              [
+                {
+                  "color": "#80CCD6",
+                  "fontSize": 18,
+                  "width": 18,
+                },
+                {
+                  "color": "#B6BAF2",
+                },
+              ]
+            }
+          >
+            ▣
+          </Text>
+          <Text
+            accessibilityRole="header"
+            style={
+              [
+                {
+                  "color": "#80CCD6",
+                  "flex": 1,
+                  "fontSize": 17,
+                  "fontWeight": "600",
+                },
+                {
+                  "color": "#B6BAF2",
+                },
+              ]
+            }
+          >
+            Patient
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "gap": 2,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#B0BFC6",
+                "fontSize": 11,
+                "fontWeight": "600",
+              }
+            }
+          >
+            NAME
+          </Text>
+          <Text
+            selectable={true}
+            style={
+              {
+                "color": "#EDF3F5",
+                "fontSize": 14,
+                "lineHeight": 21,
+              }
+            }
+          >
+            Test Patient
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "gap": 2,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#B0BFC6",
+                "fontSize": 11,
+                "fontWeight": "600",
+              }
+            }
+          >
+            GENDER
+          </Text>
+          <Text
+            selectable={true}
+            style={
+              {
+                "color": "#EDF3F5",
+                "fontSize": 14,
+                "lineHeight": 21,
+              }
+            }
+          >
+            Female
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#1C2529",
+              "borderRadius": 8,
+              "gap": 12,
+              "padding": 14,
+            },
+            {
+              "marginTop": 14,
+            },
+            {
+              "borderBottomLeftRadius": 0,
+              "borderBottomRightRadius": 0,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "row",
+              "gap": 8,
+            }
+          }
+        >
+          <Text
+            accessible={false}
+            style={
+              [
+                {
+                  "color": "#80CCD6",
+                  "fontSize": 18,
+                  "width": 18,
+                },
+                false,
+              ]
+            }
+          >
+            ≡
+          </Text>
+          <Text
+            accessibilityRole="header"
+            style={
+              [
+                {
+                  "color": "#80CCD6",
+                  "flex": 1,
+                  "fontSize": 17,
+                  "fontWeight": "600",
+                },
+                false,
+              ]
+            }
+          >
+            Problems
+          </Text>
+        </View>
+        <Text
+          selectable={true}
+          style={
+            {
+              "color": "#EDF3F5",
+              "fontSize": 14,
+              "lineHeight": 21,
+            }
+          }
+        >
+          Synthetic problem narrative.
+        </Text>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#1C2529",
+              "paddingBottom": 10,
+              "paddingHorizontal": 14,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "#263237",
+              "borderRadius": 8,
+              "gap": 8,
+              "padding": 10,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "flex-start",
+                "flexDirection": "row",
+                "gap": 8,
+              }
+            }
+          >
+            <Text
+              accessible={false}
+              style={
+                [
+                  {
+                    "color": "#80CCD6",
+                    "fontSize": 18,
+                    "width": 18,
+                  },
+                  {
+                    "color": "#B6BAF2",
+                  },
+                ]
+              }
+            >
+              ⌁
+            </Text>
+            <Text
+              selectable={true}
+              style={
+                {
+                  "color": "#EDF3F5",
+                  "flexShrink": 1,
+                  "fontSize": 15,
+                  "fontWeight": "600",
+                }
+              }
+            >
+              Hypertension
+            </Text>
+          </View>
+          <View
+            style={
+              {
+                "gap": 4,
+                "paddingLeft": 26,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#B0BFC6",
+                  "fontSize": 12,
+                  "lineHeight": 18,
+                }
+              }
+            >
+              Status: 
+              active
+            </Text>
+            <View
+              style={
+                {
+                  "borderLeftColor": "#B6BAF2",
+                  "borderLeftWidth": 2,
+                  "marginTop": 4,
+                  "paddingLeft": 8,
+                }
+              }
+            >
+              <Text
+                selectable={true}
+                style={
+                  {
+                    "color": "#EDF3F5",
+                    "fontSize": 12,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                Child detail
+              </Text>
+              <Text
+                selectable={true}
+                style={
+                  {
+                    "color": "#B0BFC6",
+                    "fontSize": 12,
+                    "lineHeight": 18,
+                  }
+                }
+              >
+                Controlled
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#1C2529",
+              "paddingBottom": 10,
+              "paddingHorizontal": 14,
+            },
+            {
+              "borderBottomLeftRadius": 8,
+              "borderBottomRightRadius": 8,
+              "paddingBottom": 14,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "#35291F",
+              "borderRadius": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "gap": 8,
+                "justifyContent": "center",
+                "minHeight": 44,
+                "padding": 10,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "gap": 8,
+                }
+              }
+            >
+              <Text
+                accessible={false}
+                style={
+                  {
+                    "color": "#F2B17E",
+                    "fontSize": 20,
+                  }
+                }
+              >
+                ↳
+              </Text>
+              <Text
+                style={
+                  {
+                    "color": "#EDF3F5",
+                    "flex": 1,
+                    "fontSize": 15,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                PDF
+              </Text>
+            </View>
+            <Text
+              style={
+                {
+                  "color": "#B0BFC6",
+                  "fontSize": 12,
+                  "lineHeight": 18,
+                }
+              }
+            >
+              Attachment unavailable
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;
+
+exports[`default UI appearance snapshots preserves the light document appearance 1`] = `
+<RCTScrollView
+  contentContainerStyle={
+    {
+      "padding": 16,
+    }
+  }
+  data={
+    [
+      {
+        "document": {
+          "header": {
+            "documentId": {
+              "extensionValue": "doc-1",
+              "root": "2.16.840.1.113883.3.72",
+              "stringValue": "2.16.840.1.113883.3.72 / doc-1",
+            },
+            "effectiveTime": {
+              "day": 15,
+              "fractionalSecond": null,
+              "hasTime": false,
+              "hour": null,
+              "minute": null,
+              "month": 1,
+              "rawValue": "20260115",
+              "second": null,
+              "timeZoneOffset": null,
+              "year": 2026,
+            },
+            "templateIds": [],
+            "title": "Synthetic Summary of Care",
+          },
+          "id": "2.16.840.1.113883.3.72 / doc-1",
+          "patient": {
+            "addresses": [],
+            "birthTime": null,
+            "ethnicity": null,
+            "gender": {
+              "code": "F",
+              "displayName": "Female",
+            },
+            "ids": [],
+            "maritalStatus": null,
+            "name": {
+              "family": "Patient",
+              "given": [
+                "Test",
+              ],
+              "prefix": null,
+            },
+            "race": null,
+            "telecoms": [],
+          },
+          "sections": [
+            {
+              "code": {
+                "code": "11450-4",
+                "displayName": "Problem List",
+              },
+              "entries": [
+                {
+                  "children": [
+                    {
+                      "children": [],
+                      "code": {
+                        "displayName": "Child detail",
+                      },
+                      "effectiveTime": null,
+                      "id": "entry-1-child",
+                      "identifiers": [],
+                      "status": null,
+                      "templateIds": [],
+                      "textReference": null,
+                      "type": "observation",
+                      "value": {
+                        "type": "ST",
+                        "value": "Controlled",
+                      },
+                    },
+                  ],
+                  "code": {
+                    "code": "38341003",
+                    "displayName": "Hypertension",
+                  },
+                  "effectiveTime": null,
+                  "id": "entry-1",
+                  "identifiers": [],
+                  "status": "active",
+                  "templateIds": [],
+                  "textReference": null,
+                  "type": "observation",
+                  "value": null,
+                },
+              ],
+              "id": "section-1",
+              "kind": "problems",
+              "media": [
+                {
+                  "id": "media-1",
+                  "isCached": false,
+                  "isImage": false,
+                  "mediaType": {
+                    "kind": "applicationPDF",
+                    "mimeType": "application/pdf",
+                  },
+                  "payload": {
+                    "kind": "unavailable",
+                  },
+                  "representation": {
+                    "kind": "base64",
+                    "rawValue": "B64",
+                  },
+                },
+              ],
+              "narrativeText": "Synthetic problem narrative.",
+              "templateIds": [],
+              "title": "Problems",
+            },
+          ],
+        },
+        "key": "header",
+        "kind": "header",
+      },
+      {
+        "key": "patient",
+        "kind": "patient",
+        "patient": {
+          "addresses": [],
+          "birthTime": null,
+          "ethnicity": null,
+          "gender": {
+            "code": "F",
+            "displayName": "Female",
+          },
+          "ids": [],
+          "maritalStatus": null,
+          "name": {
+            "family": "Patient",
+            "given": [
+              "Test",
+            ],
+            "prefix": null,
+          },
+          "race": null,
+          "telecoms": [],
+        },
+      },
+      {
+        "key": "section-section-1",
+        "kind": "section",
+        "section": {
+          "code": {
+            "code": "11450-4",
+            "displayName": "Problem List",
+          },
+          "entries": [
+            {
+              "children": [
+                {
+                  "children": [],
+                  "code": {
+                    "displayName": "Child detail",
+                  },
+                  "effectiveTime": null,
+                  "id": "entry-1-child",
+                  "identifiers": [],
+                  "status": null,
+                  "templateIds": [],
+                  "textReference": null,
+                  "type": "observation",
+                  "value": {
+                    "type": "ST",
+                    "value": "Controlled",
+                  },
+                },
+              ],
+              "code": {
+                "code": "38341003",
+                "displayName": "Hypertension",
+              },
+              "effectiveTime": null,
+              "id": "entry-1",
+              "identifiers": [],
+              "status": "active",
+              "templateIds": [],
+              "textReference": null,
+              "type": "observation",
+              "value": null,
+            },
+          ],
+          "id": "section-1",
+          "kind": "problems",
+          "media": [
+            {
+              "id": "media-1",
+              "isCached": false,
+              "isImage": false,
+              "mediaType": {
+                "kind": "applicationPDF",
+                "mimeType": "application/pdf",
+              },
+              "payload": {
+                "kind": "unavailable",
+              },
+              "representation": {
+                "kind": "base64",
+                "rawValue": "B64",
+              },
+            },
+          ],
+          "narrativeText": "Synthetic problem narrative.",
+          "templateIds": [],
+          "title": "Problems",
+        },
+      },
+      {
+        "entry": {
+          "children": [
+            {
+              "children": [],
+              "code": {
+                "displayName": "Child detail",
+              },
+              "effectiveTime": null,
+              "id": "entry-1-child",
+              "identifiers": [],
+              "status": null,
+              "templateIds": [],
+              "textReference": null,
+              "type": "observation",
+              "value": {
+                "type": "ST",
+                "value": "Controlled",
+              },
+            },
+          ],
+          "code": {
+            "code": "38341003",
+            "displayName": "Hypertension",
+          },
+          "effectiveTime": null,
+          "id": "entry-1",
+          "identifiers": [],
+          "status": "active",
+          "templateIds": [],
+          "textReference": null,
+          "type": "observation",
+          "value": null,
+        },
+        "key": "entry-section-1-entry-1",
+        "kind": "entry",
+      },
+      {
+        "endsSection": true,
+        "key": "media-section-1-media-1",
+        "kind": "media",
+        "media": {
+          "id": "media-1",
+          "isCached": false,
+          "isImage": false,
+          "mediaType": {
+            "kind": "applicationPDF",
+            "mimeType": "application/pdf",
+          },
+          "payload": {
+            "kind": "unavailable",
+          },
+          "representation": {
+            "kind": "base64",
+            "rawValue": "B64",
+          },
+        },
+      },
+    ]
+  }
+  getItem={[Function]}
+  getItemCount={[Function]}
+  initialNumToRender={8}
+  keyExtractor={[Function]}
+  maxToRenderPerBatch={8}
+  onContentSizeChange={[Function]}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={true}
+  renderItem={[Function]}
+  scrollEventThrottle={0.0001}
+  stickyHeaderIndices={[]}
+  style={
+    {
+      "backgroundColor": "#F3F6F7",
+      "flex": 1,
+    }
+  }
+  viewabilityConfigCallbackPairs={[]}
+  windowSize={7}
+>
+  <View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#1A6D7A",
+            "borderRadius": 8,
+            "gap": 12,
+            "marginBottom": 14,
+            "padding": 16,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "row",
+              "gap": 8,
+            }
+          }
+        >
+          <Text
+            accessible={false}
+            style={
+              {
+                "color": "#FFFFFF",
+                "fontSize": 24,
+              }
+            }
+          >
+            ▤
+          </Text>
+          <Text
+            accessibilityRole="header"
+            style={
+              {
+                "color": "#FFFFFF",
+                "flex": 1,
+                "fontSize": 22,
+                "fontWeight": "600",
+              }
+            }
+          >
+            Synthetic Summary of Care
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "backgroundColor": "#FFFFFF24",
+              "borderRadius": 8,
+              "gap": 2,
+              "padding": 10,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#D9EDF0",
+                "fontSize": 11,
+                "fontWeight": "600",
+              }
+            }
+          >
+            Document ID
+          </Text>
+          <Text
+            selectable={true}
+            style={
+              {
+                "color": "#FFFFFF",
+                "fontSize": 13,
+                "lineHeight": 19,
+              }
+            }
+          >
+            2.16.840.1.113883.3.72 / doc-1
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "backgroundColor": "#FFFFFF24",
+              "borderRadius": 8,
+              "gap": 2,
+              "padding": 10,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#D9EDF0",
+                "fontSize": 11,
+                "fontWeight": "600",
+              }
+            }
+          >
+            Effective
+          </Text>
+          <Text
+            selectable={true}
+            style={
+              {
+                "color": "#FFFFFF",
+                "fontSize": 13,
+                "lineHeight": 19,
+              }
+            }
+          >
+            Jan 15, 2026
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 8,
+            "gap": 12,
+            "padding": 14,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "row",
+              "gap": 8,
+            }
+          }
+        >
+          <Text
+            accessible={false}
+            style={
+              [
+                {
+                  "color": "#1A6D7A",
+                  "fontSize": 18,
+                  "width": 18,
+                },
+                {
+                  "color": "#474F9E",
+                },
+              ]
+            }
+          >
+            ▣
+          </Text>
+          <Text
+            accessibilityRole="header"
+            style={
+              [
+                {
+                  "color": "#1A6D7A",
+                  "flex": 1,
+                  "fontSize": 17,
+                  "fontWeight": "600",
+                },
+                {
+                  "color": "#474F9E",
+                },
+              ]
+            }
+          >
+            Patient
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "gap": 2,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#56636B",
+                "fontSize": 11,
+                "fontWeight": "600",
+              }
+            }
+          >
+            NAME
+          </Text>
+          <Text
+            selectable={true}
+            style={
+              {
+                "color": "#182126",
+                "fontSize": 14,
+                "lineHeight": 21,
+              }
+            }
+          >
+            Test Patient
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "gap": 2,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#56636B",
+                "fontSize": 11,
+                "fontWeight": "600",
+              }
+            }
+          >
+            GENDER
+          </Text>
+          <Text
+            selectable={true}
+            style={
+              {
+                "color": "#182126",
+                "fontSize": 14,
+                "lineHeight": 21,
+              }
+            }
+          >
+            Female
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#FFFFFF",
+              "borderRadius": 8,
+              "gap": 12,
+              "padding": 14,
+            },
+            {
+              "marginTop": 14,
+            },
+            {
+              "borderBottomLeftRadius": 0,
+              "borderBottomRightRadius": 0,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "row",
+              "gap": 8,
+            }
+          }
+        >
+          <Text
+            accessible={false}
+            style={
+              [
+                {
+                  "color": "#1A6D7A",
+                  "fontSize": 18,
+                  "width": 18,
+                },
+                false,
+              ]
+            }
+          >
+            ≡
+          </Text>
+          <Text
+            accessibilityRole="header"
+            style={
+              [
+                {
+                  "color": "#1A6D7A",
+                  "flex": 1,
+                  "fontSize": 17,
+                  "fontWeight": "600",
+                },
+                false,
+              ]
+            }
+          >
+            Problems
+          </Text>
+        </View>
+        <Text
+          selectable={true}
+          style={
+            {
+              "color": "#182126",
+              "fontSize": 14,
+              "lineHeight": 21,
+            }
+          }
+        >
+          Synthetic problem narrative.
+        </Text>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#FFFFFF",
+              "paddingBottom": 10,
+              "paddingHorizontal": 14,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "#F1F3F5",
+              "borderRadius": 8,
+              "gap": 8,
+              "padding": 10,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "flex-start",
+                "flexDirection": "row",
+                "gap": 8,
+              }
+            }
+          >
+            <Text
+              accessible={false}
+              style={
+                [
+                  {
+                    "color": "#1A6D7A",
+                    "fontSize": 18,
+                    "width": 18,
+                  },
+                  {
+                    "color": "#474F9E",
+                  },
+                ]
+              }
+            >
+              ⌁
+            </Text>
+            <Text
+              selectable={true}
+              style={
+                {
+                  "color": "#182126",
+                  "flexShrink": 1,
+                  "fontSize": 15,
+                  "fontWeight": "600",
+                }
+              }
+            >
+              Hypertension
+            </Text>
+          </View>
+          <View
+            style={
+              {
+                "gap": 4,
+                "paddingLeft": 26,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#56636B",
+                  "fontSize": 12,
+                  "lineHeight": 18,
+                }
+              }
+            >
+              Status: 
+              active
+            </Text>
+            <View
+              style={
+                {
+                  "borderLeftColor": "#474F9E",
+                  "borderLeftWidth": 2,
+                  "marginTop": 4,
+                  "paddingLeft": 8,
+                }
+              }
+            >
+              <Text
+                selectable={true}
+                style={
+                  {
+                    "color": "#182126",
+                    "fontSize": 12,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                Child detail
+              </Text>
+              <Text
+                selectable={true}
+                style={
+                  {
+                    "color": "#56636B",
+                    "fontSize": 12,
+                    "lineHeight": 18,
+                  }
+                }
+              >
+                Controlled
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#FFFFFF",
+              "paddingBottom": 10,
+              "paddingHorizontal": 14,
+            },
+            {
+              "borderBottomLeftRadius": 8,
+              "borderBottomRightRadius": 8,
+              "paddingBottom": 14,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "#FFF4E9",
+              "borderRadius": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "gap": 8,
+                "justifyContent": "center",
+                "minHeight": 44,
+                "padding": 10,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "gap": 8,
+                }
+              }
+            >
+              <Text
+                accessible={false}
+                style={
+                  {
+                    "color": "#BD5E1F",
+                    "fontSize": 20,
+                  }
+                }
+              >
+                ↳
+              </Text>
+              <Text
+                style={
+                  {
+                    "color": "#182126",
+                    "flex": 1,
+                    "fontSize": 15,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                PDF
+              </Text>
+            </View>
+            <Text
+              style={
+                {
+                  "color": "#56636B",
+                  "fontSize": 12,
+                  "lineHeight": 18,
+                }
+              }
+            >
+              Attachment unavailable
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;

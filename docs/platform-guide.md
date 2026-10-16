@@ -1,6 +1,6 @@
 # Platform Guide
 
-`ccda-kit` is planned as a multi-platform toolkit with native parser and UI integrations per platform.
+`ccda-kit` is a multi-platform toolkit with native parser and UI integrations per platform.
 
 ## Library Philosophy
 
@@ -10,7 +10,7 @@ The parser layer should understand C-CDA XML and produce stable model objects. I
 
 The UI layer should be optional. Default views should make parsed documents easy to inspect, but host apps should always be able to replace every header, patient, section, entry, and media renderer with their own native components.
 
-The platform layer should feel native on each platform. Apple uses Swift and SwiftUI. Android uses Kotlin and Jetpack Compose helpers. React Native and Flutter should wrap the native Apple and Android parsers instead of adding separate parser implementations.
+The platform layer should feel native on each platform. Apple uses Swift and SwiftUI. Android uses Kotlin and Jetpack Compose helpers. React Native wraps the native Apple and Android parsers. Flutter should also wrap the native Apple and Android parsers instead of adding a separate parser implementation.
 
 Shared test data should keep behavior aligned across platforms. Each parser can expose idiomatic APIs, but the same C-CDA input should produce equivalent normalized summaries wherever possible.
 
@@ -31,6 +31,14 @@ The Apple `CCDAUI` product and Android `ccda-compose` module own:
 - Platform-specific formatting, such as names, postal addresses, values, and display timestamps.
 - Default media presentation for images, PDFs, text, and HTML.
 - Composable views that let host apps provide their own native UI.
+
+The React Native package owns:
+
+- TypeScript APIs and normalized model definitions.
+- Native bridge methods that call the Swift and Kotlin parsers.
+- Lightweight React Native document, section, entry, and media components.
+- Optional bridge-owned native attachment previews, with host rendering and
+  opening callbacks. Reusing native UI-library presentation is deferred.
 
 Example apps own:
 
@@ -85,17 +93,18 @@ Android:
 - Compiled libraries packaged as Maven artifacts without requiring a separate source repository.
 - Android release automation runs tests, builds the sample app, signs versioned artifacts, and uploads them for Maven Central validation and maintainer approval.
 
-See the [Apple README](../apple/README.md) and [Android README](../android/README.md) for installation, parsing, native UI, media handling, examples, tests, and packaging.
-
-## Planned Platforms
-
 React Native:
 
-- JavaScript/TypeScript package surface.
+- JavaScript/TypeScript package surface under `react-native/src`.
 - Native iOS bridge backed by the Swift Apple implementation.
 - Native Android bridge backed by the Kotlin Android implementation.
 - React Native components for rendering parsed document structures.
-- Package source and its example under `react-native/`, published to npm.
+- Package source and example entry point under `react-native/`.
+- Release publishing uses the coordinated toolkit tag and the `NPM_TOKEN` repository secret.
+
+See the [Apple README](../apple/README.md) and [Android README](../android/README.md) for installation, parsing, native UI, media handling, examples, tests, and packaging.
+
+## Planned Platforms
 
 Flutter:
 

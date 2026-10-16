@@ -1,0 +1,97 @@
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
+platform :ios, '16.0'
+prepare_react_native_project!
+
+# Xcode launched from Finder does not inherit nvm's PATH. Capture the real
+# executable during pod installation, while preserving explicit local overrides.
+node_environment_path = File.join(__dir__, '.xcode.env.local')
+unless File.exist?(node_environment_path)
+  require 'shellwords'
+  node_binary = Pod::Executable.execute_command('node', ['--print', 'process.execPath']).strip
+  File.write(node_environment_path, "export NODE_BINARY=#{Shellwords.escape(node_binary)}\n")
+end
+
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
+
+target 'CCDAExample' do
+  config = use_native_modules!
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  target 'CCDAExampleTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  post_install do |installer|
+    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false,
+      # :ccache_enabled => true
+    )
+
+    pods_project = installer.pods_project
+    # React Native's pods can retain a lower minimum than the host app.
+    # Apply the app's minimum after react_native_post_install adjusts them.
+    minimum_ios_version = Gem::Version.new(installer.podfile.target_definitions['CCDAExample'].platform.deployment_target.to_s)
+    pods_project.targets.each do |pod_target|
+      pod_target.build_configurations.each do |build_configuration|
+        deployment_target = build_configuration.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+        if deployment_target.nil? || Gem::Version.new(deployment_target) < minimum_ios_version
+          build_configuration.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = minimum_ios_version.to_s
+        end
+      end
+    end
+
+    # The bridge owns the engine link. Linking it directly to the app as well
+    # would duplicate the SwiftPM objects embedded in the bridge's archive.
+    package_reference = pods_project.root_object.package_references.find do |reference|
+      reference.relative_path == '../../../../apple'
+    end
+    unless package_reference
+      package_reference = pods_project.new(Xcodeproj::Project::Object::XCLocalSwiftPackageReference)
+      package_reference.relative_path = '../../../../apple'
+      pods_project.root_object.package_references << package_reference
+    end
+
+    bridge_target = pods_project.targets.find { |target| target.name == 'ccda-kit-react-native' }
+    if bridge_target
+      # CocoaPods puts this target in a product subdirectory; SwiftPM emits
+      # CCDAEngine.swiftmodule in the shared configuration products directory.
+      bridge_target.build_configurations.each do |build_configuration|
+        include_paths = Array(build_configuration.build_settings['SWIFT_INCLUDE_PATHS'] || '$(inherited)')
+        build_configuration.build_settings['SWIFT_INCLUDE_PATHS'] = (include_paths + ['$(PODS_CONFIGURATION_BUILD_DIR)']).uniq
+      end
+
+      package_product = bridge_target.package_product_dependencies.find { |dependency| dependency.product_name == 'CCDAEngine' }
+      unless package_product
+        package_product = pods_project.new(Xcodeproj::Project::Object::XCSwiftPackageProductDependency)
+        package_product.package = package_reference
+        package_product.product_name = 'CCDAEngine'
+        bridge_target.package_product_dependencies << package_product
+      end
+
+      unless bridge_target.frameworks_build_phase.files.any? { |file| file.product_ref == package_product }
+        build_file = pods_project.new(Xcodeproj::Project::Object::PBXBuildFile)
+        build_file.product_ref = package_product
+        bridge_target.frameworks_build_phase.files << build_file
+      end
+    end
+  end
+end

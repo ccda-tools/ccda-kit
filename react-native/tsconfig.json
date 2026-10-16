@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "esModuleInterop": true,
+    "jsx": "react-native",
+    "lib": ["ES2020"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "strict": true,
+    "target": "ES2020",
+    "types": ["react", "react-native", "jest"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

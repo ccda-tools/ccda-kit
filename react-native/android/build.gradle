@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.7.3")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21")
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+
+def getExtOrDefault(name, fallback) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : fallback
+}
+
+android {
+    namespace "com.ccdakit.reactnative"
+    compileSdkVersion getExtOrDefault("compileSdkVersion", 35)
+
+    defaultConfig {
+        minSdkVersion Math.max(getExtOrDefault("minSdkVersion", 26).toInteger(), 26)
+        targetSdkVersion getExtOrDefault("targetSdkVersion", 35)
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        androidTest.assets.srcDirs += new File(projectDir.canonicalFile, "../../test-data/ccda/samples")
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "com.facebook.react:react-android"
+    androidTestImplementation "androidx.test.ext:junit:1.2.1"
+    androidTestImplementation "androidx.test:runner:1.6.2"
+
+    if (findProject(":ccda-engine") != null) {
+        implementation project(":ccda-engine")
+    } else {
+        def packageVersion = new groovy.json.JsonSlurper().parse(file("../package.json")).version
+        implementation "io.github.shahzaibiqbal.ccdakit:ccda-engine:${getExtOrDefault("ccdaKitVersion", packageVersion)}"
+    }
+}
