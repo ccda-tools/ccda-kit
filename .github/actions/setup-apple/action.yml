@@ -1,6 +1,12 @@
 name: Setup Apple toolchain
 description: Identify Xcode and restore SwiftPM and Xcode build caches.
 
+inputs:
+  cache-scope:
+    description: Separate native Apple builds from React Native engine modes.
+    required: false
+    default: apple
+
 runs:
   using: composite
   steps:
@@ -9,13 +15,23 @@ runs:
       shell: bash
       run: echo "version=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)" >> "${GITHUB_OUTPUT}"
 
+    - name: Cache Swift package downloads
+      uses: actions/cache@v4
+      with:
+        path: ~/Library/Caches/org.swift.swiftpm
+        key: swiftpm-v2-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.version }}-${{ hashFiles('apple/Package.swift', 'react-native/example/engine-version.json') }}
+        restore-keys: |
+          swiftpm-v2-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.version }}-
+
     - name: Cache Swift and Xcode builds
       uses: actions/cache@v4
       with:
         path: |
           apple/.build
-          ~/Library/Caches/org.swift.swiftpm
           ~/Library/Developer/Xcode/DerivedData
-        key: ${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode.outputs.version }}-${{ hashFiles('apple/Package.swift') }}
+        # Cache entries are immutable. A per-commit key saves refreshed build
+        # state while the prefix restores the previous compatible build.
+        key: apple-build-v2-${{ inputs.cache-scope }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.version }}-${{ hashFiles('apple/Package.swift', 'react-native/example/ios/Podfile.lock', 'react-native/example/Gemfile.lock', 'react-native/example/engine-version.json') }}-${{ github.sha }}
         restore-keys: |
-          ${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode.outputs.version }}-
+          apple-build-v2-${{ inputs.cache-scope }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.version }}-${{ hashFiles('apple/Package.swift', 'react-native/example/ios/Podfile.lock', 'react-native/example/Gemfile.lock', 'react-native/example/engine-version.json') }}-
+          apple-build-v2-${{ inputs.cache-scope }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.version }}-

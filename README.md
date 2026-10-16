@@ -82,6 +82,11 @@ The Android project includes Kotlin parser tests, shared sample corpus checks, C
 
 Testing and conformance commands are documented in the [Apple README](apple/README.md) and [Android README](android/README.md).
 
+CI reuses Gradle dependencies and task outputs, SwiftPM downloads, Swift/Xcode
+build state, npm downloads, Bundler gems, and CocoaPods downloads where applicable.
+React Native local and published engine builds use separate build caches.
+Dependency installation and checks still run on cache hits.
+
 ## Versioning And Releases
 
 A tracked snapshot of the Apple package is published to [`ccda-tools/ccda-swift`](https://github.com/ccda-tools/ccda-swift) with semantic version tags so Swift Package Manager can resolve package versions correctly. Android releases are packaged in this monorepo and uploaded to Maven Central for validation and maintainer approval; a separate Android source repository is not required. React Native packages are built and published to npm from `react-native/`, and Flutter will publish through pub.dev directly from its monorepo directory.

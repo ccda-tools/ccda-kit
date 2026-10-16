@@ -17,6 +17,8 @@ on:
       - ".github/workflows/pr-react-native.yml"
       - ".github/workflows/publish-react-native.yml"
       - ".github/workflows/release.yml"
+      - ".github/actions/setup-apple/**"
+      - ".github/actions/setup-android/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -40,7 +42,9 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-          cache-dependency-path: react-native/package-lock.json
+          cache-dependency-path: |
+            react-native/package-lock.json
+            react-native/example/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -110,6 +114,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-apple
+        with:
+          cache-scope: react-native-${{ matrix.engine_source }}
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -122,6 +128,15 @@ jobs:
           ruby-version: "4.0"
           working-directory: react-native/example
           bundler-cache: true
+      - name: Cache CocoaPods downloads
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/CocoaPods
+            ~/.cocoapods/repos
+          key: cocoapods-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('react-native/example/Gemfile.lock', 'react-native/example/ios/Podfile.lock') }}
+          restore-keys: |
+            cocoapods-v1-${{ runner.os }}-${{ runner.arch }}-
       - name: Install package and example dependencies
         working-directory: react-native
         run: |
