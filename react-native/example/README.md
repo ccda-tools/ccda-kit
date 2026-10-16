@@ -1,6 +1,6 @@
 # C-CDA React Native Example
 
-Runnable React Native example app for the local `@ccda-kit/react-native` package.
+Runnable React Native example app for the local `@ccda-tools/react-native` package.
 
 The app starts with the same seven-document list as the native iOS example:
 Local Comprehensive Sample, Media Attachments, HL7 CCD, HL7 Discharge Summary,
@@ -30,7 +30,7 @@ The example depends on the parent package through `file:..`, so build the parent
 
 Navigation dependencies (`@react-navigation/native`, `@react-navigation/native-stack`,
 `react-native-screens`, and `react-native-safe-area-context`) belong to this
-example. They are not dependencies of the `@ccda-kit/react-native` library.
+example. They are not dependencies of the `@ccda-tools/react-native` library.
 Versions are pinned for the example's React Native 0.74 setup.
 Adding these native dependencies requires pod installation on iOS and a new
 native app build on both platforms before the navigator can run. Restarting

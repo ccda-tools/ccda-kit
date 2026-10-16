@@ -32,7 +32,7 @@ can replace the attachment UI with `renderMedia` or handle taps with `onOpenMedi
 ## Install
 
 ```bash
-npm install @ccda-kit/react-native
+npm install @ccda-tools/react-native
 ```
 
 ### iOS
@@ -43,7 +43,7 @@ supports hoisted dependencies):
 
 ```ruby
 require Pod::Executable.execute_command('node', ['-p',
-  'require.resolve("@ccda-kit/react-native/ios/ccda_pods.rb", {paths: [process.argv[1]]})',
+  'require.resolve("@ccda-tools/react-native/ios/ccda_pods.rb", {paths: [process.argv[1]]})',
   __dir__]).strip
 ```
 
@@ -97,7 +97,7 @@ engine version must be publicly available on Maven Central before consumption.
 ## Usage
 
 ```tsx
-import { CCDADocumentView, parseCCDAFile, parseCCDAXml } from '@ccda-kit/react-native';
+import { CCDADocumentView, parseCCDAFile, parseCCDAXml } from '@ccda-tools/react-native';
 
 const document = await parseCCDAFile('/path/to/document.xml');
 const sameDocument = await parseCCDAXml(xmlString);
@@ -119,7 +119,7 @@ Each callback receives its parsed model and returns a React node; returning
 
 ```tsx
 import { Text, View } from 'react-native';
-import { CCDADocumentView, type CCDADocument } from '@ccda-kit/react-native';
+import { CCDADocumentView, type CCDADocument } from '@ccda-tools/react-native';
 
 export function CustomDocument({ document }: { document: CCDADocument }) {
   return (

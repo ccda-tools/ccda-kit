@@ -1,5 +1,5 @@
 {
-  "name": "@ccda-kit/react-native",
+  "name": "@ccda-tools/react-native",
   "version": "0.0.0",
   "description": "React Native bindings for ccda-kit C-CDA parsing and rendering.",
   "license": "MIT",
