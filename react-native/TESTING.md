@@ -1,6 +1,6 @@
 # Library tests
 
-These suites test `@ccda-kit/react-native`. The example app's tests are separate.
+These suites test `@ccda-tools/react-native`. The example app's tests are separate.
 
 ## JavaScript and TypeScript
 

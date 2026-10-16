@@ -15,7 +15,7 @@ import {
   useCCDATheme,
   type CCDAThemeColors,
   type CCDADocument,
-} from '@ccda-kit/react-native';
+} from '@ccda-tools/react-native';
 
 import {
   NavigationContainer,

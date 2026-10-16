@@ -27,7 +27,7 @@ const config = {
     // Two React copies cause hook failures when the document list mounts.
     disableHierarchicalLookup: true,
     extraNodeModules: {
-      '@ccda-kit/react-native': packageRoot,
+      '@ccda-tools/react-native': packageRoot,
     },
     nodeModulesPaths: [
       path.resolve(__dirname, 'node_modules'),
